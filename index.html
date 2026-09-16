@@ -1,595 +1,1213 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulador de Crédito Automotriz</title>
-    
-    <style>
-        :root {
-            --primary: #4F46E5;
-            --primary-dark: #3730A3;
-            --success: #10B981;
-            --whatsapp: #25D366;
-            --bg-color: #F3F4F6;
-            --card-bg: #FFFFFF;
-            --text-main: #1F2937;
-            --text-muted: #6B7280;
-            --border-radius: 16px;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoClick | Cotizador Automotriz</title>
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
+<style>
+:root{
+  --primary:#111827;
+  --primary2:#2563eb;
+  --success:#16a34a;
+  --whatsapp:#25D366;
+  --bg:#f3f4f6;
+  --card:#ffffff;
+  --text:#111827;
+  --muted:#6b7280;
+  --border:#d1d5db;
+  --radius:16px;
+}
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            padding: 10px;
-            padding-bottom: 40px;
-        }
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-        .container {
-            max-width: 480px;
-            margin: 0 auto;
-        }
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  padding:12px;
+}
 
-        .header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            padding: 24px 20px;
-            border-radius: var(--border-radius);
-            margin-bottom: 16px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            position: relative;
-        }
+.container{
+  max-width:1100px;
+  margin:auto;
+}
 
-        .badge-propuesta {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: inline-block;
-            margin-bottom: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-        }
+header{
+  background:linear-gradient(135deg,#111827,#1f2937);
+  color:white;
+  padding:22px;
+  border-radius:var(--radius);
+  margin-bottom:15px;
+}
 
-        .header h1 {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
+.logo{
+  font-size:30px;
+  font-weight:800;
+  letter-spacing:-1px;
+}
 
-        .header p {
-            font-size: 14px;
-            opacity: 0.9;
-        }
+.subtitle{
+  margin-top:5px;
+  color:#d1d5db;
+}
 
-        .card {
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 20px;
-            margin-bottom: 16px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
+.card{
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:18px;
+  margin-bottom:15px;
+  box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
 
-        .card-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: var(--primary-dark);
-            border-bottom: 2px solid #E5E7EB;
-            padding-bottom: 8px;
-        }
+h2{
+  font-size:19px;
+  margin-bottom:15px;
+}
 
-        .form-group {
-            margin-bottom: 16px;
-        }
+h3{
+  font-size:16px;
+  margin-bottom:10px;
+}
 
-        .form-group label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 6px;
-            color: var(--text-main);
-        }
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
 
-        .input-wrapper {
-            position: relative;
-        }
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
 
-        .input-wrapper span {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-            font-weight: 600;
-        }
+.field.full{
+  grid-column:1/-1;
+}
 
-        .input-wrapper input, .input-wrapper select {
-            width: 100%;
-            padding: 12px 12px 12px 30px;
-            font-size: 16px;
-            border: 2px solid #E5E7EB;
-            border-radius: 10px;
-            outline: none;
-            transition: all 0.2s;
-            background: #F9FAFB;
-        }
+label{
+  font-size:13px;
+  font-weight:700;
+}
 
-        .input-wrapper input:focus, .input-wrapper select:focus {
-            border-color: var(--primary);
-            background: #FFFFFF;
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
-        }
+input,select{
+  width:100%;
+  padding:12px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  font-size:15px;
+  background:white;
+}
 
-        .input-wrapper.percent input {
-            padding: 12px 30px 12px 12px;
-        }
-        .input-wrapper.percent span {
-            left: auto;
-            right: 12px;
-        }
+input:focus,select:focus{
+  outline:none;
+  border-color:var(--primary2);
+  box-shadow:0 0 0 2px rgba(37,99,235,.12);
+}
 
-        .row {
-            display: flex;
-            gap: 12px;
-        }
-        .row .form-group {
-            flex: 1;
-        }
+.buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
 
-        .breakdown-item {
-            display: flex;
-            justify-content: space-between;
-            font-size: 14px;
-            margin-bottom: 10px;
-            padding-bottom: 6px;
-            border-bottom: 1px dashed #E5E7EB;
-        }
-        .breakdown-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-        }
-        .breakdown-item span:first-child {
-            color: var(--text-muted);
-        }
-        .breakdown-item span:last-child {
-            font-weight: 600;
-        }
+button{
+  border:0;
+  border-radius:10px;
+  padding:12px 15px;
+  font-weight:700;
+  cursor:pointer;
+}
 
-        .highlight-item {
-            color: var(--primary-dark) !important;
-            font-weight: 700 !important;
-        }
+.entry-btn{
+  background:#e5e7eb;
+  color:#111827;
+}
 
-        .result-card {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            text-align: center;
-        }
+.entry-btn.active{
+  background:var(--primary2);
+  color:white;
+}
 
-        .result-card .label {
-            font-size: 16px;
-            opacity: 0.9;
-            margin-bottom: 4px;
-        }
+.primary{
+  background:var(--primary2);
+  color:white;
+}
 
-        .result-card .amount {
-            font-size: 42px;
-            font-weight: 800;
-            margin-bottom: 16px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
+.success{
+  background:var(--success);
+  color:white;
+}
 
-        .gift-box {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            padding: 12px;
-            margin-top: 16px;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-        
-        .gift-box .gift-title {
-            font-size: 14px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            margin-bottom: 4px;
-        }
-        
-        .gift-box .gift-amount {
-            font-size: 22px;
-            font-weight: 700;
-            color: #A7F3D0;
-        }
+.whatsapp{
+  background:var(--whatsapp);
+  color:#064e3b;
+}
 
-        .cta-card {
-            border: 2px solid var(--primary);
-            text-align: center;
-        }
+.dark{
+  background:#111827;
+  color:white;
+}
 
-        .cta-card p {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-bottom: 16px;
-        }
+.result{
+  background:linear-gradient(135deg,#111827,#1f2937);
+  color:white;
+  border-radius:var(--radius);
+  padding:22px;
+  margin-bottom:15px;
+}
 
-        .btn-whatsapp {
-            width: 100%;
-            background-color: var(--whatsapp);
-            color: white;
-            border: none;
-            padding: 16px;
-            font-size: 16px;
-            font-weight: 700;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(37, 211, 102, 0.3);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: transform 0.1s;
-        }
+.result-title{
+  color:#d1d5db;
+  font-size:14px;
+}
 
-        .btn-whatsapp:active {
-            transform: scale(0.98);
-        }
+.main-number{
+  font-size:38px;
+  font-weight:800;
+  margin:7px 0 15px;
+}
 
-        .footer-text {
-            text-align: center;
-            margin-top: 24px;
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--primary-dark);
-        }
+.result-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
 
-        .disclaimer {
-            font-size: 11px;
-            color: var(--text-muted);
-            text-align: justify;
-            margin-top: 24px;
-            line-height: 1.4;
-            padding: 0 10px;
-            opacity: 0.8;
-        }
-    </style>
+.result-item{
+  background:rgba(255,255,255,.08);
+  padding:12px;
+  border-radius:10px;
+}
+
+.result-item small{
+  color:#d1d5db;
+  display:block;
+  margin-bottom:4px;
+}
+
+.result-item strong{
+  font-size:17px;
+}
+
+.summary{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+}
+
+.row{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:9px 0;
+  border-bottom:1px solid #eee;
+}
+
+.row span:first-child{
+  color:var(--muted);
+}
+
+.total{
+  font-size:18px;
+  font-weight:800;
+}
+
+.table-wrap{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:600px;
+}
+
+th,td{
+  padding:9px;
+  border-bottom:1px solid #e5e7eb;
+  text-align:right;
+  font-size:13px;
+}
+
+th{
+  background:#f3f4f6;
+}
+
+th:first-child,td:first-child{
+  text-align:center;
+}
+
+.note{
+  background:#eff6ff;
+  border-left:4px solid var(--primary2);
+  padding:12px;
+  border-radius:8px;
+  margin-top:10px;
+  font-size:13px;
+}
+
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+.hidden{
+  display:none;
+}
+
+@media(max-width:650px){
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .field.full{
+    grid-column:auto;
+  }
+
+  .summary,
+  .result-grid{
+    grid-template-columns:1fr;
+  }
+
+  .main-number{
+    font-size:32px;
+  }
+}
+
+@media print{
+  body{
+    background:white;
+  }
+
+  button,
+  .actions,
+  .no-print{
+    display:none!important;
+  }
+
+  .card,.result{
+    box-shadow:none;
+    break-inside:avoid;
+  }
+}
+</style>
 </head>
+
 <body>
 
-    <div class="container">
-        
-        <div class="header">
-            <div class="badge-propuesta">📄 Propuesta Comercial</div>
-            <h1>Cotizador Automotriz</h1>
-            <p>Planifica tu crédito de forma fácil y clara</p>
-        </div>
+<div class="container">
 
-        <!-- 1. FORMULARIO DE DATOS -->
-        <div class="card">
-            <h2 class="card-title">Datos del Crédito</h2>
-            
-            <div class="form-group">
-                <label>Monto a Financiar</label>
-                <div class="input-wrapper">
-                    <span>$</span>
-                    <input type="number" id="monto" value="12000" step="100">
-                </div>
-            </div>
+<header>
+  <div class="logo">AutoClick</div>
+  <div class="subtitle">Soluciones digitales para vehículos comerciales</div>
+  <div class="subtitle">Cotizador profesional de financiamiento automotriz</div>
+</header>
 
-            <div class="row">
-                <div class="form-group">
-                    <label>Plazo</label>
-                    <div class="input-wrapper">
-                        <select id="plazo">
-                            <option value="36">36 meses</option>
-                            <option value="48">48 meses</option>
-                            <option value="60" selected>60 meses</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Ahorro Programado</label>
-                    <div class="input-wrapper">
-                        <span>$</span>
-                        <input type="number" id="ahorro" value="12" step="1">
-                    </div>
-                </div>
-            </div>
-        </div>
+<!-- CLIENTE -->
+<section class="card">
+<h2>1. Datos del cliente</h2>
 
-        <!-- 2. PARÁMETROS INTERNOS -->
-        <div class="card">
-            <h2 class="card-title">Condiciones de la Cooperativa</h2>
-            
-            <div class="row">
-                <div class="form-group">
-                    <label>Tasa Nominal</label>
-                    <div class="input-wrapper percent">
-                        <input type="number" id="tasa" value="14.50" step="0.1">
-                        <span>%</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Encaje</label>
-                    <div class="input-wrapper percent">
-                        <input type="number" id="encaje" value="10" step="1">
-                        <span>%</span>
-                    </div>
-                </div>
-            </div>
+<div class="grid">
 
-            <div class="row">
-                <div class="form-group">
-                    <label>Fondo Irrepart.</label>
-                    <div class="input-wrapper percent">
-                        <input type="number" id="fondo" value="3" step="0.5">
-                        <span>%</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>SOLCA</label>
-                    <div class="input-wrapper percent">
-                        <input type="number" id="solca" value="0.50" step="0.1">
-                        <span>%</span>
-                    </div>
-                </div>
-            </div>
+<div class="field">
+<label>Nombre del cliente</label>
+<input id="cliente" placeholder="Ej. Juan Pérez">
+</div>
 
-            <div class="row">
-                <div class="form-group">
-                    <label>Seguro Desgravamen</label>
-                    <div class="input-wrapper percent">
-                        <input type="number" id="desgravamen" value="1" step="0.1">
-                        <span>%</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Otros Gastos</label>
-                    <div class="input-wrapper">
-                        <span>$</span>
-                        <input type="number" id="otros" value="0">
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="field">
+<label>Cédula / RUC</label>
+<input id="identificacion" placeholder="Identificación">
+</div>
 
-        <!-- 3. DESGLOSE -->
-        <div class="card">
-            <h2 class="card-title">Desglose de la Operación</h2>
-            <div class="breakdown-item">
-                <span>Monto del Crédito</span>
-                <span id="res-monto">$0.00</span>
-            </div>
-            <div class="breakdown-item">
-                <span>Encaje Financiado</span>
-                <span id="res-encaje">$0.00</span>
-            </div>
-            <div class="breakdown-item">
-                <span class="highlight-item">Capital Total Financiado</span>
-                <span class="highlight-item" id="res-capital">$0.00</span>
-            </div>
-            <br>
-            <div class="breakdown-item">
-                <span>Fondo Irrepartible</span>
-                <span id="res-fondo">$0.00</span>
-            </div>
-            <div class="breakdown-item">
-                <span>SOLCA</span>
-                <span id="res-solca">$0.00</span>
-            </div>
-            <div class="breakdown-item">
-                <span>Seguro de Desgravamen</span>
-                <span id="res-desgravamen">$0.00</span>
-            </div>
-            <div class="breakdown-item">
-                <span>Otros Gastos</span>
-                <span id="res-otros">$0.00</span>
-            </div>
-            <div class="breakdown-item">
-                <span>Interés Estimado</span>
-                <span id="res-interes">$0.00</span>
-            </div>
-        </div>
+<div class="field">
+<label>Teléfono</label>
+<input id="telefono" placeholder="0999999999">
+</div>
 
-        <!-- 4. RESULTADO PRINCIPAL -->
-        <div class="card result-card">
-            <div class="label">CUOTA MENSUAL ESTIMADA</div>
-            <div class="amount" id="res-cuota">$0.00</div>
-            
-            <div style="font-size: 14px; opacity: 0.9; margin-bottom: 12px;">
-                Total a pagar en <span id="res-plazo">60</span> meses: <strong id="res-total">$0.00</strong>
-            </div>
+<div class="field">
+<label>Correo electrónico</label>
+<input id="correo" type="email" placeholder="cliente@email.com">
+</div>
 
-            <div class="gift-box">
-                <div class="gift-title">🎁 Monto recuperable al finalizar</div>
-                <div class="gift-amount" id="res-recuperable">$0.00</div>
-                <div style="font-size: 11px; margin-top: 4px; opacity: 0.8;">
-                    (Incluye el Encaje + Ahorro Programado Acumulado)
-                </div>
-            </div>
-        </div>
+<div class="field full">
+<label>Asesor comercial</label>
+<input id="asesor" placeholder="Nombre del asesor">
+</div>
 
-        <!-- 5. ANÁLISIS DE TASA NETA -->
-        <div class="card" style="border: 2px solid var(--success); background: #F0FDF4;">
-            <h2 class="card-title" style="color: var(--success); border-bottom-color: #A7F3D0;">💡 Beneficio Cooperativo</h2>
-            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px; text-align: justify;">
-                Al recuperar el ahorro programado al final del plazo, el costo real de tu crédito disminuye:
-            </p>
-            <div class="breakdown-item">
-                <span>Interés Normal Estimado</span>
-                <span id="res-interes-bruto" style="text-decoration: line-through; color: var(--text-muted);">$0.00</span>
-            </div>
-            <div class="breakdown-item">
-                <span>Ahorro Programado Acumulado</span>
-                <span id="res-ahorro-beneficio" style="color: var(--success);">$0.00</span>
-            </div>
-            <div class="breakdown-item">
-                <span style="color: var(--text-main); font-weight: 600;">Costo Real del Dinero (Neto)</span>
-                <span id="res-costo-neto" style="color: var(--text-main); font-weight: 600;">$0.00</span>
-            </div>
-            <div class="breakdown-item" style="margin-top: 12px; padding-top: 12px; border-top: 2px solid #A7F3D0;">
-                <span style="color: var(--success); font-weight: 800; font-size: 16px;">Tasa Anual Neta (Real)</span>
-                <span id="res-tasa-neta" style="color: var(--success); font-weight: 800; font-size: 24px;">0.00%</span>
-            </div>
-        </div>
+</div>
+</section>
 
-        <!-- 6. LLAMADO A LA ACCIÓN (Inbound) -->
-        <div class="card cta-card">
-            <h2 class="card-title" style="border-bottom: none; margin-bottom: 4px;">🚀 ¡Haz realidad tu meta hoy!</h2>
-            <p>Obtén un análisis personalizado y avanza con tu pre-aprobación inmediata.</p>
-            
-            <button class="btn-whatsapp" onclick="enviarWhatsApp()">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                Quiero mi crédito
-            </button>
-        </div>
+<!-- VEHICULO -->
+<section class="card">
+<h2>2. Vehículo</h2>
 
-        <!-- AGRADECIMIENTO -->
-        <div class="footer-text">
-            🤝 ¡Gracias por preferirnos!
-        </div>
+<div class="grid">
 
-        <p class="disclaimer">
-            * Simulación referencial. Los valores definitivos pueden variar según las condiciones, metodología de cálculo exacto, gastos administrativos y aprobación final de la institución financiera.
-        </p>
+<div class="field">
+<label>Marca</label>
+<input id="marca" placeholder="Ej. FAW">
+</div>
 
-    </div>
+<div class="field">
+<label>Modelo</label>
+<input id="modelo" placeholder="Ej. JH6">
+</div>
 
-    <script>
-        // Formateador de moneda
-        const formatter = new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-            minimumFractionDigits: 2
-        });
+<div class="field">
+<label>Año</label>
+<input id="anio" type="number" value="2026">
+</div>
 
-        let ultimoMonto = 12000;
+<div class="field">
+<label>Precio del vehículo</label>
+<input id="precio" type="number" value="23990" min="0" step="0.01">
+</div>
 
-        function calcularPMT(tasaMensual, nPagos, valorActual) {
-            if (tasaMensual === 0) return valorActual / nPagos;
-            return valorActual * (tasaMensual * Math.pow(1 + tasaMensual, nPagos)) / (Math.pow(1 + tasaMensual, nPagos) - 1);
-        }
+<div class="field">
+<label>Descuento</label>
+<input id="descuento" type="number" value="0" min="0" step="0.01">
+</div>
 
-        function calcularTasaNeta(nper, pmtMensual, montoRecibido, montoRecuperado) {
-            let low = 0.0000;
-            let high = 0.20; 
-            let r = 0.01;
-            
-            for (let i = 0; i < 50; i++) {
-                r = (low + high) / 2;
-                let npv = montoRecibido - (pmtMensual * ((1 - Math.pow(1 + r, -nper)) / r)) + (montoRecuperado * Math.pow(1 + r, -nper));
-                if (npv < 0) low = r;
-                else high = r; 
-            }
-            return r * 12 * 100; 
-        }
+<div class="field">
+<label>Otros gastos de operación</label>
+<input id="otrosGastos" type="number" value="0" min="0" step="0.01">
+</div>
 
-        function recalcular() {
-            try {
-                let monto = parseFloat(document.getElementById('monto').value);
-                if (isNaN(monto) || monto < 0) monto = 0;
+</div>
+</section>
 
-                const ahorroInput = document.getElementById('ahorro');
-                if (monto !== ultimoMonto) {
-                    const ahorroSugerido = (monto / 10000) * 10;
-                    ahorroInput.value = ahorroSugerido.toFixed(0);
-                    ultimoMonto = monto;
-                }
+<!-- CARROCERIA -->
+<section class="card">
+<h2>3. Carrocería / Furgón / Equipamiento</h2>
 
-                const plazo = parseInt(document.getElementById('plazo').value) || 60;
-                const tasaAnual = parseFloat(document.getElementById('tasa').value) || 0;
-                const encajePerc = parseFloat(document.getElementById('encaje').value) || 0;
-                const fondoPerc = parseFloat(document.getElementById('fondo').value) || 0;
-                const solcaPerc = parseFloat(document.getElementById('solca').value) || 0;
-                const desgravamenPerc = parseFloat(document.getElementById('desgravamen').value) || 0;
-                const otrosGastos = parseFloat(document.getElementById('otros').value) || 0;
-                let ahorro = parseFloat(ahorroInput.value);
-                if (isNaN(ahorro) || ahorro < 0) ahorro = 0;
+<div class="grid">
 
-                const encaje = monto * (encajePerc / 100);
-                const capitalFinanciado = monto + encaje;
-                
-                const fondo = capitalFinanciado * (fondoPerc / 100);
-                const solca = capitalFinanciado * (solcaPerc / 100);
-                const desgravamen = capitalFinanciado * (desgravamenPerc / 100);
+<div class="field">
+<label>Tipo de carrocería</label>
+<select id="carroceria">
+<option value="">Sin carrocería</option>
+<option>Furgón</option>
+<option>Furgón refrigerado</option>
+<option>Plataforma</option>
+<option>Cajón</option>
+<option>Volqueta</option>
+<option>Tanquero</option>
+<option>Mixer</option>
+<option>Grúa</option>
+<option>Otro</option>
+</select>
+</div>
 
-                const tasaMensual = tasaAnual / 100 / 12;
-                const pmtBase = calcularPMT(tasaMensual, plazo, monto);
-                const factorCalibracion = 283.81 / 282.361633; 
-                const cuotaCredito = pmtBase * factorCalibracion;
-                
-                const cuotaMensualTotal = cuotaCredito + ahorro;
-                const interesEstimado = (cuotaCredito * plazo) - monto;
-                const totalPagadoCredito = (cuotaCredito * plazo);
-                const totalRecuperable = encaje + (ahorro * plazo);
+<div class="field">
+<label>Valor carrocería</label>
+<input id="valorCarroceria" type="number" value="0" min="0" step="0.01">
+</div>
 
-                const totalPagadoConAhorro = cuotaMensualTotal * plazo;
-                const costoRealNeto = interesEstimado - (ahorro * plazo);
-                const tasaNetaAnual = calcularTasaNeta(plazo, cuotaMensualTotal, monto, totalRecuperable);
+<div class="field">
+<label>Accesorios / implementos</label>
+<input id="accesorios" placeholder="Ej. Parrilla, llantas, etc.">
+</div>
 
-                // Imprimir en pantalla
-                document.getElementById('res-monto').innerText = formatter.format(monto);
-                document.getElementById('res-encaje').innerText = formatter.format(encaje);
-                document.getElementById('res-capital').innerText = formatter.format(capitalFinanciado);
-                document.getElementById('res-fondo').innerText = formatter.format(fondo);
-                document.getElementById('res-solca').innerText = formatter.format(solca);
-                document.getElementById('res-desgravamen').innerText = formatter.format(desgravamen);
-                document.getElementById('res-otros').innerText = formatter.format(otrosGastos);
-                document.getElementById('res-interes').innerText = formatter.format(interesEstimado);
-                
-                document.getElementById('res-cuota').innerText = formatter.format(cuotaMensualTotal);
-                document.getElementById('res-plazo').innerText = plazo;
-                document.getElementById('res-total').innerText = formatter.format(totalPagadoCredito);
-                document.getElementById('res-recuperable').innerText = formatter.format(totalRecuperable);
+<div class="field">
+<label>Valor accesorios</label>
+<input id="valorAccesorios" type="number" value="0" min="0" step="0.01">
+</div>
 
-                // Actualizar Análisis de Beneficio
-                document.getElementById('res-interes-bruto').innerText = formatter.format(interesEstimado);
-                document.getElementById('res-ahorro-beneficio').innerText = '− ' + formatter.format(ahorro * plazo);
-                document.getElementById('res-costo-neto').innerText = formatter.format(costoRealNeto);
-                document.getElementById('res-tasa-neta').innerText = tasaNetaAnual.toFixed(2) + '%';
+</div>
 
-            } catch (error) {
-                console.log("Esperando datos válidos...");
-            }
-        }
+<div class="note">
+La carrocería y los accesorios son opcionales y se suman al valor de la operación.
+</div>
+</section>
 
-        // Función para enviar por WhatsApp con enlace directo y funcional
-        function enviarWhatsApp() {
-            const monto = document.getElementById('res-monto').innerText;
-            const plazo = document.getElementById('res-plazo').innerText;
-            const cuota = document.getElementById('res-cuota').innerText;
-            const recuperable = document.getElementById('res-recuperable').innerText;
-            const tasaNeta = document.getElementById('res-tasa-neta').innerText;
-            
-            const enlaceBase = "https://wa.me/593991930112"; 
-            
-            const mensaje = `¡Hola! 👋 Estuve usando el simulador y me interesa avanzar con el siguiente paso. Estos son los datos de mi proyección:\n\n📊 *Resumen de mi simulación:*\n- Monto solicitado: *${monto}*\n- Plazo: *${plazo} meses*\n- Cuota Mensual Estimada: *${cuota}*\n\n🎁 *Dinero recuperable al finalizar:* ${recuperable}\n📉 *Tasa Anual Neta Real:* ${tasaNeta}\n\nPor favor, ayúdame con los requisitos y el proceso de pre-aprobación. ¡Muchas gracias!`;
-            
-            const url = `${enlaceBase}?text=${encodeURIComponent(mensaje)}`;
-            window.open(url, '_blank');
-        }
+<!-- RASTREO -->
+<section class="card">
+<h2>4. Rastreo satelital</h2>
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const inputs = document.querySelectorAll('input, select');
-            inputs.forEach(function(input) {
-                input.addEventListener('input', recalcular);
-                input.addEventListener('change', recalcular);
-                input.addEventListener('keyup', recalcular);
-            });
-            recalcular();
-        });
-    </script>
+<div class="grid">
+
+<div class="field">
+<label>Contratar rastreo</label>
+<select id="rastreo" onchange="actualizarRastreo()">
+<option value="0">No</option>
+<option value="1">Sí</option>
+</select>
+</div>
+
+<div class="field">
+<label>Duración</label>
+<select id="aniosRastreo" onchange="actualizarRastreo()">
+<option value="1">1 año</option>
+<option value="2">2 años</option>
+<option value="3">3 años</option>
+<option value="4">4 años</option>
+<option value="5">5 años</option>
+</select>
+</div>
+
+<div class="field">
+<label>Valor rastreo</label>
+<input id="valorRastreo" type="number" value="0" readonly>
+</div>
+
+</div>
+
+<div class="note">
+Valores configurados actualmente: 1 año = $1.081 y 5 años = $2.300. Los valores de 2, 3 y 4 años quedan pendientes de configuración.
+</div>
+</section>
+
+<!-- FINANCIAMIENTO -->
+<section class="card">
+<h2>5. Financiamiento</h2>
+
+<h3>Entrada</h3>
+
+<div class="buttons">
+<button class="entry-btn" onclick="seleccionarEntrada(0,this)">0%</button>
+<button class="entry-btn" onclick="seleccionarEntrada(10,this)">10%</button>
+<button class="entry-btn" onclick="seleccionarEntrada(20,this)">20%</button>
+<button class="entry-btn" onclick="seleccionarEntrada(25,this)">25%</button>
+<button class="entry-btn" onclick="seleccionarEntrada(30,this)">30%</button>
+</div>
+
+<div class="grid" style="margin-top:12px">
+
+<div class="field">
+<label>Entrada personalizada (%)</label>
+<input id="entradaPersonalizada" type="number" min="0" max="100" value="25" oninput="calcular()">
+</div>
+
+<div class="field">
+<label>Institución financiera</label>
+<select id="institucion" onchange="cargarInstitucion()">
+<option value="Banco 1">Banco 1</option>
+<option value="Banco 2">Banco 2</option>
+<option value="Cooperativa 1">Cooperativa 1</option>
+<option value="Cooperativa 2">Cooperativa 2</option>
+<option value="Financiera 1">Financiera 1</option>
+<option value="Personalizada">Personalizada</option>
+</select>
+</div>
+
+<div class="field">
+<label>Tipo de institución</label>
+<input id="tipoInstitucion" readonly>
+</div>
+
+<div class="field">
+<label>Producto financiero</label>
+<select id="producto">
+<option>Crédito automotriz</option>
+<option>Crédito de consumo</option>
+<option>Crédito productivo</option>
+<option>Productivo PYMES</option>
+<option>Vehículo comercial</option>
+<option>Otro</option>
+</select>
+</div>
+
+<div class="field">
+<label>Plazo</label>
+<select id="plazo" onchange="calcular()">
+<option value="24">24 meses</option>
+<option value="36" selected>36 meses</option>
+<option value="48">48 meses</option>
+<option value="60">60 meses</option>
+<option value="72">72 meses</option>
+</select>
+</div>
+
+<div class="field">
+<label>Tasa nominal anual (%)</label>
+<input id="tasa" type="number" value="14.50" min="0" step="0.01" oninput="calcular()">
+</div>
+
+<div class="field">
+<label>Encaje (%)</label>
+<input id="encaje" type="number" value="0" min="0" step="0.01" oninput="calcular()">
+</div>
+
+<div class="field">
+<label>Fondo / aporte</label>
+<input id="fondo" type="number" value="0" min="0" step="0.01" oninput="calcular()">
+</div>
+
+<div class="field">
+<label>Gastos administrativos</label>
+<input id="gastosAdmin" type="number" value="0" min="0" step="0.01" oninput="calcular()">
+</div>
+
+<div class="field">
+<label>Desgravamen mensual (%)</label>
+<input id="desgravamen" type="number" value="0.05" min="0" step="0.01" oninput="calcular()">
+</div>
+
+<div class="field">
+<label>Ahorro mensual</label>
+<input id="ahorroMensual" type="number" value="0" min="0" step="0.01" oninput="calcular()">
+</div>
+
+</div>
+</section>
+
+<!-- RESULTADO -->
+<section class="result">
+
+<div class="result-title">CUOTA MENSUAL ESTIMADA</div>
+<div class="main-number" id="cuota">$0,00</div>
+
+<div class="result-grid">
+
+<div class="result-item">
+<small>Entrada</small>
+<strong id="resEntrada">$0,00</strong>
+</div>
+
+<div class="result-item">
+<small>Monto financiado</small>
+<strong id="resFinanciado">$0,00</strong>
+</div>
+
+<div class="result-item">
+<small>Plazo</small>
+<strong id="resPlazo">36 meses</strong>
+</div>
+
+<div class="result-item">
+<small>Tasa nominal</small>
+<strong id="resTasa">0%</strong>
+</div>
+
+</div>
+</section>
+
+<!-- DETALLE -->
+<section class="card">
+<h2>6. Resumen financiero</h2>
+
+<div class="summary">
+
+<div class="row">
+<span>Precio vehículo</span>
+<strong id="rVehiculo">$0,00</strong>
+</div>
+
+<div class="row">
+<span>Carrocería</span>
+<strong id="rCarroceria">$0,00</strong>
+</div>
+
+<div class="row">
+<span>Accesorios</span>
+<strong id="rAccesorios">$0,00</strong>
+</div>
+
+<div class="row">
+<span>Rastreo</span>
+<strong id="rRastreo">$0,00</strong>
+</div>
+
+<div class="row">
+<span>Otros gastos</span>
+<strong id="rOtros">$0,00</strong>
+</div>
+
+<div class="row total">
+<span>Total operación</span>
+<strong id="rOperacion">$0,00</strong>
+</div>
+
+<div class="row">
+<span>Entrada</span>
+<strong id="rEntrada">$0,00</strong>
+</div>
+
+<div class="row">
+<span>Saldo base</span>
+<strong id="rSaldo">$0,00</strong>
+</div>
+
+<div class="row">
+<span>Encaje financiado</span>
+<strong id="rEncaje">$0,00</strong>
+</div>
+
+<div class="row">
+<span>Capital financiado</span>
+<strong id="rCapital">$0,00</strong>
+</div>
+
+<div class="row">
+<span>Interés estimado</span>
+<strong id="rInteres">$0,00</strong>
+</div>
+
+<div class="row">
+<span>Desgravamen total</span>
+<strong id="rDesgravamen">$0,00</strong>
+</div>
+
+<div class="row">
+<span>Fondo / aporte</span>
+<strong id="rFondo">$0,00</strong>
+</div>
+
+<div class="row">
+<span>Gastos administrativos</span>
+<strong id="rAdmin">$0,00</strong>
+</div>
+
+<div class="row">
+<span>Ahorro total</span>
+<strong id="rAhorro">$0,00</strong>
+</div>
+
+<div class="row total">
+<span>Total general</span>
+<strong id="rTotal">$0,00</strong>
+</div>
+
+<div class="row">
+<span>Tasa efectiva anual equivalente</span>
+<strong id="rEfectiva">0%</strong>
+</div>
+
+</div>
+</section>
+
+<!-- ACCIONES -->
+<section class="card no-print">
+<h2>7. Acciones comerciales</h2>
+
+<div class="actions">
+<button class="primary" onclick="window.print()">Imprimir / Guardar PDF</button>
+<button class="whatsapp" onclick="enviarWhatsApp()">Enviar por WhatsApp</button>
+<button class="dark" onclick="limpiar()">Nueva cotización</button>
+</div>
+</section>
+
+<!-- AMORTIZACION -->
+<section class="card">
+<h2>8. Tabla de amortización</h2>
+
+<div class="table-wrap">
+
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Saldo inicial</th>
+<th>Cuota</th>
+<th>Interés</th>
+<th>Capital</th>
+<th>Saldo final</th>
+</tr>
+</thead>
+
+<tbody id="tablaAmortizacion"></tbody>
+
+</table>
+
+</div>
+</section>
+
+<section class="card">
+<h2>AutoClick</h2>
+
+<p style="color:#6b7280;font-size:13px">
+Herramienta de simulación comercial. Los valores mostrados son estimativos y deben ser validados con las condiciones definitivas de la institución financiera.
+</p>
+</section>
+
+</div>
+
+<script>
+
+const preciosRastreo = {
+  1:1081,
+  2:null,
+  3:null,
+  4:null,
+  5:2300
+};
+
+const instituciones = {
+
+  "Banco 1":{
+    tipo:"Banco",
+    tasa:14.50
+  },
+
+  "Banco 2":{
+    tipo:"Banco",
+    tasa:14.00
+  },
+
+  "Cooperativa 1":{
+    tipo:"Cooperativa",
+    tasa:13.50
+  },
+
+  "Cooperativa 2":{
+    tipo:"Cooperativa",
+    tasa:13.00
+  },
+
+  "Financiera 1":{
+    tipo:"Financiera",
+    tasa:15.00
+  },
+
+  "Personalizada":{
+    tipo:"Personalizada",
+    tasa:14.50
+  }
+
+};
+
+let entradaSeleccionada = 25;
+
+function money(valor){
+
+  return new Intl.NumberFormat("es-EC",{
+    style:"currency",
+    currency:"USD"
+  }).format(valor || 0);
+
+}
+
+function numero(id){
+
+  return parseFloat(document.getElementById(id).value) || 0;
+
+}
+
+function seleccionarEntrada(valor,boton){
+
+  entradaSeleccionada = valor;
+
+  document.getElementById("entradaPersonalizada").value = valor;
+
+  document.querySelectorAll(".entry-btn").forEach(b=>{
+    b.classList.remove("active");
+  });
+
+  boton.classList.add("active");
+
+  calcular();
+
+}
+
+function actualizarRastreo(){
+
+  const activo = document.getElementById("rastreo").value;
+
+  const anios = document.getElementById("aniosRastreo").value;
+
+  const input = document.getElementById("valorRastreo");
+
+  if(activo !== "1"){
+
+    input.value = 0;
+    calcular();
+    return;
+
+  }
+
+  const valor = preciosRastreo[anios];
+
+  if(valor === null){
+
+    input.value = 0;
+
+  }else{
+
+    input.value = valor;
+
+  }
+
+  calcular();
+
+}
+
+function cargarInstitucion(){
+
+  const nombre = document.getElementById("institucion").value;
+
+  const data = instituciones[nombre];
+
+  document.getElementById("tipoInstitucion").value = data.tipo;
+
+  document.getElementById("tasa").value = data.tasa;
+
+  calcular();
+
+}
+
+function calcular(){
+
+  const precio = numero("precio");
+
+  const descuento = numero("descuento");
+
+  const carroceria = numero("valorCarroceria");
+
+  const accesorios = numero("valorAccesorios");
+
+  const rastreo = numero("valorRastreo");
+
+  const otros = numero("otrosGastos");
+
+  const tasaAnual = numero("tasa");
+
+  const entradaPct = numero("entradaPersonalizada");
+
+  const plazo = parseInt(document.getElementById("plazo").value) || 36;
+
+  const encajePct = numero("encaje");
+
+  const desgravamenPct = numero("desgravamen");
+
+  const fondo = numero("fondo");
+
+  const admin = numero("gastosAdmin");
+
+  const ahorroMensual = numero("ahorroMensual");
+
+  const precioFinal = Math.max(0,precio-descuento);
+
+  const operacion =
+    precioFinal+
+    carroceria+
+    accesorios+
+    rastreo+
+    otros;
+
+  const entrada =
+    operacion*(entradaPct/100);
+
+  const saldo =
+    Math.max(0,operacion-entrada);
+
+  const encaje =
+    saldo*(encajePct/100);
+
+  const capital =
+    saldo+encaje;
+
+  const tasaMensual =
+    (tasaAnual/100)/12;
+
+  let cuotaCredito = 0;
+
+  if(capital > 0){
+
+    if(tasaMensual > 0){
+
+      cuotaCredito =
+        capital*
+        (
+          tasaMensual*
+          Math.pow(1+tasaMensual,plazo)
+        )/
+        (
+          Math.pow(1+tasaMensual,plazo)-1
+        );
+
+    }else{
+
+      cuotaCredito = capital/plazo;
+
+    }
+
+  }
+
+  const desgravamenMensual =
+    capital*(desgravamenPct/100);
+
+  const cuotaTotal =
+    cuotaCredito+
+    desgravamenMensual+
+    ahorroMensual;
+
+  const interes =
+    Math.max(
+      0,
+      cuotaCredito*plazo-capital
+    );
+
+  const totalDesgravamen =
+    desgravamenMensual*plazo;
+
+  const totalAhorro =
+    ahorroMensual*plazo;
+
+  const totalCredito =
+    cuotaCredito*plazo+
+    totalDesgravamen+
+    fondo+
+    admin;
+
+  const totalGeneral =
+    entrada+
+    totalCredito+
+    totalAhorro;
+
+  const tasaEfectiva =
+    tasaMensual > 0
+      ? (Math.pow(1+tasaMensual,12)-1)*100
+      : 0;
+
+  document.getElementById("cuota").textContent =
+    money(cuotaTotal);
+
+  document.getElementById("resEntrada").textContent =
+    money(entrada);
+
+  document.getElementById("resFinanciado").textContent =
+    money(capital);
+
+  document.getElementById("resPlazo").textContent =
+    plazo+" meses";
+
+  document.getElementById("resTasa").textContent =
+    tasaAnual.toFixed(2)+"%";
+
+  document.getElementById("rVehiculo").textContent =
+    money(precioFinal);
+
+  document.getElementById("rCarroceria").textContent =
+    money(carroceria);
+
+  document.getElementById("rAccesorios").textContent =
+    money(accesorios);
+
+  document.getElementById("rRastreo").textContent =
+    money(rastreo);
+
+  document.getElementById("rOtros").textContent =
+    money(otros);
+
+  document.getElementById("rOperacion").textContent =
+    money(operacion);
+
+  document.getElementById("rEntrada").textContent =
+    money(entrada);
+
+  document.getElementById("rSaldo").textContent =
+    money(saldo);
+
+  document.getElementById("rEncaje").textContent =
+    money(encaje);
+
+  document.getElementById("rCapital").textContent =
+    money(capital);
+
+  document.getElementById("rInteres").textContent =
+    money(interes);
+
+  document.getElementById("rDesgravamen").textContent =
+    money(totalDesgravamen);
+
+  document.getElementById("rFondo").textContent =
+    money(fondo);
+
+  document.getElementById("rAdmin").textContent =
+    money(admin);
+
+  document.getElementById("rAhorro").textContent =
+    money(totalAhorro);
+
+  document.getElementById("rTotal").textContent =
+    money(totalGeneral);
+
+  document.getElementById("rEfectiva").textContent =
+    tasaEfectiva.toFixed(2)+"%";
+
+  generarAmortizacion(
+    capital,
+    tasaMensual,
+    cuotaCredito,
+    plazo
+  );
+
+}
+
+function generarAmortizacion(
+  capital,
+  tasaMensual,
+  cuota,
+  plazo
+){
+
+  const tabla =
+    document.getElementById("tablaAmortizacion");
+
+  tabla.innerHTML="";
+
+  let saldo=capital;
+
+  for(let i=1;i<=plazo;i++){
+
+    const saldoInicial=saldo;
+
+    const interes=saldoInicial*tasaMensual;
+
+    let capitalPagado=
+      cuota-interes;
+
+    if(i===plazo){
+
+      capitalPagado=saldoInicial;
+
+    }
+
+    let saldoFinal=
+      Math.max(
+        0,
+        saldoInicial-capitalPagado
+      );
+
+    const tr=document.createElement("tr");
+
+    tr.innerHTML=`
+
+      <td>${i}</td>
+
+      <td>${money(saldoInicial)}</td>
+
+      <td>${money(
+        i===plazo
+          ? capitalPagado+interes
+          : cuota
+      )}</td>
+
+      <td>${money(interes)}</td>
+
+      <td>${money(capitalPagado)}</td>
+
+      <td>${money(saldoFinal)}</td>
+
+    `;
+
+    tabla.appendChild(tr);
+
+    saldo=saldoFinal;
+
+    if(saldo<=0.01) break;
+
+  }
+
+}
+
+function enviarWhatsApp(){
+
+  const cliente =
+    document.getElementById("cliente").value ||
+    "Cliente";
+
+  const marca =
+    document.getElementById("marca").value ||
+    "";
+
+  const modelo =
+    document.getElementById("modelo").value ||
+    "";
+
+  const precio =
+    numero("precio");
+
+  const entrada =
+    numero("entradaPersonalizada");
+
+  const plazo =
+    document.getElementById("plazo").value;
+
+  const cuota =
+    document.getElementById("cuota").textContent;
+
+  const institucion =
+    document.getElementById("institucion").value;
+
+  const mensaje =
+`Hola ${cliente},
+
+Te comparto tu simulación de financiamiento AutoClick.
+
+Vehículo: ${marca} ${modelo}
+Precio: ${money(precio)}
+Entrada: ${entrada.toFixed(2)}%
+Institución: ${institucion}
+Plazo: ${plazo} meses
+Cuota estimada: ${cuota}
+
+Esta simulación es referencial y está sujeta a aprobación y condiciones definitivas de la institución financiera.
+
+Asesor: ${document.getElementById("asesor").value || ""}`;
+
+  const url =
+    "https://wa.me/593991930112?text="+
+    encodeURIComponent(mensaje);
+
+  window.open(url,"_blank");
+
+}
+
+function limpiar(){
+
+  if(!confirm("¿Deseas iniciar una nueva cotización?")) return;
+
+  document.querySelectorAll("input").forEach(input=>{
+
+    if(input.id==="precio"){
+      input.value=0;
+    }else if(input.id==="anio"){
+      input.value=2026;
+    }else if(input.id==="entradaPersonalizada"){
+      input.value=25;
+    }else if(input.id==="tasa"){
+      input.value=14.50;
+    }else if(input.id==="desgravamen"){
+      input.value=0.05;
+    }else{
+      input.value="";
+    }
+
+  });
+
+  document.getElementById("valorRastreo").value=0;
+  document.getElementById("valorCarroceria").value=0;
+  document.getElementById("valorAccesorios").value=0;
+  document.getElementById("otrosGastos").value=0;
+  document.getElementById("fondo").value=0;
+  document.getElementById("gastosAdmin").value=0;
+  document.getElementById("ahorroMensual").value=0;
+
+  calcular();
+
+}
+
+document.querySelectorAll("input,select").forEach(element=>{
+
+  element.addEventListener("input",calcular);
+  element.addEventListener("change",calcular);
+
+});
+
+cargarInstitucion();
+actualizarRastreo();
+calcular();
+
+</script>
+
 </body>
 </html>
