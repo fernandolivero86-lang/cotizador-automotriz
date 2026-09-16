@@ -1,301 +1,848 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>AutoClick | Cotizador Automotriz</title>
 
 <style>
 :root{
-  --primary:#111827;
-  --primary2:#2563eb;
-  --success:#16a34a;
-  --whatsapp:#25D366;
-  --bg:#f3f4f6;
-  --card:#ffffff;
-  --text:#111827;
-  --muted:#6b7280;
-  --border:#d1d5db;
+  --navy:#142235;
+  --navy2:#1d3047;
+  --blue:#2f5f8f;
+  --blue2:#3e78ad;
+  --silver:#e8edf2;
+  --silver2:#f5f7f9;
+  --white:#ffffff;
+  --text:#243140;
+  --muted:#6b7785;
+  --border:#dce2e8;
+  --success:#26734d;
+  --warning:#9b6b1c;
+  --danger:#9d3d3d;
+  --shadow:0 10px 30px rgba(20,34,53,.08);
   --radius:16px;
 }
 
 *{
   box-sizing:border-box;
-  margin:0;
-  padding:0;
 }
 
 body{
+  margin:0;
   font-family:Arial,Helvetica,sans-serif;
-  background:var(--bg);
+  background:#f4f6f8;
   color:var(--text);
-  padding:12px;
 }
 
-.container{
+button,
+input,
+select{
+  font-family:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.header{
+  background:linear-gradient(135deg,var(--navy),var(--navy2));
+  color:white;
+  padding:22px 18px 28px;
+}
+
+.header-inner{
   max-width:1100px;
   margin:auto;
 }
 
-header{
-  background:linear-gradient(135deg,#111827,#1f2937);
-  color:white;
-  padding:22px;
-  border-radius:var(--radius);
-  margin-bottom:15px;
+.brand{
+  display:flex;
+  align-items:center;
+  gap:13px;
 }
 
 .logo{
-  font-size:30px;
+  width:46px;
+  height:46px;
+  border-radius:12px;
+  background:white;
+  color:var(--navy);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
   font-weight:800;
   letter-spacing:-1px;
 }
 
-.subtitle{
-  margin-top:5px;
-  color:#d1d5db;
+.brand h1{
+  margin:0;
+  font-size:24px;
+  letter-spacing:.2px;
+}
+
+.brand p{
+  margin:3px 0 0;
+  color:#cbd5df;
+  font-size:13px;
+}
+
+.container{
+  max-width:1100px;
+  margin:-12px auto 40px;
+  padding:0 14px;
+}
+
+.progress-wrap{
+  background:white;
+  border-radius:18px;
+  padding:18px;
+  box-shadow:var(--shadow);
+  margin-bottom:18px;
+}
+
+.progress-line{
+  height:5px;
+  background:#e7ebef;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.progress-fill{
+  height:100%;
+  width:10%;
+  background:linear-gradient(90deg,var(--blue),var(--blue2));
+  transition:.3s;
+}
+
+.progress-labels{
+  display:flex;
+  justify-content:space-between;
+  margin-top:11px;
+  gap:4px;
+}
+
+.progress-label{
+  font-size:10px;
+  color:#8a949f;
+  text-align:center;
+  flex:1;
+}
+
+.progress-label.active{
+  color:var(--navy);
+  font-weight:700;
 }
 
 .card{
-  background:var(--card);
+  background:white;
+  border:1px solid var(--border);
   border-radius:var(--radius);
-  padding:18px;
-  margin-bottom:15px;
-  box-shadow:0 3px 12px rgba(0,0,0,.06);
+  box-shadow:var(--shadow);
+  padding:24px;
+  margin-bottom:18px;
 }
 
-h2{
-  font-size:19px;
-  margin-bottom:15px;
+.step{
+  display:none;
 }
 
-h3{
-  font-size:16px;
-  margin-bottom:10px;
+.step.active{
+  display:block;
+}
+
+.step-head{
+  margin-bottom:22px;
+}
+
+.step-number{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  background:#edf3f8;
+  color:var(--blue);
+  border-radius:8px;
+  padding:6px 10px;
+  font-size:11px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  margin-bottom:9px;
+}
+
+.step-head h2{
+  margin:0;
+  color:var(--navy);
+  font-size:24px;
+}
+
+.step-head p{
+  margin:7px 0 0;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.5;
+}
+
+.welcome{
+  text-align:center;
+  padding:38px 20px;
+}
+
+.welcome-icon{
+  width:74px;
+  height:74px;
+  margin:0 auto 20px;
+  border-radius:20px;
+  background:#edf3f8;
+  color:var(--blue);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  font-weight:800;
+}
+
+.welcome h2{
+  color:var(--navy);
+  margin:0;
+  font-size:29px;
+}
+
+.welcome p{
+  max-width:650px;
+  margin:12px auto 25px;
+  color:var(--muted);
+  line-height:1.6;
+}
+
+.info-strip{
+  background:var(--silver2);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:14px;
+  text-align:left;
+  max-width:720px;
+  margin:0 auto 24px;
+  font-size:13px;
+  color:#596572;
 }
 
 .grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:12px;
+  gap:16px;
+}
+
+.grid-3{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
 }
 
 .field{
   display:flex;
   flex-direction:column;
-  gap:6px;
+  gap:7px;
 }
 
 .field.full{
   grid-column:1/-1;
 }
 
-label{
-  font-size:13px;
+.field label{
+  font-size:12px;
+  color:#53606d;
   font-weight:700;
 }
 
-input,select{
+.field input,
+.field select{
   width:100%;
-  padding:12px;
+  padding:13px 14px;
   border:1px solid var(--border);
   border-radius:10px;
-  font-size:15px;
-  background:white;
-}
-
-input:focus,select:focus{
   outline:none;
-  border-color:var(--primary2);
-  box-shadow:0 0 0 2px rgba(37,99,235,.12);
+  background:white;
+  color:var(--text);
+  font-size:14px;
+  transition:.2s;
 }
 
-.buttons{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
+.field input:focus,
+.field select:focus{
+  border-color:var(--blue2);
+  box-shadow:0 0 0 3px rgba(62,120,173,.10);
 }
 
-button{
-  border:0;
+.prefix{
+  position:relative;
+}
+
+.prefix span{
+  position:absolute;
+  left:14px;
+  top:50%;
+  transform:translateY(-50%);
+  color:#7b8793;
+  font-weight:700;
+}
+
+.prefix input{
+  padding-left:32px;
+}
+
+.section-title{
+  margin:24px 0 14px;
+  font-size:14px;
+  color:var(--navy);
+  font-weight:800;
+  border-bottom:1px solid var(--border);
+  padding-bottom:9px;
+}
+
+.option-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:9px;
+}
+
+.option{
+  position:relative;
+}
+
+.option input{
+  position:absolute;
+  opacity:0;
+}
+
+.option label{
+  display:block;
+  text-align:center;
+  padding:12px 5px;
+  border:1px solid var(--border);
   border-radius:10px;
-  padding:12px 15px;
+  background:#fff;
+  color:#53606d;
+  font-size:13px;
   font-weight:700;
   cursor:pointer;
+  transition:.2s;
 }
 
-.entry-btn{
-  background:#e5e7eb;
-  color:#111827;
+.option input:checked + label{
+  background:#edf3f8;
+  color:var(--navy);
+  border-color:var(--blue);
 }
 
-.entry-btn.active{
-  background:var(--primary2);
+.check-box{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:#f7f9fb;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:14px;
+  margin-top:16px;
+}
+
+.check-box input{
+  width:18px;
+  height:18px;
+  accent-color:var(--blue);
+}
+
+.check-box label{
+  font-size:13px;
+  color:#4d5965;
+}
+
+.navigation{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:24px;
+}
+
+.btn{
+  border:0;
+  border-radius:10px;
+  padding:13px 20px;
+  font-size:13px;
+  font-weight:800;
+  transition:.2s;
+}
+
+.btn-primary{
+  background:var(--navy);
   color:white;
 }
 
-.primary{
-  background:var(--primary2);
-  color:white;
+.btn-primary:hover{
+  background:#213b58;
 }
 
-.success{
+.btn-secondary{
+  background:#eef1f4;
+  color:#344250;
+}
+
+.btn-secondary:hover{
+  background:#e1e6eb;
+}
+
+.btn-success{
   background:var(--success);
   color:white;
 }
 
-.whatsapp{
-  background:var(--whatsapp);
-  color:#064e3b;
-}
-
-.dark{
-  background:#111827;
+.btn-whatsapp{
+  background:#26734d;
   color:white;
 }
 
-.result{
-  background:linear-gradient(135deg,#111827,#1f2937);
+.btn-wide{
+  min-width:170px;
+}
+
+.compare{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
+}
+
+.finance-card{
+  border:1px solid var(--border);
+  border-radius:16px;
+  overflow:hidden;
+  background:white;
+}
+
+.finance-head{
+  padding:18px;
+  background:linear-gradient(135deg,#f5f7f9,#e9eef3);
+  border-bottom:1px solid var(--border);
+}
+
+.finance-head.bank{
+  border-top:4px solid #355d84;
+}
+
+.finance-head.coop{
+  border-top:4px solid #68798a;
+}
+
+.finance-name{
+  color:var(--navy);
+  font-size:19px;
+  font-weight:800;
+}
+
+.finance-rate{
+  margin-top:5px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.finance-body{
+  padding:18px;
+}
+
+.main-quote{
+  background:var(--navy);
   color:white;
-  border-radius:var(--radius);
-  padding:22px;
+  border-radius:13px;
+  padding:17px;
   margin-bottom:15px;
 }
 
-.result-title{
-  color:#d1d5db;
-  font-size:14px;
+.main-quote small{
+  display:block;
+  color:#c8d3de;
+  font-size:11px;
+  margin-bottom:4px;
 }
 
-.main-number{
-  font-size:38px;
-  font-weight:800;
-  margin:7px 0 15px;
+.main-quote strong{
+  font-size:28px;
+}
+
+.quote-list{
+  display:flex;
+  flex-direction:column;
+  gap:9px;
+}
+
+.quote-row{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  font-size:12px;
+  border-bottom:1px solid #edf0f3;
+  padding-bottom:8px;
+}
+
+.quote-row:last-child{
+  border-bottom:0;
+}
+
+.quote-row span:first-child{
+  color:var(--muted);
+}
+
+.quote-row strong{
+  color:var(--navy);
+}
+
+.total-row{
+  background:#f3f6f8;
+  border-radius:10px;
+  padding:12px;
+  margin-top:12px;
+}
+
+.total-row strong{
+  font-size:16px;
+}
+
+.conditions{
+  margin-top:15px;
+  background:#fafbfc;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:12px;
+  font-size:11px;
+  color:#687582;
+  line-height:1.55;
 }
 
 .result-grid{
   display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+
+.result-card{
+  background:linear-gradient(135deg,var(--navy),var(--navy2));
+  color:white;
+  border-radius:17px;
+  padding:24px;
+}
+
+.result-card.coop{
+  background:linear-gradient(135deg,#394c5f,#566879);
+}
+
+.result-card small{
+  color:#c8d3dd;
+  font-size:11px;
+}
+
+.result-card h3{
+  margin:5px 0 16px;
+  font-size:22px;
+}
+
+.result-amount{
+  font-size:34px;
+  font-weight:800;
+  margin:5px 0 17px;
+}
+
+.result-detail{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:9px;
+}
+
+.result-detail div{
+  background:rgba(255,255,255,.08);
+  border-radius:9px;
+  padding:10px;
+}
+
+.result-detail span{
+  display:block;
+  color:#cbd5df;
+  font-size:10px;
+}
+
+.result-detail strong{
+  display:block;
+  margin-top:3px;
+  font-size:13px;
+}
+
+.selected-box{
+  background:#f4f7f9;
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:20px;
+  margin-top:20px;
+}
+
+.selected-box h3{
+  margin:0 0 16px;
+  color:var(--navy);
+}
+
+.selected-main{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.selected-main .label{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.selected-main .value{
+  color:var(--navy);
+  font-size:30px;
+  font-weight:800;
+}
+
+.detail-grid{
+  display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:10px;
 }
 
-.result-item{
-  background:rgba(255,255,255,.08);
-  padding:12px;
-  border-radius:10px;
-}
-
-.result-item small{
-  color:#d1d5db;
-  display:block;
-  margin-bottom:4px;
-}
-
-.result-item strong{
-  font-size:17px;
-}
-
-.summary{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:8px;
-}
-
-.row{
+.detail-row{
   display:flex;
   justify-content:space-between;
   gap:10px;
-  padding:9px 0;
-  border-bottom:1px solid #eee;
+  padding:11px 12px;
+  border-bottom:1px solid #edf0f3;
+  font-size:12px;
 }
 
-.row span:first-child{
+.detail-row span{
   color:var(--muted);
 }
 
-.total{
-  font-size:18px;
-  font-weight:800;
+.detail-row strong{
+  color:var(--navy);
+  text-align:right;
 }
 
 .table-wrap{
   overflow-x:auto;
+  border:1px solid var(--border);
+  border-radius:12px;
 }
 
 table{
   width:100%;
   border-collapse:collapse;
-  min-width:600px;
-}
-
-th,td{
-  padding:9px;
-  border-bottom:1px solid #e5e7eb;
-  text-align:right;
-  font-size:13px;
+  min-width:650px;
+  font-size:11px;
 }
 
 th{
-  background:#f3f4f6;
+  background:var(--navy);
+  color:white;
+  padding:11px 8px;
+  text-align:right;
 }
 
-th:first-child,td:first-child{
+th:first-child{
   text-align:center;
 }
 
-.note{
-  background:#eff6ff;
-  border-left:4px solid var(--primary2);
-  padding:12px;
-  border-radius:8px;
-  margin-top:10px;
-  font-size:13px;
+td{
+  padding:9px 8px;
+  border-bottom:1px solid #edf0f3;
+  text-align:right;
 }
 
-.actions{
+td:first-child{
+  text-align:center;
+}
+
+tr:last-child td{
+  border-bottom:0;
+}
+
+.final-card{
+  text-align:center;
+  padding:35px 20px;
+}
+
+.final-card h2{
+  color:var(--navy);
+  font-size:27px;
+  margin:0;
+}
+
+.final-card p{
+  color:var(--muted);
+  font-size:14px;
+}
+
+.final-highlight{
+  max-width:520px;
+  margin:25px auto;
+  background:var(--navy);
+  color:white;
+  border-radius:17px;
+  padding:22px;
+}
+
+.final-highlight small{
+  color:#cbd5df;
+}
+
+.final-highlight strong{
+  display:block;
+  font-size:33px;
+  margin-top:5px;
+}
+
+.final-data{
   display:flex;
-  flex-wrap:wrap;
+  justify-content:center;
   gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:25px;
+}
+
+.final-pill{
+  background:#f2f5f7;
+  border:1px solid var(--border);
+  padding:10px 15px;
+  border-radius:10px;
+  font-size:12px;
+  color:#52606d;
+}
+
+.footer{
+  text-align:center;
+  color:#89939e;
+  font-size:11px;
+  padding:5px 10px 25px;
+}
+
+.muted-note{
+  font-size:11px;
+  color:#7c8792;
+  margin-top:8px;
+  line-height:1.5;
 }
 
 .hidden{
-  display:none;
+  display:none!important;
 }
 
-@media(max-width:650px){
-  .grid{
+@media(max-width:760px){
+
+  .header{
+    padding:18px 14px 24px;
+  }
+
+  .brand h1{
+    font-size:21px;
+  }
+
+  .container{
+    padding:0 9px;
+  }
+
+  .card{
+    padding:18px;
+    border-radius:14px;
+  }
+
+  .progress-wrap{
+    padding:14px 10px;
+  }
+
+  .progress-label{
+    font-size:8px;
+  }
+
+  .grid,
+  .grid-3,
+  .compare,
+  .result-grid,
+  .detail-grid{
     grid-template-columns:1fr;
   }
 
-  .field.full{
-    grid-column:auto;
+  .option-grid{
+    grid-template-columns:repeat(3,1fr);
   }
 
-  .summary,
-  .result-grid{
-    grid-template-columns:1fr;
+  .step-head h2{
+    font-size:21px;
   }
 
-  .main-number{
-    font-size:32px;
+  .welcome h2{
+    font-size:25px;
+  }
+
+  .selected-main{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .result-amount{
+    font-size:30px;
+  }
+
+  .navigation{
+    flex-direction:column-reverse;
+  }
+
+  .navigation .btn{
+    width:100%;
   }
 }
 
 @media print{
+
   body{
     background:white;
   }
 
-  button,
-  .actions,
-  .no-print{
+  .header{
+    background:white;
+    color:black;
+    border-bottom:2px solid var(--navy);
+  }
+
+  .logo{
+    border:1px solid #aaa;
+  }
+
+  .progress-wrap,
+  .navigation,
+  .footer,
+  .btn{
     display:none!important;
   }
 
-  .card,.result{
+  .container{
+    margin:0;
+    max-width:none;
+  }
+
+  .step{
+    display:none!important;
+  }
+
+  #s8.active,
+  #s9.active,
+  #s10.active{
+    display:block!important;
+  }
+
+  .card{
     box-shadow:none;
-    break-inside:avoid;
   }
 }
 </style>
@@ -303,436 +850,826 @@ th:first-child,td:first-child{
 
 <body>
 
-<div class="container">
-
-<header>
-  <div class="logo">AutoClick</div>
-  <div class="subtitle">Soluciones digitales para vehículos comerciales</div>
-  <div class="subtitle">Cotizador profesional de financiamiento automotriz</div>
+<header class="header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="logo">AC</div>
+      <div>
+        <h1>AutoClick</h1>
+        <p>Cotizador Automotriz · Simulación profesional de financiamiento</p>
+      </div>
+    </div>
+  </div>
 </header>
 
-<!-- CLIENTE -->
-<section class="card">
-<h2>1. Datos del cliente</h2>
-
-<div class="grid">
-
-<div class="field">
-<label>Nombre del cliente</label>
-<input id="cliente" placeholder="Ej. Juan Pérez">
-</div>
-
-<div class="field">
-<label>Cédula / RUC</label>
-<input id="identificacion" placeholder="Identificación">
-</div>
-
-<div class="field">
-<label>Teléfono</label>
-<input id="telefono" placeholder="0999999999">
-</div>
-
-<div class="field">
-<label>Correo electrónico</label>
-<input id="correo" type="email" placeholder="cliente@email.com">
-</div>
-
-<div class="field full">
-<label>Asesor comercial</label>
-<input id="asesor" placeholder="Nombre del asesor">
-</div>
-
-</div>
-</section>
-
-<!-- VEHICULO -->
-<section class="card">
-<h2>2. Vehículo</h2>
-
-<div class="grid">
-
-<div class="field">
-<label>Marca</label>
-<input id="marca" placeholder="Ej. FAW">
-</div>
-
-<div class="field">
-<label>Modelo</label>
-<input id="modelo" placeholder="Ej. JH6">
-</div>
-
-<div class="field">
-<label>Año</label>
-<input id="anio" type="number" value="2026">
-</div>
-
-<div class="field">
-<label>Precio del vehículo</label>
-<input id="precio" type="number" value="23990" min="0" step="0.01">
-</div>
-
-<div class="field">
-<label>Descuento</label>
-<input id="descuento" type="number" value="0" min="0" step="0.01">
-</div>
-
-<div class="field">
-<label>Otros gastos de operación</label>
-<input id="otrosGastos" type="number" value="0" min="0" step="0.01">
-</div>
-
-</div>
-</section>
-
-<!-- CARROCERIA -->
-<section class="card">
-<h2>3. Carrocería / Furgón / Equipamiento</h2>
-
-<div class="grid">
-
-<div class="field">
-<label>Tipo de carrocería</label>
-<select id="carroceria">
-<option value="">Sin carrocería</option>
-<option>Furgón</option>
-<option>Furgón refrigerado</option>
-<option>Plataforma</option>
-<option>Cajón</option>
-<option>Volqueta</option>
-<option>Tanquero</option>
-<option>Mixer</option>
-<option>Grúa</option>
-<option>Otro</option>
-</select>
-</div>
-
-<div class="field">
-<label>Valor carrocería</label>
-<input id="valorCarroceria" type="number" value="0" min="0" step="0.01">
-</div>
-
-<div class="field">
-<label>Accesorios / implementos</label>
-<input id="accesorios" placeholder="Ej. Parrilla, llantas, etc.">
-</div>
-
-<div class="field">
-<label>Valor accesorios</label>
-<input id="valorAccesorios" type="number" value="0" min="0" step="0.01">
-</div>
-
-</div>
-
-<div class="note">
-La carrocería y los accesorios son opcionales y se suman al valor de la operación.
-</div>
-</section>
-
-<!-- RASTREO -->
-<section class="card">
-<h2>4. Rastreo satelital</h2>
-
-<div class="grid">
-
-<div class="field">
-<label>Contratar rastreo</label>
-<select id="rastreo" onchange="actualizarRastreo()">
-<option value="0">No</option>
-<option value="1">Sí</option>
-</select>
-</div>
-
-<div class="field">
-<label>Duración</label>
-<select id="aniosRastreo" onchange="actualizarRastreo()">
-<option value="1">1 año</option>
-<option value="2">2 años</option>
-<option value="3">3 años</option>
-<option value="4">4 años</option>
-<option value="5">5 años</option>
-</select>
-</div>
-
-<div class="field">
-<label>Valor rastreo</label>
-<input id="valorRastreo" type="number" value="0" readonly>
-</div>
-
-</div>
-
-<div class="note">
-Valores configurados actualmente: 1 año = $1.081 y 5 años = $2.300. Los valores de 2, 3 y 4 años quedan pendientes de configuración.
-</div>
-</section>
-
-<!-- FINANCIAMIENTO -->
-<section class="card">
-<h2>5. Financiamiento</h2>
-
-<h3>Entrada</h3>
-
-<div class="buttons">
-<button class="entry-btn" onclick="seleccionarEntrada(0,this)">0%</button>
-<button class="entry-btn" onclick="seleccionarEntrada(10,this)">10%</button>
-<button class="entry-btn" onclick="seleccionarEntrada(20,this)">20%</button>
-<button class="entry-btn" onclick="seleccionarEntrada(25,this)">25%</button>
-<button class="entry-btn" onclick="seleccionarEntrada(30,this)">30%</button>
-</div>
-
-<div class="grid" style="margin-top:12px">
-
-<div class="field">
-<label>Entrada personalizada (%)</label>
-<input id="entradaPersonalizada" type="number" min="0" max="100" value="25" oninput="calcular()">
-</div>
-
-<div class="field">
-<label>Institución financiera</label>
-<select id="institucion" onchange="cargarInstitucion()">
-<option value="Banco 1">Banco 1</option>
-<option value="Banco 2">Banco 2</option>
-<option value="Cooperativa 1">Cooperativa 1</option>
-<option value="Cooperativa 2">Cooperativa 2</option>
-<option value="Financiera 1">Financiera 1</option>
-<option value="Personalizada">Personalizada</option>
-</select>
-</div>
-
-<div class="field">
-<label>Tipo de institución</label>
-<input id="tipoInstitucion" readonly>
-</div>
-
-<div class="field">
-<label>Producto financiero</label>
-<select id="producto">
-<option>Crédito automotriz</option>
-<option>Crédito de consumo</option>
-<option>Crédito productivo</option>
-<option>Productivo PYMES</option>
-<option>Vehículo comercial</option>
-<option>Otro</option>
-</select>
-</div>
-
-<div class="field">
-<label>Plazo</label>
-<select id="plazo" onchange="calcular()">
-<option value="24">24 meses</option>
-<option value="36" selected>36 meses</option>
-<option value="48">48 meses</option>
-<option value="60">60 meses</option>
-<option value="72">72 meses</option>
-</select>
-</div>
-
-<div class="field">
-<label>Tasa nominal anual (%)</label>
-<input id="tasa" type="number" value="14.50" min="0" step="0.01" oninput="calcular()">
-</div>
-
-<div class="field">
-<label>Encaje (%)</label>
-<input id="encaje" type="number" value="0" min="0" step="0.01" oninput="calcular()">
-</div>
-
-<div class="field">
-<label>Fondo / aporte</label>
-<input id="fondo" type="number" value="0" min="0" step="0.01" oninput="calcular()">
-</div>
-
-<div class="field">
-<label>Gastos administrativos</label>
-<input id="gastosAdmin" type="number" value="0" min="0" step="0.01" oninput="calcular()">
-</div>
-
-<div class="field">
-<label>Desgravamen mensual (%)</label>
-<input id="desgravamen" type="number" value="0.05" min="0" step="0.01" oninput="calcular()">
-</div>
-
-<div class="field">
-<label>Ahorro mensual</label>
-<input id="ahorroMensual" type="number" value="0" min="0" step="0.01" oninput="calcular()">
-</div>
-
-</div>
-</section>
-
-<!-- RESULTADO -->
-<section class="result">
-
-<div class="result-title">CUOTA MENSUAL ESTIMADA</div>
-<div class="main-number" id="cuota">$0,00</div>
-
-<div class="result-grid">
-
-<div class="result-item">
-<small>Entrada</small>
-<strong id="resEntrada">$0,00</strong>
-</div>
-
-<div class="result-item">
-<small>Monto financiado</small>
-<strong id="resFinanciado">$0,00</strong>
-</div>
-
-<div class="result-item">
-<small>Plazo</small>
-<strong id="resPlazo">36 meses</strong>
-</div>
-
-<div class="result-item">
-<small>Tasa nominal</small>
-<strong id="resTasa">0%</strong>
-</div>
-
-</div>
-</section>
-
-<!-- DETALLE -->
-<section class="card">
-<h2>6. Resumen financiero</h2>
-
-<div class="summary">
-
-<div class="row">
-<span>Precio vehículo</span>
-<strong id="rVehiculo">$0,00</strong>
-</div>
-
-<div class="row">
-<span>Carrocería</span>
-<strong id="rCarroceria">$0,00</strong>
-</div>
-
-<div class="row">
-<span>Accesorios</span>
-<strong id="rAccesorios">$0,00</strong>
-</div>
-
-<div class="row">
-<span>Rastreo</span>
-<strong id="rRastreo">$0,00</strong>
-</div>
-
-<div class="row">
-<span>Otros gastos</span>
-<strong id="rOtros">$0,00</strong>
-</div>
-
-<div class="row total">
-<span>Total operación</span>
-<strong id="rOperacion">$0,00</strong>
-</div>
-
-<div class="row">
-<span>Entrada</span>
-<strong id="rEntrada">$0,00</strong>
-</div>
-
-<div class="row">
-<span>Saldo base</span>
-<strong id="rSaldo">$0,00</strong>
-</div>
-
-<div class="row">
-<span>Encaje financiado</span>
-<strong id="rEncaje">$0,00</strong>
-</div>
-
-<div class="row">
-<span>Capital financiado</span>
-<strong id="rCapital">$0,00</strong>
-</div>
-
-<div class="row">
-<span>Interés estimado</span>
-<strong id="rInteres">$0,00</strong>
-</div>
-
-<div class="row">
-<span>Desgravamen total</span>
-<strong id="rDesgravamen">$0,00</strong>
-</div>
-
-<div class="row">
-<span>Fondo / aporte</span>
-<strong id="rFondo">$0,00</strong>
-</div>
-
-<div class="row">
-<span>Gastos administrativos</span>
-<strong id="rAdmin">$0,00</strong>
-</div>
-
-<div class="row">
-<span>Ahorro total</span>
-<strong id="rAhorro">$0,00</strong>
-</div>
-
-<div class="row total">
-<span>Total general</span>
-<strong id="rTotal">$0,00</strong>
-</div>
-
-<div class="row">
-<span>Tasa efectiva anual equivalente</span>
-<strong id="rEfectiva">0%</strong>
-</div>
-
-</div>
-</section>
-
-<!-- ACCIONES -->
-<section class="card no-print">
-<h2>7. Acciones comerciales</h2>
-
-<div class="actions">
-<button class="primary" onclick="window.print()">Imprimir / Guardar PDF</button>
-<button class="whatsapp" onclick="enviarWhatsApp()">Enviar por WhatsApp</button>
-<button class="dark" onclick="limpiar()">Nueva cotización</button>
-</div>
-</section>
-
-<!-- AMORTIZACION -->
-<section class="card">
-<h2>8. Tabla de amortización</h2>
-
-<div class="table-wrap">
-
-<table>
-<thead>
-<tr>
-<th>#</th>
-<th>Saldo inicial</th>
-<th>Cuota</th>
-<th>Interés</th>
-<th>Capital</th>
-<th>Saldo final</th>
-</tr>
-</thead>
-
-<tbody id="tablaAmortizacion"></tbody>
-
-</table>
-
-</div>
-</section>
-
-<section class="card">
-<h2>AutoClick</h2>
-
-<p style="color:#6b7280;font-size:13px">
-Herramienta de simulación comercial. Los valores mostrados son estimativos y deben ser validados con las condiciones definitivas de la institución financiera.
-</p>
-</section>
-
-</div>
+<main class="container">
+
+  <div class="progress-wrap">
+    <div class="progress-line">
+      <div class="progress-fill" id="progress"></div>
+    </div>
+
+    <div class="progress-labels">
+      <div class="progress-label active">Inicio</div>
+      <div class="progress-label">Cliente</div>
+      <div class="progress-label">Vehículo</div>
+      <div class="progress-label">Equipamiento</div>
+      <div class="progress-label">Financiamiento</div>
+      <div class="progress-label">Comparar</div>
+      <div class="progress-label">Resultado</div>
+      <div class="progress-label">Detalle</div>
+      <div class="progress-label">Amortización</div>
+      <div class="progress-label">Finalizar</div>
+    </div>
+  </div>
+
+
+  <!-- PASO 1 -->
+  <section class="step active" id="s1">
+    <div class="card welcome">
+
+      <div class="welcome-icon">AC</div>
+
+      <h2>Cotizador Automotriz</h2>
+
+      <p>
+        Simula una operación de financiamiento vehicular de forma clara,
+        ordenada y profesional. Ingresa los datos de la operación y compara
+        las condiciones entre Banco y Cooperativa.
+      </p>
+
+      <div class="info-strip">
+        <strong>AutoClick</strong><br>
+        Herramienta de apoyo comercial para estructurar cotizaciones,
+        comparar alternativas de financiamiento y presentar al cliente
+        una propuesta clara.
+      </div>
+
+      <button class="btn btn-primary btn-wide" onclick="go(2)">
+        Iniciar cotización
+      </button>
+
+    </div>
+  </section>
+
+
+  <!-- PASO 2 -->
+  <section class="step" id="s2">
+    <div class="card">
+
+      <div class="step-head">
+        <div class="step-number">Paso 2 · Cliente</div>
+        <h2>Información del cliente</h2>
+        <p>Registra los datos básicos para identificar la cotización.</p>
+      </div>
+
+      <div class="grid">
+
+        <div class="field">
+          <label>Nombre del cliente</label>
+          <input id="cliente" placeholder="Ej. Carlos Ramírez">
+        </div>
+
+        <div class="field">
+          <label>Cédula / RUC</label>
+          <input id="cedula" placeholder="Identificación">
+        </div>
+
+        <div class="field">
+          <label>Teléfono / WhatsApp</label>
+          <input id="telefono" placeholder="09XXXXXXXX">
+        </div>
+
+        <div class="field">
+          <label>Correo electrónico</label>
+          <input id="correo" type="email" placeholder="cliente@email.com">
+        </div>
+
+        <div class="field full">
+          <label>Asesor comercial</label>
+          <input id="asesor" placeholder="Nombre del asesor">
+        </div>
+
+      </div>
+
+      <div class="navigation">
+        <button class="btn btn-secondary" onclick="go(1)">Atrás</button>
+        <button class="btn btn-primary" onclick="go(3)">Continuar</button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- PASO 3 -->
+  <section class="step" id="s3">
+    <div class="card">
+
+      <div class="step-head">
+        <div class="step-number">Paso 3 · Vehículo</div>
+        <h2>Datos del vehículo</h2>
+        <p>Ingresa el valor comercial y los descuentos aplicables.</p>
+      </div>
+
+      <div class="grid">
+
+        <div class="field">
+          <label>Marca</label>
+          <input id="marca" placeholder="Ej. FAW, HOWO, JAC, Chevrolet">
+        </div>
+
+        <div class="field">
+          <label>Modelo</label>
+          <input id="modelo" placeholder="Modelo / versión">
+        </div>
+
+        <div class="field">
+          <label>Año</label>
+          <input id="anio" type="number" placeholder="2026">
+        </div>
+
+        <div class="field">
+          <label>Precio del vehículo</label>
+          <div class="prefix">
+            <span>$</span>
+            <input id="precio" type="number" min="0" step="0.01" placeholder="0.00">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Descuento comercial</label>
+          <div class="prefix">
+            <span>$</span>
+            <input id="descuento" type="number" min="0" step="0.01" value="0">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Otros gastos de operación</label>
+          <div class="prefix">
+            <span>$</span>
+            <input id="otros" type="number" min="0" step="0.01" value="0">
+          </div>
+        </div>
+
+      </div>
+
+      <div class="navigation">
+        <button class="btn btn-secondary" onclick="go(2)">Atrás</button>
+        <button class="btn btn-primary" onclick="go(4)">Continuar</button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- PASO 4 -->
+  <section class="step" id="s4">
+    <div class="card">
+
+      <div class="step-head">
+        <div class="step-number">Paso 4 · Equipamiento</div>
+        <h2>Carrocería, accesorios y rastreo</h2>
+        <p>Agrega los componentes adicionales de la operación.</p>
+      </div>
+
+      <div class="grid">
+
+        <div class="field">
+          <label>Carrocería / furgón</label>
+          <select id="carroceria">
+            <option value="">Sin carrocería</option>
+            <option>Furgón</option>
+            <option>Plataforma</option>
+            <option>Tanque</option>
+            <option>Volqueta</option>
+            <option>Refrigerado</option>
+            <option>Otro</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Valor carrocería</label>
+          <div class="prefix">
+            <span>$</span>
+            <input id="vcarro" type="number" min="0" step="0.01" value="0">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Accesorios / equipamiento</label>
+          <input id="acc" placeholder="Descripción">
+        </div>
+
+        <div class="field">
+          <label>Valor accesorios</label>
+          <div class="prefix">
+            <span>$</span>
+            <input id="vacc" type="number" min="0" step="0.01" value="0">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Rastreo satelital</label>
+          <select id="rastreo" onchange="rastreoCambio()">
+            <option value="">No incluido</option>
+            <option value="1">1 año · $1.081</option>
+            <option value="2">2 años · Valor pendiente</option>
+            <option value="3">3 años · Valor pendiente</option>
+            <option value="4">4 años · Valor pendiente</option>
+            <option value="5">5 años · $2.300</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Años de rastreo</label>
+          <input id="rastreoAnios" readonly placeholder="—">
+        </div>
+
+        <div class="field full">
+          <label>Valor rastreo</label>
+          <div class="prefix">
+            <span>$</span>
+            <input id="vrastreo" type="number" min="0" step="0.01" value="0">
+          </div>
+          <div class="muted-note">
+            Los valores de 2, 3 y 4 años quedan pendientes de parametrización.
+          </div>
+        </div>
+
+      </div>
+
+      <div class="navigation">
+        <button class="btn btn-secondary" onclick="go(3)">Atrás</button>
+        <button class="btn btn-primary" onclick="go(5)">Continuar</button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- PASO 5 -->
+  <section class="step" id="s5">
+    <div class="card">
+
+      <div class="step-head">
+        <div class="step-number">Paso 5 · Financiamiento</div>
+        <h2>Entrada y plazo</h2>
+        <p>Define la estructura financiera de la operación.</p>
+      </div>
+
+      <div class="section-title">Porcentaje de entrada</div>
+
+      <div class="option-grid">
+
+        <div class="option">
+          <input type="radio" name="entrada" id="e0" value="0" checked onchange="entradaSeleccionada(0)">
+          <label for="e0">0%</label>
+        </div>
+
+        <div class="option">
+          <input type="radio" name="entrada" id="e10" value="10" onchange="entradaSeleccionada(10)">
+          <label for="e10">10%</label>
+        </div>
+
+        <div class="option">
+          <input type="radio" name="entrada" id="e20" value="20" onchange="entradaSeleccionada(20)">
+          <label for="e20">20%</label>
+        </div>
+
+        <div class="option">
+          <input type="radio" name="entrada" id="e25" value="25" onchange="entradaSeleccionada(25)">
+          <label for="e25">25%</label>
+        </div>
+
+        <div class="option">
+          <input type="radio" name="entrada" id="e30" value="30" onchange="entradaSeleccionada(30)">
+          <label for="e30">30%</label>
+        </div>
+
+      </div>
+
+      <div class="grid" style="margin-top:16px">
+
+        <div class="field">
+          <label>Entrada personalizada (%)</label>
+          <input id="entradaPct" type="number" min="0" max="100" step="0.01"
+                 placeholder="Ej. 15">
+        </div>
+
+        <div class="field">
+          <label>Plazo</label>
+          <select id="plazo">
+            <option value="36">36 meses</option>
+            <option value="48">48 meses</option>
+            <option value="60" selected>60 meses</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="check-box">
+        <input type="checkbox" id="ahorroActivo">
+        <label for="ahorroActivo">
+          Activar <strong>ahorro programado opcional</strong>.
+          Se calcula a razón de <strong>$10 por cada $10.000 financiados</strong>.
+        </label>
+      </div>
+
+      <div class="navigation">
+        <button class="btn btn-secondary" onclick="go(4)">Atrás</button>
+        <button class="btn btn-primary" onclick="go(6)">Comparar financiamiento</button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- PASO 6 -->
+  <section class="step" id="s6">
+    <div class="card">
+
+      <div class="step-head">
+        <div class="step-number">Paso 6 · Comparación</div>
+        <h2>Banco vs. Cooperativa</h2>
+        <p>
+          Revisa las dos alternativas con la misma operación comercial.
+        </p>
+      </div>
+
+      <div class="compare">
+
+        <div class="finance-card">
+
+          <div class="finance-head bank">
+            <div class="finance-name">Banco</div>
+            <div class="finance-rate">
+              Tasa nominal anual: <strong>15,50%</strong>
+            </div>
+          </div>
+
+          <div class="finance-body">
+
+            <div class="main-quote">
+              <small>Cuota mensual estimada</small>
+              <strong id="bcuota">$0,00</strong>
+            </div>
+
+            <div class="quote-list">
+
+              <div class="quote-row">
+                <span>Entrada</span>
+                <strong id="bentrada">$0,00</strong>
+              </div>
+
+              <div class="quote-row">
+                <span>Capital financiado</span>
+                <strong id="bcapital">$0,00</strong>
+              </div>
+
+              <div class="quote-row">
+                <span>Intereses estimados</span>
+                <strong id="binteres">$0,00</strong>
+              </div>
+
+              <div class="quote-row">
+                <span>Otros costos</span>
+                <strong id="bcostos">$0,00</strong>
+              </div>
+
+              <div class="quote-row total-row">
+                <span>Total operación</span>
+                <strong id="btotal">$0,00</strong>
+              </div>
+
+            </div>
+
+            <div class="conditions">
+              Tasa nominal anual: 15,50%. Sin encaje.
+            </div>
+
+          </div>
+        </div>
+
+
+        <div class="finance-card">
+
+          <div class="finance-head coop">
+            <div class="finance-name">Cooperativa</div>
+            <div class="finance-rate">
+              Tasa nominal anual: <strong>14,50%</strong>
+            </div>
+          </div>
+
+          <div class="finance-body">
+
+            <div class="main-quote">
+              <small>Cuota mensual estimada</small>
+              <strong id="ccuota">$0,00</strong>
+            </div>
+
+            <div class="quote-list">
+
+              <div class="quote-row">
+                <span>Entrada</span>
+                <strong id="centrada">$0,00</strong>
+              </div>
+
+              <div class="quote-row">
+                <span>Capital financiado</span>
+                <strong id="ccapital">$0,00</strong>
+              </div>
+
+              <div class="quote-row">
+                <span>Intereses estimados</span>
+                <strong id="cinteres">$0,00</strong>
+              </div>
+
+              <div class="quote-row">
+                <span>Otros costos</span>
+                <strong id="ccostos">$0,00</strong>
+              </div>
+
+              <div class="quote-row total-row">
+                <span>Total operación</span>
+                <strong id="ctotal">$0,00</strong>
+              </div>
+
+            </div>
+
+            <div class="conditions">
+              Encaje 10% · Fondo irrepartible 3% · SOLCA 0,50% ·
+              Desgravamen 1% mensual · Gastos administrativos $0.
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="navigation">
+        <button class="btn btn-secondary" onclick="go(5)">Atrás</button>
+        <button class="btn btn-primary" onclick="go(7)">Ver resultado</button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- PASO 7 -->
+  <section class="step" id="s7">
+    <div class="card">
+
+      <div class="step-head">
+        <div class="step-number">Paso 7 · Resultado</div>
+        <h2>Selecciona la alternativa</h2>
+        <p>Elige la institución que utilizarás para continuar la cotización.</p>
+      </div>
+
+      <div class="result-grid">
+
+        <div class="result-card">
+
+          <small>ALTERNATIVA 01</small>
+          <h3>Banco</h3>
+
+          <div class="result-amount" id="bcuota2">$0,00</div>
+
+          <div class="result-detail">
+            <div>
+              <span>Entrada</span>
+              <strong id="bentrada2">$0,00</strong>
+            </div>
+
+            <div>
+              <span>Plazo</span>
+              <strong id="bplazo2">60 meses</strong>
+            </div>
+
+            <div>
+              <span>Capital</span>
+              <strong id="bcapital2">$0,00</strong>
+            </div>
+
+            <div>
+              <span>Tasa</span>
+              <strong>15,50%</strong>
+            </div>
+          </div>
+
+          <button class="btn btn-secondary"
+                  style="width:100%;margin-top:18px"
+                  onclick="seleccionar('Banco')">
+            Usar Banco
+          </button>
+
+        </div>
+
+
+        <div class="result-card coop">
+
+          <small>ALTERNATIVA 02</small>
+          <h3>Cooperativa</h3>
+
+          <div class="result-amount" id="ccuota2">$0,00</div>
+
+          <div class="result-detail">
+            <div>
+              <span>Entrada</span>
+              <strong id="centrada2">$0,00</strong>
+            </div>
+
+            <div>
+              <span>Plazo</span>
+              <strong id="cplazo2">60 meses</strong>
+            </div>
+
+            <div>
+              <span>Capital</span>
+              <strong id="ccapital2">$0,00</strong>
+            </div>
+
+            <div>
+              <span>Tasa</span>
+              <strong>14,50%</strong>
+            </div>
+          </div>
+
+          <button class="btn btn-secondary"
+                  style="width:100%;margin-top:18px"
+                  onclick="seleccionar('Cooperativa')">
+            Usar Cooperativa
+          </button>
+
+        </div>
+
+      </div>
+
+      <div class="selected-box">
+
+        <h3>Alternativa seleccionada</h3>
+
+        <div class="selected-main">
+
+          <div>
+            <div class="label">Institución</div>
+            <strong id="xinstitucion">Pendiente</strong>
+          </div>
+
+          <div>
+            <div class="label">Cuota mensual</div>
+            <div class="value" id="cuota">$0,00</div>
+          </div>
+
+          <div>
+            <div class="label">Plazo</div>
+            <strong id="xplazo">—</strong>
+          </div>
+
+          <div>
+            <div class="label">Entrada</div>
+            <strong id="xentrada">$0,00</strong>
+          </div>
+
+          <div>
+            <div class="label">Capital</div>
+            <strong id="xcapital">$0,00</strong>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="navigation">
+        <button class="btn btn-secondary" onclick="go(6)">Atrás</button>
+        <button class="btn btn-primary" onclick="go(8)">Ver detalle</button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- PASO 8 -->
+  <section class="step" id="s8">
+    <div class="card">
+
+      <div class="step-head">
+        <div class="step-number">Paso 8 · Detalle</div>
+        <h2>Detalle de la operación</h2>
+        <p>Revisa cómo se construye la propuesta seleccionada.</p>
+      </div>
+
+      <div class="detail-grid">
+
+        <div class="detail-row">
+          <span>Vehículo</span>
+          <strong id="dveh">$0,00</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Carrocería</span>
+          <strong id="dcar">$0,00</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Accesorios</span>
+          <strong id="dacc">$0,00</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Rastreo</span>
+          <strong id="drast">$0,00</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Otros gastos</span>
+          <strong id="dotros">$0,00</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Total operación</span>
+          <strong id="dop">$0,00</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Entrada</span>
+          <strong id="dentrada">$0,00</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Saldo base</span>
+          <strong id="dsaldo">$0,00</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Encaje</span>
+          <strong id="dencaje">$0,00</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Capital financiado</span>
+          <strong id="dcapital">$0,00</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Intereses</span>
+          <strong id="dinteres">$0,00</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Desgravamen</span>
+          <strong id="ddes">$0,00</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Fondo irrepartible</span>
+          <strong id="dfondo">$0,00</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>SOLCA</span>
+          <strong id="dsolca">$0,00</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Gastos administrativos</span>
+          <strong id="dadmin">$0,00</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Ahorro programado</span>
+          <strong id="dahorro">$0,00</strong>
+        </div>
+
+        <div class="detail-row" style="grid-column:1/-1;background:#f4f7f9;border-radius:10px">
+          <span><strong>Total general</strong></span>
+          <strong id="dtotal">$0,00</strong>
+        </div>
+
+        <div class="detail-row" style="grid-column:1/-1">
+          <span>Tasa efectiva anual equivalente</span>
+          <strong id="defectiva">0,00%</strong>
+        </div>
+
+      </div>
+
+      <div class="navigation">
+        <button class="btn btn-secondary" onclick="go(7)">Atrás</button>
+        <button class="btn btn-primary" onclick="go(9)">Ver amortización</button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- PASO 9 -->
+  <section class="step" id="s9">
+    <div class="card">
+
+      <div class="step-head">
+        <div class="step-number">Paso 9 · Amortización</div>
+        <h2>Tabla de amortización</h2>
+        <p>Proyección de capital, interés y saldo durante el plazo seleccionado.</p>
+      </div>
+
+      <div class="table-wrap">
+
+        <table>
+          <thead>
+            <tr>
+              <th>Mes</th>
+              <th>Cuota</th>
+              <th>Interés</th>
+              <th>Capital</th>
+              <th>Saldo</th>
+            </tr>
+          </thead>
+
+          <tbody id="tabla"></tbody>
+
+        </table>
+
+      </div>
+
+      <div class="navigation">
+        <button class="btn btn-secondary" onclick="go(8)">Atrás</button>
+        <button class="btn btn-primary" onclick="go(10)">Finalizar cotización</button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- PASO 10 -->
+  <section class="step" id="s10">
+    <div class="card final-card">
+
+      <div class="welcome-icon">AC</div>
+
+      <h2>Cotización lista</h2>
+
+      <p>
+        La simulación ha sido estructurada y está lista para ser presentada
+        al cliente.
+      </p>
+
+      <div class="final-highlight">
+
+        <small id="finInst">Institución</small>
+
+        <strong id="finCuota">$0,00</strong>
+
+        <small>
+          Cuota mensual estimada
+        </small>
+
+      </div>
+
+      <div class="final-data">
+
+        <div class="final-pill">
+          Plazo: <strong id="finPlazo">—</strong>
+        </div>
+
+        <div class="final-pill">
+          Entrada: <strong id="finEntrada">$0,00</strong>
+        </div>
+
+        <div class="final-pill">
+          Capital: <strong id="finCapital">$0,00</strong>
+        </div>
+
+      </div>
+
+      <div class="navigation" style="justify-content:center">
+
+        <button class="btn btn-secondary" onclick="window.print()">
+          Imprimir / PDF
+        </button>
+
+        <button class="btn btn-whatsapp" onclick="whatsapp()">
+          Enviar por WhatsApp
+        </button>
+
+        <button class="btn btn-primary" onclick="nuevo()">
+          Nueva cotización
+        </button>
+
+      </div>
+
+    </div>
+  </section>
+
+  <div class="footer">
+    AutoClick · Cotizador Automotriz · Herramienta de apoyo comercial
+  </div>
+
+</main>
+
 
 <script>
 
-const preciosRastreo = {
+const rast = {
   1:1081,
   2:null,
   3:null,
@@ -740,472 +1677,679 @@ const preciosRastreo = {
   5:2300
 };
 
-const instituciones = {
 
-  "Banco 1":{
-    tipo:"Banco",
-    tasa:14.50
+const cfg = {
+
+  Banco:{
+    tasa:15.5,
+    encaje:0,
+    fondo:0,
+    solca:0,
+    des:0.05
   },
 
-  "Banco 2":{
-    tipo:"Banco",
-    tasa:14.00
-  },
-
-  "Cooperativa 1":{
-    tipo:"Cooperativa",
-    tasa:13.50
-  },
-
-  "Cooperativa 2":{
-    tipo:"Cooperativa",
-    tasa:13.00
-  },
-
-  "Financiera 1":{
-    tipo:"Financiera",
-    tasa:15.00
-  },
-
-  "Personalizada":{
-    tipo:"Personalizada",
-    tasa:14.50
+  Cooperativa:{
+    tasa:14.5,
+    encaje:10,
+    fondo:3,
+    solca:0.5,
+    des:1
   }
 
 };
 
-let entradaSeleccionada = 25;
 
-function money(valor){
+let institucionSeleccionada = "Banco";
 
-  return new Intl.NumberFormat("es-EC",{
+
+function money(n){
+
+  n = Number(n) || 0;
+
+  return n.toLocaleString("es-EC",{
     style:"currency",
-    currency:"USD"
-  }).format(valor || 0);
-
-}
-
-function numero(id){
-
-  return parseFloat(document.getElementById(id).value) || 0;
-
-}
-
-function seleccionarEntrada(valor,boton){
-
-  entradaSeleccionada = valor;
-
-  document.getElementById("entradaPersonalizada").value = valor;
-
-  document.querySelectorAll(".entry-btn").forEach(b=>{
-    b.classList.remove("active");
+    currency:"USD",
+    minimumFractionDigits:2
   });
 
-  boton.classList.add("active");
+}
 
-  calcular();
+
+function num(id){
+
+  return Number(document.getElementById(id)?.value) || 0;
 
 }
 
-function actualizarRastreo(){
 
-  const activo = document.getElementById("rastreo").value;
+function getEntradaPct(){
 
-  const anios = document.getElementById("aniosRastreo").value;
+  const personalizada = Number(
+    document.getElementById("entradaPct").value
+  );
 
-  const input = document.getElementById("valorRastreo");
+  if(
+    document.getElementById("entradaPct").value !== "" &&
+    personalizada >= 0 &&
+    personalizada <= 100
+  ){
 
-  if(activo !== "1"){
+    return personalizada;
 
-    input.value = 0;
+  }
+
+  const checked = document.querySelector(
+    'input[name="entrada"]:checked'
+  );
+
+  return checked ? Number(checked.value) : 0;
+
+}
+
+
+function getPlazo(){
+
+  return Number(document.getElementById("plazo").value) || 60;
+
+}
+
+
+function baseOperacion(){
+
+  const precio = num("precio");
+
+  const descuento = num("descuento");
+
+  const otros = num("otros");
+
+  const carro = num("vcarro");
+
+  const acc = num("vacc");
+
+  const rastreo = num("vrastreo");
+
+  const vehiculoNeto = Math.max(0,precio-descuento);
+
+  return {
+    vehiculoNeto,
+    carro,
+    acc,
+    rastreo,
+    otros,
+    total:vehiculoNeto+carro+acc+rastreo+otros
+  };
+
+}
+
+
+function pmt(rate,nper,pv){
+
+  if(rate===0){
+
+    return pv/nper;
+
+  }
+
+  return pv*rate/(1-Math.pow(1+rate,-nper));
+
+}
+
+
+function datos(inst){
+
+  const c = cfg[inst];
+
+  const op = baseOperacion();
+
+  const entradaPct = getEntradaPct();
+
+  const plazo = getPlazo();
+
+  const entrada = op.total*(entradaPct/100);
+
+  const saldoBase = Math.max(0,op.total-entrada);
+
+  const encaje = saldoBase*(c.encaje/100);
+
+  const capital = saldoBase+encaje;
+
+  const tasaMensual = (c.tasa/100)/12;
+
+  const cuotaBase = pmt(
+    tasaMensual,
+    plazo,
+    capital
+  );
+
+  const interes = Math.max(
+    0,
+    cuotaBase*plazo-capital
+  );
+
+  const desMensual =
+    capital*(c.des/100);
+
+  const desTotal =
+    desMensual*plazo;
+
+  const ahorroActivo =
+    document.getElementById("ahorroActivo").checked;
+
+  const ahorroMensual =
+    ahorroActivo
+    ? (capital/10000)*10
+    : 0;
+
+  const ahorroTotal =
+    ahorroMensual*plazo;
+
+  const fondo =
+    saldoBase*(c.fondo/100);
+
+  const solca =
+    op.total*(c.solca/100);
+
+  const admin = 0;
+
+  const otrosCostos =
+    desTotal+
+    fondo+
+    solca+
+    admin+
+    ahorroTotal;
+
+  const cuotaMensual =
+    cuotaBase+
+    desMensual+
+    ahorroMensual;
+
+  const totalGeneral =
+    entrada+
+    cuotaBase*plazo+
+    desTotal+
+    fondo+
+    solca+
+    admin+
+    ahorroTotal;
+
+  const efectiva =
+    (Math.pow(1+tasaMensual,12)-1)*100;
+
+  return {
+
+    inst,
+    plazo,
+    entradaPct,
+    vehiculoNeto:op.vehiculoNeto,
+    carro:op.carro,
+    acc:op.acc,
+    rastreo:op.rastreo,
+    otros:op.otros,
+    operacion:op.total,
+    entrada,
+    saldoBase,
+    encaje,
+    capital,
+    tasa:c.tasa,
+    tasaMensual,
+    cuotaBase,
+    cuotaMensual,
+    interes,
+    desMensual,
+    desTotal,
+    fondo,
+    solca,
+    admin,
+    ahorroMensual,
+    ahorroTotal,
+    otrosCostos,
+    totalGeneral,
+    efectiva
+
+  };
+
+}
+
+
+function calcular(){
+
+  const b = datos("Banco");
+
+  const c = datos("Cooperativa");
+
+
+  // BANCO
+
+  document.getElementById("bcuota").textContent =
+    money(b.cuotaMensual);
+
+  document.getElementById("bentrada").textContent =
+    money(b.entrada);
+
+  document.getElementById("bcapital").textContent =
+    money(b.capital);
+
+  document.getElementById("binteres").textContent =
+    money(b.interes);
+
+  document.getElementById("bcostos").textContent =
+    money(b.otrosCostos);
+
+  document.getElementById("btotal").textContent =
+    money(b.totalGeneral);
+
+
+  // COOPERATIVA
+
+  document.getElementById("ccuota").textContent =
+    money(c.cuotaMensual);
+
+  document.getElementById("centrada").textContent =
+    money(c.entrada);
+
+  document.getElementById("ccapital").textContent =
+    money(c.capital);
+
+  document.getElementById("cinteres").textContent =
+    money(c.interes);
+
+  document.getElementById("ccostos").textContent =
+    money(c.otrosCostos);
+
+  document.getElementById("ctotal").textContent =
+    money(c.totalGeneral);
+
+
+  // RESULTADO
+
+  document.getElementById("bcuota2").textContent =
+    money(b.cuotaMensual);
+
+  document.getElementById("bentrada2").textContent =
+    money(b.entrada);
+
+  document.getElementById("bcapital2").textContent =
+    money(b.capital);
+
+  document.getElementById("bplazo2").textContent =
+    b.plazo+" meses";
+
+
+  document.getElementById("ccuota2").textContent =
+    money(c.cuotaMensual);
+
+  document.getElementById("centrada2").textContent =
+    money(c.entrada);
+
+  document.getElementById("ccapital2").textContent =
+    money(c.capital);
+
+  document.getElementById("cplazo2").textContent =
+    c.plazo+" meses";
+
+
+  seleccionar(institucionSeleccionada);
+
+}
+
+
+function seleccionar(inst){
+
+  institucionSeleccionada = inst;
+
+  const d = datos(inst);
+
+  document.getElementById("xinstitucion").textContent =
+    inst;
+
+  document.getElementById("cuota").textContent =
+    money(d.cuotaMensual);
+
+  document.getElementById("xplazo").textContent =
+    d.plazo+" meses";
+
+  document.getElementById("xentrada").textContent =
+    money(d.entrada);
+
+  document.getElementById("xcapital").textContent =
+    money(d.capital);
+
+}
+
+
+function detalle(){
+
+  const d = datos(institucionSeleccionada);
+
+  document.getElementById("dveh").textContent =
+    money(d.vehiculoNeto);
+
+  document.getElementById("dcar").textContent =
+    money(d.carro);
+
+  document.getElementById("dacc").textContent =
+    money(d.acc);
+
+  document.getElementById("drast").textContent =
+    money(d.rastreo);
+
+  document.getElementById("dotros").textContent =
+    money(d.otros);
+
+  document.getElementById("dop").textContent =
+    money(d.operacion);
+
+  document.getElementById("dentrada").textContent =
+    money(d.entrada);
+
+  document.getElementById("dsaldo").textContent =
+    money(d.saldoBase);
+
+  document.getElementById("dencaje").textContent =
+    money(d.encaje);
+
+  document.getElementById("dcapital").textContent =
+    money(d.capital);
+
+  document.getElementById("dinteres").textContent =
+    money(d.interes);
+
+  document.getElementById("ddes").textContent =
+    money(d.desTotal);
+
+  document.getElementById("dfondo").textContent =
+    money(d.fondo);
+
+  document.getElementById("dsolca").textContent =
+    money(d.solca);
+
+  document.getElementById("dadmin").textContent =
+    money(d.admin);
+
+  document.getElementById("dahorro").textContent =
+    money(d.ahorroTotal);
+
+  document.getElementById("dtotal").textContent =
+    money(d.totalGeneral);
+
+  document.getElementById("defectiva").textContent =
+    d.efectiva.toFixed(2)+"%";
+
+}
+
+
+function amort(){
+
+  const d = datos(institucionSeleccionada);
+
+  let saldo = d.capital;
+
+  let html = "";
+
+  for(let i=1;i<=d.plazo;i++){
+
+    let interes = saldo*d.tasaMensual;
+
+    let capital = d.cuotaBase-interes;
+
+    if(i===d.plazo){
+
+      capital = saldo;
+
+    }
+
+    let cuota =
+      capital+interes;
+
+    saldo -= capital;
+
+    if(saldo<0.01){
+
+      saldo=0;
+
+    }
+
+    html += `
+
+      <tr>
+
+        <td>${i}</td>
+
+        <td>${money(cuota)}</td>
+
+        <td>${money(interes)}</td>
+
+        <td>${money(capital)}</td>
+
+        <td>${money(saldo)}</td>
+
+      </tr>
+
+    `;
+
+  }
+
+  document.getElementById("tabla").innerHTML = html;
+
+}
+
+
+function final(){
+
+  const d = datos(institucionSeleccionada);
+
+  document.getElementById("finInst").textContent =
+    d.inst;
+
+  document.getElementById("finCuota").textContent =
+    money(d.cuotaMensual);
+
+  document.getElementById("finPlazo").textContent =
+    d.plazo+" meses";
+
+  document.getElementById("finEntrada").textContent =
+    money(d.entrada);
+
+  document.getElementById("finCapital").textContent =
+    money(d.capital);
+
+}
+
+
+function go(numPaso){
+
+  if(numPaso===6){
+
     calcular();
+
+  }
+
+  if(numPaso===7){
+
+    calcular();
+
+  }
+
+  if(numPaso===8){
+
+    if(!institucionSeleccionada){
+
+      seleccionar("Banco");
+
+    }
+
+    detalle();
+
+  }
+
+  if(numPaso===9){
+
+    amort();
+
+  }
+
+  if(numPaso===10){
+
+    final();
+
+  }
+
+
+  document.querySelectorAll(".step").forEach(
+    s=>s.classList.remove("active")
+  );
+
+  document.getElementById("s"+numPaso)
+    .classList.add("active");
+
+
+  const percent =
+    ((numPaso-1)/9)*100;
+
+  document.getElementById("progress").style.width =
+    Math.max(10,percent)+"%";
+
+
+  document.querySelectorAll(".progress-label")
+    .forEach((x,i)=>{
+
+      x.classList.toggle(
+        "active",
+        i===numPaso-1
+      );
+
+    });
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function entradaSeleccionada(valor){
+
+  document.getElementById("entradaPct").value = "";
+
+}
+
+
+function rastreoCambio(){
+
+  const value =
+    document.getElementById("rastreo").value;
+
+  const años =
+    document.getElementById("rastreoAnios");
+
+  const valor =
+    document.getElementById("vrastreo");
+
+
+  if(!value){
+
+    años.value="";
+    valor.value=0;
     return;
 
   }
 
-  const valor = preciosRastreo[anios];
 
-  if(valor === null){
+  años.value=value+" año"+(value>1?"s":"");
 
-    input.value = 0;
+
+  if(rast[value] !== null){
+
+    valor.value=rast[value];
 
   }else{
 
-    input.value = valor;
+    valor.value=0;
 
   }
 
-  calcular();
-
 }
 
-function cargarInstitucion(){
 
-  const nombre = document.getElementById("institucion").value;
+function whatsapp(){
 
-  const data = instituciones[nombre];
-
-  document.getElementById("tipoInstitucion").value = data.tipo;
-
-  document.getElementById("tasa").value = data.tasa;
-
-  calcular();
-
-}
-
-function calcular(){
-
-  const precio = numero("precio");
-
-  const descuento = numero("descuento");
-
-  const carroceria = numero("valorCarroceria");
-
-  const accesorios = numero("valorAccesorios");
-
-  const rastreo = numero("valorRastreo");
-
-  const otros = numero("otrosGastos");
-
-  const tasaAnual = numero("tasa");
-
-  const entradaPct = numero("entradaPersonalizada");
-
-  const plazo = parseInt(document.getElementById("plazo").value) || 36;
-
-  const encajePct = numero("encaje");
-
-  const desgravamenPct = numero("desgravamen");
-
-  const fondo = numero("fondo");
-
-  const admin = numero("gastosAdmin");
-
-  const ahorroMensual = numero("ahorroMensual");
-
-  const precioFinal = Math.max(0,precio-descuento);
-
-  const operacion =
-    precioFinal+
-    carroceria+
-    accesorios+
-    rastreo+
-    otros;
-
-  const entrada =
-    operacion*(entradaPct/100);
-
-  const saldo =
-    Math.max(0,operacion-entrada);
-
-  const encaje =
-    saldo*(encajePct/100);
-
-  const capital =
-    saldo+encaje;
-
-  const tasaMensual =
-    (tasaAnual/100)/12;
-
-  let cuotaCredito = 0;
-
-  if(capital > 0){
-
-    if(tasaMensual > 0){
-
-      cuotaCredito =
-        capital*
-        (
-          tasaMensual*
-          Math.pow(1+tasaMensual,plazo)
-        )/
-        (
-          Math.pow(1+tasaMensual,plazo)-1
-        );
-
-    }else{
-
-      cuotaCredito = capital/plazo;
-
-    }
-
-  }
-
-  const desgravamenMensual =
-    capital*(desgravamenPct/100);
-
-  const cuotaTotal =
-    cuotaCredito+
-    desgravamenMensual+
-    ahorroMensual;
-
-  const interes =
-    Math.max(
-      0,
-      cuotaCredito*plazo-capital
-    );
-
-  const totalDesgravamen =
-    desgravamenMensual*plazo;
-
-  const totalAhorro =
-    ahorroMensual*plazo;
-
-  const totalCredito =
-    cuotaCredito*plazo+
-    totalDesgravamen+
-    fondo+
-    admin;
-
-  const totalGeneral =
-    entrada+
-    totalCredito+
-    totalAhorro;
-
-  const tasaEfectiva =
-    tasaMensual > 0
-      ? (Math.pow(1+tasaMensual,12)-1)*100
-      : 0;
-
-  document.getElementById("cuota").textContent =
-    money(cuotaTotal);
-
-  document.getElementById("resEntrada").textContent =
-    money(entrada);
-
-  document.getElementById("resFinanciado").textContent =
-    money(capital);
-
-  document.getElementById("resPlazo").textContent =
-    plazo+" meses";
-
-  document.getElementById("resTasa").textContent =
-    tasaAnual.toFixed(2)+"%";
-
-  document.getElementById("rVehiculo").textContent =
-    money(precioFinal);
-
-  document.getElementById("rCarroceria").textContent =
-    money(carroceria);
-
-  document.getElementById("rAccesorios").textContent =
-    money(accesorios);
-
-  document.getElementById("rRastreo").textContent =
-    money(rastreo);
-
-  document.getElementById("rOtros").textContent =
-    money(otros);
-
-  document.getElementById("rOperacion").textContent =
-    money(operacion);
-
-  document.getElementById("rEntrada").textContent =
-    money(entrada);
-
-  document.getElementById("rSaldo").textContent =
-    money(saldo);
-
-  document.getElementById("rEncaje").textContent =
-    money(encaje);
-
-  document.getElementById("rCapital").textContent =
-    money(capital);
-
-  document.getElementById("rInteres").textContent =
-    money(interes);
-
-  document.getElementById("rDesgravamen").textContent =
-    money(totalDesgravamen);
-
-  document.getElementById("rFondo").textContent =
-    money(fondo);
-
-  document.getElementById("rAdmin").textContent =
-    money(admin);
-
-  document.getElementById("rAhorro").textContent =
-    money(totalAhorro);
-
-  document.getElementById("rTotal").textContent =
-    money(totalGeneral);
-
-  document.getElementById("rEfectiva").textContent =
-    tasaEfectiva.toFixed(2)+"%";
-
-  generarAmortizacion(
-    capital,
-    tasaMensual,
-    cuotaCredito,
-    plazo
-  );
-
-}
-
-function generarAmortizacion(
-  capital,
-  tasaMensual,
-  cuota,
-  plazo
-){
-
-  const tabla =
-    document.getElementById("tablaAmortizacion");
-
-  tabla.innerHTML="";
-
-  let saldo=capital;
-
-  for(let i=1;i<=plazo;i++){
-
-    const saldoInicial=saldo;
-
-    const interes=saldoInicial*tasaMensual;
-
-    let capitalPagado=
-      cuota-interes;
-
-    if(i===plazo){
-
-      capitalPagado=saldoInicial;
-
-    }
-
-    let saldoFinal=
-      Math.max(
-        0,
-        saldoInicial-capitalPagado
-      );
-
-    const tr=document.createElement("tr");
-
-    tr.innerHTML=`
-
-      <td>${i}</td>
-
-      <td>${money(saldoInicial)}</td>
-
-      <td>${money(
-        i===plazo
-          ? capitalPagado+interes
-          : cuota
-      )}</td>
-
-      <td>${money(interes)}</td>
-
-      <td>${money(capitalPagado)}</td>
-
-      <td>${money(saldoFinal)}</td>
-
-    `;
-
-    tabla.appendChild(tr);
-
-    saldo=saldoFinal;
-
-    if(saldo<=0.01) break;
-
-  }
-
-}
-
-function enviarWhatsApp(){
+  const d = datos(institucionSeleccionada);
 
   const cliente =
     document.getElementById("cliente").value ||
-    "Cliente";
+    "cliente";
+
 
   const marca =
-    document.getElementById("marca").value ||
-    "";
+    document.getElementById("marca").value || "";
 
   const modelo =
-    document.getElementById("modelo").value ||
-    "";
+    document.getElementById("modelo").value || "";
 
-  const precio =
-    numero("precio");
-
-  const entrada =
-    numero("entradaPersonalizada");
-
-  const plazo =
-    document.getElementById("plazo").value;
-
-  const cuota =
-    document.getElementById("cuota").textContent;
-
-  const institucion =
-    document.getElementById("institucion").value;
 
   const mensaje =
-`Hola ${cliente},
+`Hola ${cliente}.
 
-Te comparto tu simulación de financiamiento AutoClick.
+Te comparto la simulación de tu vehículo ${marca} ${modelo} realizada con AutoClick.
 
-Vehículo: ${marca} ${modelo}
-Precio: ${money(precio)}
-Entrada: ${entrada.toFixed(2)}%
-Institución: ${institucion}
-Plazo: ${plazo} meses
-Cuota estimada: ${cuota}
+Institución: ${d.inst}
+Plazo: ${d.plazo} meses
+Entrada: ${money(d.entrada)}
+Capital financiado: ${money(d.capital)}
+Cuota mensual estimada: ${money(d.cuotaMensual)}
 
-Esta simulación es referencial y está sujeta a aprobación y condiciones definitivas de la institución financiera.
+Esta simulación es referencial y está sujeta a las condiciones y aprobación de la institución financiera.
 
-Asesor: ${document.getElementById("asesor").value || ""}`;
+Saludos.`;
+
 
   const url =
     "https://wa.me/593991930112?text="+
     encodeURIComponent(mensaje);
 
+
   window.open(url,"_blank");
 
 }
 
-function limpiar(){
 
-  if(!confirm("¿Deseas iniciar una nueva cotización?")) return;
+function nuevo(){
 
-  document.querySelectorAll("input").forEach(input=>{
+  window.location.reload();
 
-    if(input.id==="precio"){
-      input.value=0;
-    }else if(input.id==="anio"){
-      input.value=2026;
-    }else if(input.id==="entradaPersonalizada"){
-      input.value=25;
-    }else if(input.id==="tasa"){
-      input.value=14.50;
-    }else if(input.id==="desgravamen"){
-      input.value=0.05;
-    }else{
-      input.value="";
+}
+
+
+document.querySelectorAll(
+  "#precio,#descuento,#otros,#vcarro,#vacc,#vrastreo,#entradaPct,#plazo,#ahorroActivo"
+).forEach(el=>{
+
+  el.addEventListener("input",()=>{
+
+    if(document.getElementById("s6").classList.contains("active") ||
+       document.getElementById("s7").classList.contains("active")){
+
+      calcular();
+
     }
 
   });
 
-  document.getElementById("valorRastreo").value=0;
-  document.getElementById("valorCarroceria").value=0;
-  document.getElementById("valorAccesorios").value=0;
-  document.getElementById("otrosGastos").value=0;
-  document.getElementById("fondo").value=0;
-  document.getElementById("gastosAdmin").value=0;
-  document.getElementById("ahorroMensual").value=0;
+  el.addEventListener("change",()=>{
 
-  calcular();
+    if(document.getElementById("s6").classList.contains("active") ||
+       document.getElementById("s7").classList.contains("active")){
 
-}
+      calcular();
 
-document.querySelectorAll("input,select").forEach(element=>{
+    }
 
-  element.addEventListener("input",calcular);
-  element.addEventListener("change",calcular);
+  });
 
 });
 
-cargarInstitucion();
-actualizarRastreo();
-calcular();
 
 </script>
 
