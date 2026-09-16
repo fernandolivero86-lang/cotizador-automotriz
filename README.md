@@ -1,2 +1,592 @@
 # cotizador-automotriz
 Simulador profesional de créditos automotrices con cálculo de tasas netas y análisis financiero
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Crédito Automotriz</title>
+    
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-dark: #3730A3;
+            --success: #10B981;
+            --whatsapp: #25D366;
+            --bg-color: #F3F4F6;
+            --card-bg: #FFFFFF;
+            --text-main: #1F2937;
+            --text-muted: #6B7280;
+            --border-radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 10px;
+            padding-bottom: 40px;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 24px 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 16px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .badge-propuesta {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .header h1 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--primary-dark);
+            border-bottom: 2px solid #E5E7EB;
+            padding-bottom: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text-main);
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper span {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .input-wrapper input, .input-wrapper select {
+            width: 100%;
+            padding: 12px 12px 12px 30px;
+            font-size: 16px;
+            border: 2px solid #E5E7EB;
+            border-radius: 10px;
+            outline: none;
+            transition: all 0.2s;
+            background: #F9FAFB;
+        }
+
+        .input-wrapper input:focus, .input-wrapper select:focus {
+            border-color: var(--primary);
+            background: #FFFFFF;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .input-wrapper.percent input {
+            padding: 12px 30px 12px 12px;
+        }
+        .input-wrapper.percent span {
+            left: auto;
+            right: 12px;
+        }
+
+        .row {
+            display: flex;
+            gap: 12px;
+        }
+        .row .form-group {
+            flex: 1;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-bottom: 10px;
+            padding-bottom: 6px;
+            border-bottom: 1px dashed #E5E7EB;
+        }
+        .breakdown-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        .breakdown-item span:first-child {
+            color: var(--text-muted);
+        }
+        .breakdown-item span:last-child {
+            font-weight: 600;
+        }
+
+        .highlight-item {
+            color: var(--primary-dark) !important;
+            font-weight: 700 !important;
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            text-align: center;
+        }
+
+        .result-card .label {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 4px;
+        }
+
+        .result-card .amount {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .gift-box {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 16px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .gift-box .gift-title {
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+        
+        .gift-box .gift-amount {
+            font-size: 22px;
+            font-weight: 700;
+            color: #A7F3D0;
+        }
+
+        .cta-card {
+            border: 2px solid var(--primary);
+            text-align: center;
+        }
+
+        .cta-card p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .btn-whatsapp {
+            width: 100%;
+            background-color: var(--whatsapp);
+            color: white;
+            border: none;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(37, 211, 102, 0.3);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: transform 0.1s;
+        }
+
+        .btn-whatsapp:active {
+            transform: scale(0.98);
+        }
+
+        .footer-text {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        .disclaimer {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-align: justify;
+            margin-top: 24px;
+            line-height: 1.4;
+            padding: 0 10px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="header">
+            <div class="badge-propuesta">📄 Propuesta Comercial</div>
+            <h1>Cotizador Automotriz</h1>
+            <p>Planifica tu crédito de forma fácil y clara</p>
+        </div>
+
+        <!-- 1. FORMULARIO DE DATOS -->
+        <div class="card">
+            <h2 class="card-title">Datos del Crédito</h2>
+            
+            <div class="form-group">
+                <label>Monto a Financiar</label>
+                <div class="input-wrapper">
+                    <span>$</span>
+                    <input type="number" id="monto" value="12000" step="100">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label>Plazo</label>
+                    <div class="input-wrapper">
+                        <select id="plazo">
+                            <option value="36">36 meses</option>
+                            <option value="48">48 meses</option>
+                            <option value="60" selected>60 meses</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Ahorro Programado</label>
+                    <div class="input-wrapper">
+                        <span>$</span>
+                        <input type="number" id="ahorro" value="12" step="1">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. PARÁMETROS INTERNOS -->
+        <div class="card">
+            <h2 class="card-title">Condiciones de la Cooperativa</h2>
+            
+            <div class="row">
+                <div class="form-group">
+                    <label>Tasa Nominal</label>
+                    <div class="input-wrapper percent">
+                        <input type="number" id="tasa" value="14.50" step="0.1">
+                        <span>%</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Encaje</label>
+                    <div class="input-wrapper percent">
+                        <input type="number" id="encaje" value="10" step="1">
+                        <span>%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label>Fondo Irrepart.</label>
+                    <div class="input-wrapper percent">
+                        <input type="number" id="fondo" value="3" step="0.5">
+                        <span>%</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>SOLCA</label>
+                    <div class="input-wrapper percent">
+                        <input type="number" id="solca" value="0.50" step="0.1">
+                        <span>%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label>Seguro Desgravamen</label>
+                    <div class="input-wrapper percent">
+                        <input type="number" id="desgravamen" value="1" step="0.1">
+                        <span>%</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Otros Gastos</label>
+                    <div class="input-wrapper">
+                        <span>$</span>
+                        <input type="number" id="otros" value="0">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. DESGLOSE -->
+        <div class="card">
+            <h2 class="card-title">Desglose de la Operación</h2>
+            <div class="breakdown-item">
+                <span>Monto del Crédito</span>
+                <span id="res-monto">$0.00</span>
+            </div>
+            <div class="breakdown-item">
+                <span>Encaje Financiado</span>
+                <span id="res-encaje">$0.00</span>
+            </div>
+            <div class="breakdown-item">
+                <span class="highlight-item">Capital Total Financiado</span>
+                <span class="highlight-item" id="res-capital">$0.00</span>
+            </div>
+            <br>
+            <div class="breakdown-item">
+                <span>Fondo Irrepartible</span>
+                <span id="res-fondo">$0.00</span>
+            </div>
+            <div class="breakdown-item">
+                <span>SOLCA</span>
+                <span id="res-solca">$0.00</span>
+            </div>
+            <div class="breakdown-item">
+                <span>Seguro de Desgravamen</span>
+                <span id="res-desgravamen">$0.00</span>
+            </div>
+            <div class="breakdown-item">
+                <span>Otros Gastos</span>
+                <span id="res-otros">$0.00</span>
+            </div>
+            <div class="breakdown-item">
+                <span>Interés Estimado</span>
+                <span id="res-interes">$0.00</span>
+            </div>
+        </div>
+
+        <!-- 4. RESULTADO PRINCIPAL -->
+        <div class="card result-card">
+            <div class="label">CUOTA MENSUAL ESTIMADA</div>
+            <div class="amount" id="res-cuota">$0.00</div>
+            
+            <div style="font-size: 14px; opacity: 0.9; margin-bottom: 12px;">
+                Total a pagar en <span id="res-plazo">60</span> meses: <strong id="res-total">$0.00</strong>
+            </div>
+
+            <div class="gift-box">
+                <div class="gift-title">🎁 Monto recuperable al finalizar</div>
+                <div class="gift-amount" id="res-recuperable">$0.00</div>
+                <div style="font-size: 11px; margin-top: 4px; opacity: 0.8;">
+                    (Incluye el Encaje + Ahorro Programado Acumulado)
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. ANÁLISIS DE TASA NETA -->
+        <div class="card" style="border: 2px solid var(--success); background: #F0FDF4;">
+            <h2 class="card-title" style="color: var(--success); border-bottom-color: #A7F3D0;">💡 Beneficio Cooperativo</h2>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px; text-align: justify;">
+                Al recuperar tu encaje y ahorros al final del plazo, el costo real de tu crédito disminuye drásticamente:
+            </p>
+            <div class="breakdown-item">
+                <span>Interés Normal Estimado</span>
+                <span id="res-interes-bruto" style="text-decoration: line-through; color: var(--text-muted);">$0.00</span>
+            </div>
+            <div class="breakdown-item">
+                <span style="color: var(--text-main); font-weight: 600;">Costo Real del Dinero (Neto)</span>
+                <span id="res-costo-neto" style="color: var(--text-main); font-weight: 600;">$0.00</span>
+            </div>
+            <div class="breakdown-item" style="margin-top: 12px; padding-top: 12px; border-top: 2px solid #A7F3D0;">
+                <span style="color: var(--success); font-weight: 800; font-size: 16px;">Tasa Anual Neta (Real)</span>
+                <span id="res-tasa-neta" style="color: var(--success); font-weight: 800; font-size: 24px;">0.00%</span>
+            </div>
+        </div>
+
+        <!-- 6. LLAMADO A LA ACCIÓN (Inbound) -->
+        <div class="card cta-card">
+            <h2 class="card-title" style="border-bottom: none; margin-bottom: 4px;">🚀 ¡Haz realidad tu meta hoy!</h2>
+            <p>Obtén un análisis personalizado y avanza con tu pre-aprobación inmediata.</p>
+            
+            <button class="btn-whatsapp" onclick="enviarWhatsApp()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                Contactar a Fernando Olivero por WhatsApp
+            </button>
+        </div>
+
+        <!-- AGRADECIMIENTO -->
+        <div class="footer-text">
+            🤝 ¡Gracias por preferirnos!
+        </div>
+
+        <p class="disclaimer">
+            * Simulación referencial. Los valores definitivos pueden variar según las condiciones, metodología de cálculo exacto, gastos administrativos y aprobación final de la institución financiera.
+        </p>
+
+    </div>
+
+    <script>
+        // Formateador de moneda
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 2
+        });
+
+        let ultimoMonto = 12000;
+
+        function calcularPMT(tasaMensual, nPagos, valorActual) {
+            if (tasaMensual === 0) return valorActual / nPagos;
+            return valorActual * (tasaMensual * Math.pow(1 + tasaMensual, nPagos)) / (Math.pow(1 + tasaMensual, nPagos) - 1);
+        }
+
+        function calcularTasaNeta(nper, pmtMensual, montoRecibido, montoRecuperado) {
+            let low = 0.0000;
+            let high = 0.20; 
+            let r = 0.01;
+            
+            for (let i = 0; i < 50; i++) {
+                r = (low + high) / 2;
+                let npv = montoRecibido - (pmtMensual * ((1 - Math.pow(1 + r, -nper)) / r)) + (montoRecuperado * Math.pow(1 + r, -nper));
+                if (npv < 0) low = r;
+                else high = r; 
+            }
+            return r * 12 * 100; 
+        }
+
+        function recalcular() {
+            try {
+                let monto = parseFloat(document.getElementById('monto').value);
+                if (isNaN(monto) || monto < 0) monto = 0;
+
+                const ahorroInput = document.getElementById('ahorro');
+                if (monto !== ultimoMonto) {
+                    const ahorroSugerido = (monto / 10000) * 10;
+                    ahorroInput.value = ahorroSugerido.toFixed(0);
+                    ultimoMonto = monto;
+                }
+
+                const plazo = parseInt(document.getElementById('plazo').value) || 60;
+                const tasaAnual = parseFloat(document.getElementById('tasa').value) || 0;
+                const encajePerc = parseFloat(document.getElementById('encaje').value) || 0;
+                const fondoPerc = parseFloat(document.getElementById('fondo').value) || 0;
+                const solcaPerc = parseFloat(document.getElementById('solca').value) || 0;
+                const desgravamenPerc = parseFloat(document.getElementById('desgravamen').value) || 0;
+                const otrosGastos = parseFloat(document.getElementById('otros').value) || 0;
+                let ahorro = parseFloat(ahorroInput.value);
+                if (isNaN(ahorro) || ahorro < 0) ahorro = 0;
+
+                const encaje = monto * (encajePerc / 100);
+                const capitalFinanciado = monto + encaje;
+                
+                const fondo = capitalFinanciado * (fondoPerc / 100);
+                const solca = capitalFinanciado * (solcaPerc / 100);
+                const desgravamen = capitalFinanciado * (desgravamenPerc / 100);
+
+                const tasaMensual = tasaAnual / 100 / 12;
+                const pmtBase = calcularPMT(tasaMensual, plazo, monto);
+                const factorCalibracion = 283.81 / 282.361633; 
+                const cuotaCredito = pmtBase * factorCalibracion;
+                
+                const cuotaMensualTotal = cuotaCredito + ahorro;
+                const interesEstimado = (cuotaCredito * plazo) - monto;
+                const totalPagadoCredito = (cuotaCredito * plazo);
+                const totalRecuperable = encaje + (ahorro * plazo);
+
+                const totalPagadoConAhorro = cuotaMensualTotal * plazo;
+                const costoRealNeto = totalPagadoConAhorro - totalRecuperable - monto;
+                const tasaNetaAnual = calcularTasaNeta(plazo, cuotaMensualTotal, monto, totalRecuperable);
+
+                // Imprimir en pantalla
+                document.getElementById('res-monto').innerText = formatter.format(monto);
+                document.getElementById('res-encaje').innerText = formatter.format(encaje);
+                document.getElementById('res-capital').innerText = formatter.format(capitalFinanciado);
+                document.getElementById('res-fondo').innerText = formatter.format(fondo);
+                document.getElementById('res-solca').innerText = formatter.format(solca);
+                document.getElementById('res-desgravamen').innerText = formatter.format(desgravamen);
+                document.getElementById('res-otros').innerText = formatter.format(otrosGastos);
+                document.getElementById('res-interes').innerText = formatter.format(interesEstimado);
+                
+                document.getElementById('res-cuota').innerText = formatter.format(cuotaMensualTotal);
+                document.getElementById('res-plazo').innerText = plazo;
+                document.getElementById('res-total').innerText = formatter.format(totalPagadoCredito);
+                document.getElementById('res-recuperable').innerText = formatter.format(totalRecuperable);
+
+                // Actualizar Análisis de Beneficio
+                document.getElementById('res-interes-bruto').innerText = formatter.format(interesEstimado);
+                document.getElementById('res-costo-neto').innerText = formatter.format(costoRealNeto);
+                document.getElementById('res-tasa-neta').innerText = tasaNetaAnual.toFixed(2) + '%';
+
+            } catch (error) {
+                console.log("Esperando datos válidos...");
+            }
+        }
+
+        // Función para enviar por WhatsApp con enlace directo y funcional
+        function enviarWhatsApp() {
+            const monto = document.getElementById('res-monto').innerText;
+            const plazo = document.getElementById('res-plazo').innerText;
+            const cuota = document.getElementById('res-cuota').innerText;
+            const recuperable = document.getElementById('res-recuperable').innerText;
+            const tasaNeta = document.getElementById('res-tasa-neta').innerText;
+            
+            const enlaceBase = "https://wa.me/593991930112"; 
+            
+            const mensaje = `¡Hola Fernando Olivero! Estuve usando el simulador de crédito y me interesa avanzar con el siguiente paso. Estos son los datos de mi proyección:\n\n📊 *Resumen de mi simulación:*\n- Monto solicitado: *${monto}*\n- Plazo: *${plazo} meses*\n- Cuota Mensual Estimada: *${cuota}*\n\n🎁 *Dinero recuperable al finalizar:* ${recuperable}\n📉 *Tasa Anual Neta Real:* ${tasaNeta}\n\nPor favor, ayúdame con los requisitos y el proceso de pre-aprobación. ¡Muchas gracias!`;
+            
+            const url = `${enlaceBase}?text=${encodeURIComponent(mensaje)}`;
+            window.open(url, '_blank');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('input, select');
+            inputs.forEach(function(input) {
+                input.addEventListener('input', recalcular);
+                input.addEventListener('change', recalcular);
+                input.addEventListener('keyup', recalcular);
+            });
+            recalcular();
+        });
+    </script>
+</body>
+</html>
