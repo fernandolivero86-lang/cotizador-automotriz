@@ -1,2357 +1,787 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>AutoClick | Cotizador Automotriz</title>
-
-<style>
-:root{
-  --navy:#142235;
-  --navy2:#1d3047;
-  --blue:#2f5f8f;
-  --blue2:#3e78ad;
-  --silver:#e8edf2;
-  --silver2:#f5f7f9;
-  --white:#ffffff;
-  --text:#243140;
-  --muted:#6b7785;
-  --border:#dce2e8;
-  --success:#26734d;
-  --warning:#9b6b1c;
-  --danger:#9d3d3d;
-  --shadow:0 10px 30px rgba(20,34,53,.08);
-  --radius:16px;
-}
-
-*{
-  box-sizing:border-box;
-}
-
-body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:#f4f6f8;
-  color:var(--text);
-}
-
-button,
-input,
-select{
-  font-family:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
-.header{
-  background:linear-gradient(135deg,var(--navy),var(--navy2));
-  color:white;
-  padding:22px 18px 28px;
-}
-
-.header-inner{
-  max-width:1100px;
-  margin:auto;
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:13px;
-}
-
-.logo{
-  width:46px;
-  height:46px;
-  border-radius:12px;
-  background:white;
-  color:var(--navy);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:20px;
-  font-weight:800;
-  letter-spacing:-1px;
-}
-
-.brand h1{
-  margin:0;
-  font-size:24px;
-  letter-spacing:.2px;
-}
-
-.brand p{
-  margin:3px 0 0;
-  color:#cbd5df;
-  font-size:13px;
-}
-
-.container{
-  max-width:1100px;
-  margin:-12px auto 40px;
-  padding:0 14px;
-}
-
-.progress-wrap{
-  background:white;
-  border-radius:18px;
-  padding:18px;
-  box-shadow:var(--shadow);
-  margin-bottom:18px;
-}
-
-.progress-line{
-  height:5px;
-  background:#e7ebef;
-  border-radius:10px;
-  overflow:hidden;
-}
-
-.progress-fill{
-  height:100%;
-  width:10%;
-  background:linear-gradient(90deg,var(--blue),var(--blue2));
-  transition:.3s;
-}
-
-.progress-labels{
-  display:flex;
-  justify-content:space-between;
-  margin-top:11px;
-  gap:4px;
-}
-
-.progress-label{
-  font-size:10px;
-  color:#8a949f;
-  text-align:center;
-  flex:1;
-}
-
-.progress-label.active{
-  color:var(--navy);
-  font-weight:700;
-}
-
-.card{
-  background:white;
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  padding:24px;
-  margin-bottom:18px;
-}
-
-.step{
-  display:none;
-}
-
-.step.active{
-  display:block;
-}
-
-.step-head{
-  margin-bottom:22px;
-}
-
-.step-number{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  background:#edf3f8;
-  color:var(--blue);
-  border-radius:8px;
-  padding:6px 10px;
-  font-size:11px;
-  font-weight:800;
-  text-transform:uppercase;
-  letter-spacing:.5px;
-  margin-bottom:9px;
-}
-
-.step-head h2{
-  margin:0;
-  color:var(--navy);
-  font-size:24px;
-}
-
-.step-head p{
-  margin:7px 0 0;
-  color:var(--muted);
-  font-size:14px;
-  line-height:1.5;
-}
-
-.welcome{
-  text-align:center;
-  padding:38px 20px;
-}
-
-.welcome-icon{
-  width:74px;
-  height:74px;
-  margin:0 auto 20px;
-  border-radius:20px;
-  background:#edf3f8;
-  color:var(--blue);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:30px;
-  font-weight:800;
-}
-
-.welcome h2{
-  color:var(--navy);
-  margin:0;
-  font-size:29px;
-}
-
-.welcome p{
-  max-width:650px;
-  margin:12px auto 25px;
-  color:var(--muted);
-  line-height:1.6;
-}
-
-.info-strip{
-  background:var(--silver2);
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:14px;
-  text-align:left;
-  max-width:720px;
-  margin:0 auto 24px;
-  font-size:13px;
-  color:#596572;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:16px;
-}
-
-.grid-3{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:16px;
-}
-
-.field{
-  display:flex;
-  flex-direction:column;
-  gap:7px;
-}
-
-.field.full{
-  grid-column:1/-1;
-}
-
-.field label{
-  font-size:12px;
-  color:#53606d;
-  font-weight:700;
-}
-
-.field input,
-.field select{
-  width:100%;
-  padding:13px 14px;
-  border:1px solid var(--border);
-  border-radius:10px;
-  outline:none;
-  background:white;
-  color:var(--text);
-  font-size:14px;
-  transition:.2s;
-}
-
-.field input:focus,
-.field select:focus{
-  border-color:var(--blue2);
-  box-shadow:0 0 0 3px rgba(62,120,173,.10);
-}
-
-.prefix{
-  position:relative;
-}
-
-.prefix span{
-  position:absolute;
-  left:14px;
-  top:50%;
-  transform:translateY(-50%);
-  color:#7b8793;
-  font-weight:700;
-}
-
-.prefix input{
-  padding-left:32px;
-}
-
-.section-title{
-  margin:24px 0 14px;
-  font-size:14px;
-  color:var(--navy);
-  font-weight:800;
-  border-bottom:1px solid var(--border);
-  padding-bottom:9px;
-}
-
-.option-grid{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:9px;
-}
-
-.option{
-  position:relative;
-}
-
-.option input{
-  position:absolute;
-  opacity:0;
-}
-
-.option label{
-  display:block;
-  text-align:center;
-  padding:12px 5px;
-  border:1px solid var(--border);
-  border-radius:10px;
-  background:#fff;
-  color:#53606d;
-  font-size:13px;
-  font-weight:700;
-  cursor:pointer;
-  transition:.2s;
-}
-
-.option input:checked + label{
-  background:#edf3f8;
-  color:var(--navy);
-  border-color:var(--blue);
-}
-
-.check-box{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  background:#f7f9fb;
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:14px;
-  margin-top:16px;
-}
-
-.check-box input{
-  width:18px;
-  height:18px;
-  accent-color:var(--blue);
-}
-
-.check-box label{
-  font-size:13px;
-  color:#4d5965;
-}
-
-.navigation{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  margin-top:24px;
-}
-
-.btn{
-  border:0;
-  border-radius:10px;
-  padding:13px 20px;
-  font-size:13px;
-  font-weight:800;
-  transition:.2s;
-}
-
-.btn-primary{
-  background:var(--navy);
-  color:white;
-}
-
-.btn-primary:hover{
-  background:#213b58;
-}
-
-.btn-secondary{
-  background:#eef1f4;
-  color:#344250;
-}
-
-.btn-secondary:hover{
-  background:#e1e6eb;
-}
-
-.btn-success{
-  background:var(--success);
-  color:white;
-}
-
-.btn-whatsapp{
-  background:#26734d;
-  color:white;
-}
-
-.btn-wide{
-  min-width:170px;
-}
-
-.compare{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:18px;
-}
-
-.finance-card{
-  border:1px solid var(--border);
-  border-radius:16px;
-  overflow:hidden;
-  background:white;
-}
-
-.finance-head{
-  padding:18px;
-  background:linear-gradient(135deg,#f5f7f9,#e9eef3);
-  border-bottom:1px solid var(--border);
-}
-
-.finance-head.bank{
-  border-top:4px solid #355d84;
-}
-
-.finance-head.coop{
-  border-top:4px solid #68798a;
-}
-
-.finance-name{
-  color:var(--navy);
-  font-size:19px;
-  font-weight:800;
-}
-
-.finance-rate{
-  margin-top:5px;
-  color:var(--muted);
-  font-size:13px;
-}
-
-.finance-body{
-  padding:18px;
-}
-
-.main-quote{
-  background:var(--navy);
-  color:white;
-  border-radius:13px;
-  padding:17px;
-  margin-bottom:15px;
-}
-
-.main-quote small{
-  display:block;
-  color:#c8d3de;
-  font-size:11px;
-  margin-bottom:4px;
-}
-
-.main-quote strong{
-  font-size:28px;
-}
-
-.quote-list{
-  display:flex;
-  flex-direction:column;
-  gap:9px;
-}
-
-.quote-row{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  font-size:12px;
-  border-bottom:1px solid #edf0f3;
-  padding-bottom:8px;
-}
-
-.quote-row:last-child{
-  border-bottom:0;
-}
-
-.quote-row span:first-child{
-  color:var(--muted);
-}
-
-.quote-row strong{
-  color:var(--navy);
-}
-
-.total-row{
-  background:#f3f6f8;
-  border-radius:10px;
-  padding:12px;
-  margin-top:12px;
-}
-
-.total-row strong{
-  font-size:16px;
-}
-
-.conditions{
-  margin-top:15px;
-  background:#fafbfc;
-  border:1px solid var(--border);
-  border-radius:10px;
-  padding:12px;
-  font-size:11px;
-  color:#687582;
-  line-height:1.55;
-}
-
-.result-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:18px;
-}
-
-.result-card{
-  background:linear-gradient(135deg,var(--navy),var(--navy2));
-  color:white;
-  border-radius:17px;
-  padding:24px;
-}
-
-.result-card.coop{
-  background:linear-gradient(135deg,#394c5f,#566879);
-}
-
-.result-card small{
-  color:#c8d3dd;
-  font-size:11px;
-}
-
-.result-card h3{
-  margin:5px 0 16px;
-  font-size:22px;
-}
-
-.result-amount{
-  font-size:34px;
-  font-weight:800;
-  margin:5px 0 17px;
-}
-
-.result-detail{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:9px;
-}
-
-.result-detail div{
-  background:rgba(255,255,255,.08);
-  border-radius:9px;
-  padding:10px;
-}
-
-.result-detail span{
-  display:block;
-  color:#cbd5df;
-  font-size:10px;
-}
-
-.result-detail strong{
-  display:block;
-  margin-top:3px;
-  font-size:13px;
-}
-
-.selected-box{
-  background:#f4f7f9;
-  border:1px solid var(--border);
-  border-radius:15px;
-  padding:20px;
-  margin-top:20px;
-}
-
-.selected-box h3{
-  margin:0 0 16px;
-  color:var(--navy);
-}
-
-.selected-main{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:20px;
-}
-
-.selected-main .label{
-  color:var(--muted);
-  font-size:12px;
-}
-
-.selected-main .value{
-  color:var(--navy);
-  font-size:30px;
-  font-weight:800;
-}
-
-.detail-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
-}
-
-.detail-row{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  padding:11px 12px;
-  border-bottom:1px solid #edf0f3;
-  font-size:12px;
-}
-
-.detail-row span{
-  color:var(--muted);
-}
-
-.detail-row strong{
-  color:var(--navy);
-  text-align:right;
-}
-
-.table-wrap{
-  overflow-x:auto;
-  border:1px solid var(--border);
-  border-radius:12px;
-}
-
-table{
-  width:100%;
-  border-collapse:collapse;
-  min-width:650px;
-  font-size:11px;
-}
-
-th{
-  background:var(--navy);
-  color:white;
-  padding:11px 8px;
-  text-align:right;
-}
-
-th:first-child{
-  text-align:center;
-}
-
-td{
-  padding:9px 8px;
-  border-bottom:1px solid #edf0f3;
-  text-align:right;
-}
-
-td:first-child{
-  text-align:center;
-}
-
-tr:last-child td{
-  border-bottom:0;
-}
-
-.final-card{
-  text-align:center;
-  padding:35px 20px;
-}
-
-.final-card h2{
-  color:var(--navy);
-  font-size:27px;
-  margin:0;
-}
-
-.final-card p{
-  color:var(--muted);
-  font-size:14px;
-}
-
-.final-highlight{
-  max-width:520px;
-  margin:25px auto;
-  background:var(--navy);
-  color:white;
-  border-radius:17px;
-  padding:22px;
-}
-
-.final-highlight small{
-  color:#cbd5df;
-}
-
-.final-highlight strong{
-  display:block;
-  font-size:33px;
-  margin-top:5px;
-}
-
-.final-data{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-bottom:25px;
-}
-
-.final-pill{
-  background:#f2f5f7;
-  border:1px solid var(--border);
-  padding:10px 15px;
-  border-radius:10px;
-  font-size:12px;
-  color:#52606d;
-}
-
-.footer{
-  text-align:center;
-  color:#89939e;
-  font-size:11px;
-  padding:5px 10px 25px;
-}
-
-.muted-note{
-  font-size:11px;
-  color:#7c8792;
-  margin-top:8px;
-  line-height:1.5;
-}
-
-.hidden{
-  display:none!important;
-}
-
-@media(max-width:760px){
-
-  .header{
-    padding:18px 14px 24px;
-  }
-
-  .brand h1{
-    font-size:21px;
-  }
-
-  .container{
-    padding:0 9px;
-  }
-
-  .card{
-    padding:18px;
-    border-radius:14px;
-  }
-
-  .progress-wrap{
-    padding:14px 10px;
-  }
-
-  .progress-label{
-    font-size:8px;
-  }
-
-  .grid,
-  .grid-3,
-  .compare,
-  .result-grid,
-  .detail-grid{
-    grid-template-columns:1fr;
-  }
-
-  .option-grid{
-    grid-template-columns:repeat(3,1fr);
-  }
-
-  .step-head h2{
-    font-size:21px;
-  }
-
-  .welcome h2{
-    font-size:25px;
-  }
-
-  .selected-main{
-    flex-direction:column;
-    align-items:flex-start;
-  }
-
-  .result-amount{
-    font-size:30px;
-  }
-
-  .navigation{
-    flex-direction:column-reverse;
-  }
-
-  .navigation .btn{
-    width:100%;
-  }
-}
-
-@media print{
-
-  body{
-    background:white;
-  }
-
-  .header{
-    background:white;
-    color:black;
-    border-bottom:2px solid var(--navy);
-  }
-
-  .logo{
-    border:1px solid #aaa;
-  }
-
-  .progress-wrap,
-  .navigation,
-  .footer,
-  .btn{
-    display:none!important;
-  }
-
-  .container{
-    margin:0;
-    max-width:none;
-  }
-
-  .step{
-    display:none!important;
-  }
-
-  #s8.active,
-  #s9.active,
-  #s10.active{
-    display:block!important;
-  }
-
-  .card{
-    box-shadow:none;
-  }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoClick | Asesoría en Vehículos Comerciales</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #3D4147; }
+        
+        .hero-bg { 
+            background: linear-gradient(rgba(11, 46, 89, 0.85), rgba(11, 46, 89, 0.95)), url('https://images.unsplash.com/photo-1574169208507-843761a4868b?q=80&w=2000'); 
+            background-size: cover; 
+            background-position: center; 
+        }
+
+        #chat-widget {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: bottom right;
+        }
+        .chat-hidden {
+            opacity: 0;
+            transform: scale(0.9) translateY(20px);
+            pointer-events: none;
+        }
+        .chat-visible {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+        }
+        .msg-enter {
+            animation: msgFadeIn 0.3s ease-out forwards;
+        }
+        @keyframes msgFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .typing-dot {
+            animation: typing 1.4s infinite ease-in-out;
+            fill: #9ca3af;
+        }
+        .typing-dot:nth-child(1) { animation-delay: 0s; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+
+        #chat-messages::-webkit-scrollbar { width: 6px; }
+        #chat-messages::-webkit-scrollbar-track { background: transparent; }
+        #chat-messages::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 10px; }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            border-color: #F36F21;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
+<body class="antialiased selection:bg-[#F36F21] selection:text-white flex flex-col min-h-screen">
 
-<body>
+    <nav class="fixed w-full z-40 bg-white/95 backdrop-blur-md border-b border-gray-100 px-6 md:px-12 py-4 flex justify-between items-center shadow-sm">
+        <div class="text-2xl font-bold tracking-tight text-[#0B2E59]">AUTOCLICK</div>
+        <div class="hidden md:flex gap-8 font-medium text-sm text-gray-600">
+            <a href="#inicio" class="hover:text-[#F36F21] transition">Inicio</a>
+            <a href="#nosotros" class="hover:text-[#F36F21] transition">Por qué elegirnos</a>
+            <a href="#catalogo" class="hover:text-[#F36F21] transition">Explorar Modelos</a>
+        </div>
+        <div class="flex items-center gap-4">
+            <button onclick="directWhatsApp('Hola, quiero recibir asesoría de AutoClick sobre un vehículo.')" class="hidden md:flex text-gray-600 hover:text-[#0B2E59] font-medium text-sm items-center gap-2">
+                WhatsApp
+            </button>
+            <button onclick="openChat()" class="bg-[#F36F21] text-white px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider hover:bg-[#d55d14] transition shadow-md shadow-[#F36F21]/20">
+                Hablar con Asesor
+            </button>
+        </div>
+    </nav>
 
-<header class="header">
-  <div class="header-inner">
-    <div class="brand">
-      <div class="logo">AC</div>
-      <div>
-        <h1>AutoClick</h1>
-        <p>Cotizador Automotriz · Simulación profesional de financiamiento</p>
-      </div>
-    </div>
-  </div>
-</header>
-
-<main class="container">
-
-  <div class="progress-wrap">
-    <div class="progress-line">
-      <div class="progress-fill" id="progress"></div>
-    </div>
-
-    <div class="progress-labels">
-      <div class="progress-label active">Inicio</div>
-      <div class="progress-label">Cliente</div>
-      <div class="progress-label">Vehículo</div>
-      <div class="progress-label">Equipamiento</div>
-      <div class="progress-label">Financiamiento</div>
-      <div class="progress-label">Comparar</div>
-      <div class="progress-label">Resultado</div>
-      <div class="progress-label">Detalle</div>
-      <div class="progress-label">Amortización</div>
-      <div class="progress-label">Finalizar</div>
-    </div>
-  </div>
-
-
-  <!-- PASO 1 -->
-  <section class="step active" id="s1">
-    <div class="card welcome">
-
-      <div class="welcome-icon">AC</div>
-
-      <h2>Cotizador Automotriz</h2>
-
-      <p>
-        Simula una operación de financiamiento vehicular de forma clara,
-        ordenada y profesional. Ingresa los datos de la operación y compara
-        las condiciones entre Banco y Cooperativa.
-      </p>
-
-      <div class="info-strip">
-        <strong>AutoClick</strong><br>
-        Herramienta de apoyo comercial para estructurar cotizaciones,
-        comparar alternativas de financiamiento y presentar al cliente
-        una propuesta clara.
-      </div>
-
-      <button class="btn btn-primary btn-wide" onclick="go(2)">
-        Iniciar cotización
-      </button>
-
-    </div>
-  </section>
-
-
-  <!-- PASO 2 -->
-  <section class="step" id="s2">
-    <div class="card">
-
-      <div class="step-head">
-        <div class="step-number">Paso 2 · Cliente</div>
-        <h2>Información del cliente</h2>
-        <p>Registra los datos básicos para identificar la cotización.</p>
-      </div>
-
-      <div class="grid">
-
-        <div class="field">
-          <label>Nombre del cliente</label>
-          <input id="cliente" placeholder="Ej. Carlos Ramírez">
+    <header id="inicio" class="hero-bg min-h-screen flex flex-col items-center justify-center text-white px-6 text-center pt-20 relative">
+        <span class="bg-white/10 text-white/90 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest mb-6 border border-white/20 backdrop-blur-sm">Personal Shopper Automotriz</span>
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 max-w-5xl tracking-tight leading-tight">Encuentra el vehículo ideal para tu negocio.</h1>
+        <p class="text-lg md:text-xl mb-10 max-w-2xl opacity-90 font-light leading-relaxed">En AutoClick comparamos las mejores marcas del mercado para ayudarte a tomar la mejor decisión de compra.</p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 w-full max-w-md justify-center">
+            <button onclick="openChat()" class="bg-[#F36F21] text-white px-8 py-4 rounded-full font-bold text-sm tracking-wide hover:bg-[#d55d14] transition shadow-lg shadow-[#F36F21]/30">
+                Solicitar Asesoría
+            </button>
+            <a href="#catalogo" class="border border-white/40 bg-black/20 backdrop-blur-sm text-white px-8 py-4 rounded-full font-bold text-sm tracking-wide hover:bg-white hover:text-[#0B2E59] transition">
+                Ver Catálogo
+            </a>
         </div>
 
-        <div class="field">
-          <label>Cédula / RUC</label>
-          <input id="cedula" placeholder="Identificación">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 text-center max-w-4xl w-full border-t border-white/10 pt-10">
+            <div><div class="text-3xl font-bold">+100</div><p class="text-xs uppercase tracking-widest opacity-80 mt-1">Clientes Asesorados</p></div>
+            <div><div class="text-3xl font-bold">+80</div><p class="text-xs uppercase tracking-widest opacity-80 mt-1">Modelos Disponibles</p></div>
+            <div><div class="text-3xl font-bold">8</div><p class="text-xs uppercase tracking-widest opacity-80 mt-1">Marcas Comerciales</p></div>
+            <div><div class="text-3xl font-bold">1:1</div><p class="text-xs uppercase tracking-widest opacity-80 mt-1">Atención Personalizada</p></div>
+        </div>
+    </header>
+
+    <section id="nosotros" class="py-24 px-6 md:px-12 max-w-7xl mx-auto bg-white">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-[#0B2E59] mb-4">¿Por qué elegir AutoClick?</h2>
+            <p class="text-gray-600 text-base leading-relaxed">AutoClick nace para transformar la forma en que empresas y emprendedores compran vehículos comerciales. Nuestro equipo analiza tus necesidades, compara marcas, identifica la mejor alternativa y te acompaña durante todo el proceso de compra. <br><br><strong>No vendemos únicamente camiones. Ayudamos a invertir correctamente.</strong></p>
         </div>
 
-        <div class="field">
-          <label>Teléfono / WhatsApp</label>
-          <input id="telefono" placeholder="09XXXXXXXX">
-        </div>
-
-        <div class="field">
-          <label>Correo electrónico</label>
-          <input id="correo" type="email" placeholder="cliente@email.com">
-        </div>
-
-        <div class="field full">
-          <label>Asesor comercial</label>
-          <input id="asesor" placeholder="Nombre del asesor">
-        </div>
-
-      </div>
-
-      <div class="navigation">
-        <button class="btn btn-secondary" onclick="go(1)">Atrás</button>
-        <button class="btn btn-primary" onclick="go(3)">Continuar</button>
-      </div>
-
-    </div>
-  </section>
-
-
-  <!-- PASO 3 -->
-  <section class="step" id="s3">
-    <div class="card">
-
-      <div class="step-head">
-        <div class="step-number">Paso 3 · Vehículo</div>
-        <h2>Datos del vehículo</h2>
-        <p>Ingresa el valor comercial y los descuentos aplicables.</p>
-      </div>
-
-      <div class="grid">
-
-        <div class="field">
-          <label>Marca</label>
-          <input id="marca" placeholder="Ej. FAW, HOWO, JAC, Chevrolet">
-        </div>
-
-        <div class="field">
-          <label>Modelo</label>
-          <input id="modelo" placeholder="Modelo / versión">
-        </div>
-
-        <div class="field">
-          <label>Año</label>
-          <input id="anio" type="number" placeholder="2026">
-        </div>
-
-        <div class="field">
-          <label>Precio del vehículo</label>
-          <div class="prefix">
-            <span>$</span>
-            <input id="precio" type="number" min="0" step="0.01" placeholder="0.00">
-          </div>
-        </div>
-
-        <div class="field">
-          <label>Descuento comercial</label>
-          <div class="prefix">
-            <span>$</span>
-            <input id="descuento" type="number" min="0" step="0.01" value="0">
-          </div>
-        </div>
-
-        <div class="field">
-          <label>Otros gastos de operación</label>
-          <div class="prefix">
-            <span>$</span>
-            <input id="otros" type="number" min="0" step="0.01" value="0">
-          </div>
-        </div>
-
-      </div>
-
-      <div class="navigation">
-        <button class="btn btn-secondary" onclick="go(2)">Atrás</button>
-        <button class="btn btn-primary" onclick="go(4)">Continuar</button>
-      </div>
-
-    </div>
-  </section>
-
-
-  <!-- PASO 4 -->
-  <section class="step" id="s4">
-    <div class="card">
-
-      <div class="step-head">
-        <div class="step-number">Paso 4 · Equipamiento</div>
-        <h2>Carrocería, accesorios y rastreo</h2>
-        <p>Agrega los componentes adicionales de la operación.</p>
-      </div>
-
-      <div class="grid">
-
-        <div class="field">
-          <label>Carrocería / furgón</label>
-          <select id="carroceria">
-            <option value="">Sin carrocería</option>
-            <option>Furgón</option>
-            <option>Plataforma</option>
-            <option>Tanque</option>
-            <option>Volqueta</option>
-            <option>Refrigerado</option>
-            <option>Otro</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Valor carrocería</label>
-          <div class="prefix">
-            <span>$</span>
-            <input id="vcarro" type="number" min="0" step="0.01" value="0">
-          </div>
-        </div>
-
-        <div class="field">
-          <label>Accesorios / equipamiento</label>
-          <input id="acc" placeholder="Descripción">
-        </div>
-
-        <div class="field">
-          <label>Valor accesorios</label>
-          <div class="prefix">
-            <span>$</span>
-            <input id="vacc" type="number" min="0" step="0.01" value="0">
-          </div>
-        </div>
-
-        <div class="field">
-          <label>Rastreo satelital</label>
-          <select id="rastreo" onchange="rastreoCambio()">
-            <option value="">No incluido</option>
-            <option value="1">1 año · $1.081</option>
-            <option value="2">2 años · Valor pendiente</option>
-            <option value="3">3 años · Valor pendiente</option>
-            <option value="4">4 años · Valor pendiente</option>
-            <option value="5">5 años · $2.300</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Años de rastreo</label>
-          <input id="rastreoAnios" readonly placeholder="—">
-        </div>
-
-        <div class="field full">
-          <label>Valor rastreo</label>
-          <div class="prefix">
-            <span>$</span>
-            <input id="vrastreo" type="number" min="0" step="0.01" value="0">
-          </div>
-          <div class="muted-note">
-            Los valores de 2, 3 y 4 años quedan pendientes de parametrización.
-          </div>
-        </div>
-
-      </div>
-
-      <div class="navigation">
-        <button class="btn btn-secondary" onclick="go(3)">Atrás</button>
-        <button class="btn btn-primary" onclick="go(5)">Continuar</button>
-      </div>
-
-    </div>
-  </section>
-
-
-  <!-- PASO 5 -->
-  <section class="step" id="s5">
-    <div class="card">
-
-      <div class="step-head">
-        <div class="step-number">Paso 5 · Financiamiento</div>
-        <h2>Entrada y plazo</h2>
-        <p>Define la estructura financiera de la operación.</p>
-      </div>
-
-      <div class="section-title">Porcentaje de entrada</div>
-
-      <div class="option-grid">
-
-        <div class="option">
-          <input type="radio" name="entrada" id="e0" value="0" checked onchange="entradaSeleccionada(0)">
-          <label for="e0">0%</label>
-        </div>
-
-        <div class="option">
-          <input type="radio" name="entrada" id="e10" value="10" onchange="entradaSeleccionada(10)">
-          <label for="e10">10%</label>
-        </div>
-
-        <div class="option">
-          <input type="radio" name="entrada" id="e20" value="20" onchange="entradaSeleccionada(20)">
-          <label for="e20">20%</label>
-        </div>
-
-        <div class="option">
-          <input type="radio" name="entrada" id="e25" value="25" onchange="entradaSeleccionada(25)">
-          <label for="e25">25%</label>
-        </div>
-
-        <div class="option">
-          <input type="radio" name="entrada" id="e30" value="30" onchange="entradaSeleccionada(30)">
-          <label for="e30">30%</label>
-        </div>
-
-      </div>
-
-      <div class="grid" style="margin-top:16px">
-
-        <div class="field">
-          <label>Entrada personalizada (%)</label>
-          <input id="entradaPct" type="number" min="0" max="100" step="0.01"
-                 placeholder="Ej. 15">
-        </div>
-
-        <div class="field">
-          <label>Plazo</label>
-          <select id="plazo">
-            <option value="36">36 meses</option>
-            <option value="48">48 meses</option>
-            <option value="60" selected>60 meses</option>
-          </select>
-        </div>
-
-      </div>
-
-      <div class="check-box">
-        <input type="checkbox" id="ahorroActivo">
-        <label for="ahorroActivo">
-          Activar <strong>ahorro programado opcional</strong>.
-          Se calcula a razón de <strong>$10 por cada $10.000 financiados</strong>.
-        </label>
-      </div>
-
-      <div class="navigation">
-        <button class="btn btn-secondary" onclick="go(4)">Atrás</button>
-        <button class="btn btn-primary" onclick="go(6)">Comparar financiamiento</button>
-      </div>
-
-    </div>
-  </section>
-
-
-  <!-- PASO 6 -->
-  <section class="step" id="s6">
-    <div class="card">
-
-      <div class="step-head">
-        <div class="step-number">Paso 6 · Comparación</div>
-        <h2>Banco vs. Cooperativa</h2>
-        <p>
-          Revisa las dos alternativas con la misma operación comercial.
-        </p>
-      </div>
-
-      <div class="compare">
-
-        <div class="finance-card">
-
-          <div class="finance-head bank">
-            <div class="finance-name">Banco</div>
-            <div class="finance-rate">
-              Tasa nominal anual: <strong>15,50%</strong>
+        <div class="grid md:grid-cols-3 gap-8 mb-20">
+            <div class="p-8 border border-gray-100 rounded-2xl bg-gray-50 transition-colors hover:bg-white hover:shadow-lg">
+                <div class="text-3xl mb-4">🎯</div>
+                <h3 class="font-bold text-lg mb-2 text-[#0B2E59]">Asesoría personalizada</h3>
+                <p class="text-sm text-gray-500">Análisis detallado de la operación y carga.</p>
             </div>
-          </div>
-
-          <div class="finance-body">
-
-            <div class="main-quote">
-              <small>Cuota mensual estimada</small>
-              <strong id="bcuota">$0,00</strong>
+            <div class="p-8 border border-gray-100 rounded-2xl bg-gray-50 transition-colors hover:bg-white hover:shadow-lg">
+                <div class="text-3xl mb-4">⚖️</div>
+                <h3 class="font-bold text-lg mb-2 text-[#0B2E59]">Comparación entre marcas</h3>
+                <p class="text-sm text-gray-500">Comparamos 8 marcas líderes del mercado.</p>
             </div>
-
-            <div class="quote-list">
-
-              <div class="quote-row">
-                <span>Entrada</span>
-                <strong id="bentrada">$0,00</strong>
-              </div>
-
-              <div class="quote-row">
-                <span>Capital financiado</span>
-                <strong id="bcapital">$0,00</strong>
-              </div>
-
-              <div class="quote-row">
-                <span>Intereses estimados</span>
-                <strong id="binteres">$0,00</strong>
-              </div>
-
-              <div class="quote-row">
-                <span>Otros costos</span>
-                <strong id="bcostos">$0,00</strong>
-              </div>
-
-              <div class="quote-row total-row">
-                <span>Total operación</span>
-                <strong id="btotal">$0,00</strong>
-              </div>
-
+            <div class="p-8 border border-gray-100 rounded-2xl bg-gray-50 transition-colors hover:bg-white hover:shadow-lg">
+                <div class="text-3xl mb-4">💳</div>
+                <h3 class="font-bold text-lg mb-2 text-[#0B2E59]">Financiamiento</h3>
+                <p class="text-sm text-gray-500">Buscamos las mejores tasas y cuotas para ti.</p>
             </div>
-
-            <div class="conditions">
-              Tasa nominal anual: 15,50%. Sin encaje.
+            <div class="p-8 border border-gray-100 rounded-2xl bg-gray-50 transition-colors hover:bg-white hover:shadow-lg">
+                <div class="text-3xl mb-4">🤝</div>
+                <h3 class="font-bold text-lg mb-2 text-[#0B2E59]">Acompañamiento comercial</h3>
+                <p class="text-sm text-gray-500">Te guiamos en cada paso hasta la matriculación.</p>
             </div>
-
-          </div>
+            <div class="p-8 border border-gray-100 rounded-2xl bg-gray-50 transition-colors hover:bg-white hover:shadow-lg">
+                <div class="text-3xl mb-4">🏢</div>
+                <h3 class="font-bold text-lg mb-2 text-[#0B2E59]">Atención empresarial</h3>
+                <p class="text-sm text-gray-500">Asesoría especializada para flotas comerciales.</p>
+            </div>
+            <div class="p-8 border border-gray-100 rounded-2xl bg-gray-50 transition-colors hover:bg-white hover:shadow-lg">
+                <div class="text-3xl mb-4">🚚</div>
+                <h3 class="font-bold text-lg mb-2 text-[#0B2E59]">Entrega de la unidad</h3>
+                <p class="text-sm text-gray-500">Vehículo listo para empezar a producir.</p>
+            </div>
         </div>
-
-
-        <div class="finance-card">
-
-          <div class="finance-head coop">
-            <div class="finance-name">Cooperativa</div>
-            <div class="finance-rate">
-              Tasa nominal anual: <strong>14,50%</strong>
-            </div>
-          </div>
-
-          <div class="finance-body">
-
-            <div class="main-quote">
-              <small>Cuota mensual estimada</small>
-              <strong id="ccuota">$0,00</strong>
-            </div>
-
-            <div class="quote-list">
-
-              <div class="quote-row">
-                <span>Entrada</span>
-                <strong id="centrada">$0,00</strong>
-              </div>
-
-              <div class="quote-row">
-                <span>Capital financiado</span>
-                <strong id="ccapital">$0,00</strong>
-              </div>
-
-              <div class="quote-row">
-                <span>Intereses estimados</span>
-                <strong id="cinteres">$0,00</strong>
-              </div>
-
-              <div class="quote-row">
-                <span>Otros costos</span>
-                <strong id="ccostos">$0,00</strong>
-              </div>
-
-              <div class="quote-row total-row">
-                <span>Total operación</span>
-                <strong id="ctotal">$0,00</strong>
-              </div>
-
-            </div>
-
-            <div class="conditions">
-              Encaje 10% · Fondo irrepartible 3% · SOLCA 0,50% ·
-              Desgravamen 1% mensual · Gastos administrativos $0.
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-
-      <div class="navigation">
-        <button class="btn btn-secondary" onclick="go(5)">Atrás</button>
-        <button class="btn btn-primary" onclick="go(7)">Ver resultado</button>
-      </div>
-
-    </div>
-  </section>
-
-
-  <!-- PASO 7 -->
-  <section class="step" id="s7">
-    <div class="card">
-
-      <div class="step-head">
-        <div class="step-number">Paso 7 · Resultado</div>
-        <h2>Selecciona la alternativa</h2>
-        <p>Elige la institución que utilizarás para continuar la cotización.</p>
-      </div>
-
-      <div class="result-grid">
-
-        <div class="result-card">
-
-          <small>ALTERNATIVA 01</small>
-          <h3>Banco</h3>
-
-          <div class="result-amount" id="bcuota2">$0,00</div>
-
-          <div class="result-detail">
+        
+        <div class="grid md:grid-cols-2 gap-8 bg-[#0B2E59] text-white rounded-3xl p-10 md:p-14">
             <div>
-              <span>Entrada</span>
-              <strong id="bentrada2">$0,00</strong>
+                <h3 class="text-2xl font-bold mb-4 text-[#F36F21]">Misión</h3>
+                <p class="opacity-90 leading-relaxed text-sm">Brindar asesoría profesional e independiente para la compra de camiones y vehículos comerciales, conectando a nuestros clientes con la mejor opción del mercado mediante un proceso transparente, eficiente y orientado a generar valor para su negocio.</p>
             </div>
-
             <div>
-              <span>Plazo</span>
-              <strong id="bplazo2">60 meses</strong>
+                <h3 class="text-2xl font-bold mb-4 text-[#F36F21]">Visión</h3>
+                <p class="opacity-90 leading-relaxed text-sm">Ser la plataforma líder en asesoría para la compra de vehículos comerciales en Ecuador, reconocida por nuestra confianza, innovación y excelencia en el acompañamiento de nuestros clientes.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="catalogo" class="py-24 bg-gray-50 px-6 md:px-12">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-[#F36F21] font-semibold text-xs uppercase tracking-widest">Marketplace</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-[#0B2E59] mt-2">Unidades Destacadas</h2>
             </div>
 
-            <div>
-              <span>Capital</span>
-              <strong id="bcapital2">$0,00</strong>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 card-hover transition duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="bg-gray-100 h-48 rounded-xl mb-4 flex items-center justify-center text-4xl">🚚</div>
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="text-xl font-bold text-[#0B2E59]">FAW JH6 460 HP</h3>
+                            <span class="text-xs font-semibold bg-blue-50 text-[#0B2E59] px-2 py-1 rounded">FAW</span>
+                        </div>
+                        <p class="text-xs text-gray-400 uppercase tracking-wider mb-4">Camión Pesado</p>
+                        <ul class="text-xs text-gray-600 space-y-2 mb-6">
+                            <li><strong>Capacidad:</strong> 48 Toneladas</li>
+                            <li><strong>Motor:</strong> Diésel 460 HP</li>
+                            <li><strong>Aplicación:</strong> Transporte Pesado</li>
+                        </ul>
+                    </div>
+                    <div class="space-y-2 mt-auto">
+                        <button onclick="requestQuote('FAW JH6 460 HP')" class="w-full bg-[#0B2E59] text-white py-3 rounded-xl text-xs font-bold hover:bg-gray-800 transition">Solicitar Cotización</button>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="directWhatsApp('Hola, quiero solicitar la ficha técnica del FAW JH6 460 HP.')" class="border border-gray-300 py-2 rounded-xl text-[11px] font-semibold text-gray-700 hover:bg-gray-50">Ficha PDF</button>
+                            <button onclick="directWhatsApp('Hola, quiero hablar con un asesor sobre el FAW JH6 460 HP.')" class="border border-green-200 bg-green-50 text-green-700 py-2 rounded-xl text-[11px] font-semibold hover:bg-green-100">WhatsApp</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 card-hover transition duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="bg-gray-100 h-48 rounded-xl mb-4 flex items-center justify-center text-4xl">🛻</div>
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="text-xl font-bold text-[#0B2E59]">CHEVROLET D-Max</h3>
+                            <span class="text-xs font-semibold bg-blue-50 text-[#0B2E59] px-2 py-1 rounded">CHEVROLET</span>
+                        </div>
+                        <p class="text-xs text-gray-400 uppercase tracking-wider mb-4">Camioneta de Trabajo</p>
+                        <ul class="text-xs text-gray-600 space-y-2 mb-6">
+                            <li><strong>Capacidad:</strong> 1+ Toneladas</li>
+                            <li><strong>Motor:</strong> Diésel Turbo</li>
+                            <li><strong>Aplicación:</strong> Campo / Ciudad</li>
+                        </ul>
+                    </div>
+                    <div class="space-y-2 mt-auto">
+                        <button onclick="requestQuote('CHEVROLET D-Max')" class="w-full bg-[#0B2E59] text-white py-3 rounded-xl text-xs font-bold hover:bg-gray-800 transition">Solicitar Cotización</button>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="directWhatsApp('Hola, quiero solicitar la ficha técnica de la CHEVROLET D-Max.')" class="border border-gray-300 py-2 rounded-xl text-[11px] font-semibold text-gray-700 hover:bg-gray-50">Ficha PDF</button>
+                            <button onclick="directWhatsApp('Hola, quiero hablar con un asesor sobre la CHEVROLET D-Max.')" class="border border-green-200 bg-green-50 text-green-700 py-2 rounded-xl text-[11px] font-semibold hover:bg-green-100">WhatsApp</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 card-hover transition duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="bg-gray-100 h-48 rounded-xl mb-4 flex items-center justify-center text-4xl">🚕</div>
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="text-xl font-bold text-[#0B2E59]">GAC AION Y</h3>
+                            <span class="text-xs font-semibold bg-blue-50 text-[#0B2E59] px-2 py-1 rounded">GAC</span>
+                        </div>
+                        <p class="text-xs text-gray-400 uppercase tracking-wider mb-4">Taxi Eléctrico</p>
+                        <ul class="text-xs text-gray-600 space-y-2 mb-6">
+                            <li><strong>Segmento:</strong> Eléctrico (EV)</li>
+                            <li><strong>Autonomía:</strong> Larga duración</li>
+                            <li><strong>Aplicación:</strong> Taxi Ejecutivo / Urbano</li>
+                        </ul>
+                    </div>
+                    <div class="space-y-2 mt-auto">
+                        <button onclick="requestQuote('GAC AION Y')" class="w-full bg-[#0B2E59] text-white py-3 rounded-xl text-xs font-bold hover:bg-gray-800 transition">Solicitar Cotización</button>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="directWhatsApp('Hola, quiero solicitar la ficha técnica del GAC AION Y.')" class="border border-gray-300 py-2 rounded-xl text-[11px] font-semibold text-gray-700 hover:bg-gray-50">Ficha PDF</button>
+                            <button onclick="directWhatsApp('Hola, quiero hablar con un asesor sobre el GAC AION Y.')" class="border border-green-200 bg-green-50 text-green-700 py-2 rounded-xl text-[11px] font-semibold hover:bg-green-100">WhatsApp</button>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
+    </section>
 
-            <div>
-              <span>Tasa</span>
-              <strong>15,50%</strong>
+    <div id="chat-widget" class="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-50 w-[92vw] md:w-[400px] h-[80vh] md:h-[600px] max-h-[800px] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col chat-hidden overflow-hidden">
+        
+        <!-- Header -->
+        <div class="bg-[#0B2E59] text-white p-4 flex justify-between items-center shadow-sm relative z-10">
+            <div class="flex items-center gap-3">
+                <div class="relative">
+                    <div class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-xl">👨‍💼</div>
+                    <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-400 border-2 border-[#0B2E59] rounded-full"></div>
+                </div>
+                <div>
+                    <h3 class="font-bold text-sm leading-tight">Asesor AutoClick</h3>
+                    <p class="text-[10px] text-blue-200">Asistente Virtual en línea</p>
+                </div>
             </div>
-          </div>
-
-          <button class="btn btn-secondary"
-                  style="width:100%;margin-top:18px"
-                  onclick="seleccionar('Banco')">
-            Usar Banco
-          </button>
-
+            <button onclick="closeChat()" class="text-white/70 hover:text-white p-1 text-2xl leading-none">&times;</button>
         </div>
 
-
-        <div class="result-card coop">
-
-          <small>ALTERNATIVA 02</small>
-          <h3>Cooperativa</h3>
-
-          <div class="result-amount" id="ccuota2">$0,00</div>
-
-          <div class="result-detail">
-            <div>
-              <span>Entrada</span>
-              <strong id="centrada2">$0,00</strong>
-            </div>
-
-            <div>
-              <span>Plazo</span>
-              <strong id="cplazo2">60 meses</strong>
-            </div>
-
-            <div>
-              <span>Capital</span>
-              <strong id="ccapital2">$0,00</strong>
-            </div>
-
-            <div>
-              <span>Tasa</span>
-              <strong>14,50%</strong>
-            </div>
-          </div>
-
-          <button class="btn btn-secondary"
-                  style="width:100%;margin-top:18px"
-                  onclick="seleccionar('Cooperativa')">
-            Usar Cooperativa
-          </button>
-
+        <!-- Messages Area -->
+        <div id="chat-messages" class="flex-1 p-4 overflow-y-auto bg-gray-50 flex flex-col gap-4 relative scroll-smooth">
+            <!-- Messages injected here -->
         </div>
 
-      </div>
-
-      <div class="selected-box">
-
-        <h3>Alternativa seleccionada</h3>
-
-        <div class="selected-main">
-
-          <div>
-            <div class="label">Institución</div>
-            <strong id="xinstitucion">Pendiente</strong>
-          </div>
-
-          <div>
-            <div class="label">Cuota mensual</div>
-            <div class="value" id="cuota">$0,00</div>
-          </div>
-
-          <div>
-            <div class="label">Plazo</div>
-            <strong id="xplazo">—</strong>
-          </div>
-
-          <div>
-            <div class="label">Entrada</div>
-            <strong id="xentrada">$0,00</strong>
-          </div>
-
-          <div>
-            <div class="label">Capital</div>
-            <strong id="xcapital">$0,00</strong>
-          </div>
-
+        <!-- Typing Indicator -->
+        <div id="typing-indicator" class="hidden px-4 pb-2 bg-gray-50">
+            <div class="bg-white border border-gray-100 rounded-2xl rounded-tl-none px-4 py-3 w-max shadow-sm">
+                <svg width="24" height="12" viewBox="0 0 24 12" xmlns="http://www.w3.org/2000/svg">
+                    <circle class="typing-dot" cx="4" cy="6" r="3"/>
+                    <circle class="typing-dot" cx="12" cy="6" r="3"/>
+                    <circle class="typing-dot" cx="20" cy="6" r="3"/>
+                </svg>
+                <span class="text-[10px] text-gray-400 ml-2">Escribiendo...</span>
+            </div>
         </div>
 
-      </div>
-
-      <div class="navigation">
-        <button class="btn btn-secondary" onclick="go(6)">Atrás</button>
-        <button class="btn btn-primary" onclick="go(8)">Ver detalle</button>
-      </div>
-
+        <!-- Input Area -->
+        <div class="p-3 bg-white border-t border-gray-100 flex gap-2 items-end">
+            <textarea id="chat-input" rows="1" placeholder="Escribe un mensaje..." class="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#F36F21] focus:bg-white resize-none max-h-24 min-h-[44px] transition-colors" onkeydown="handleEnter(event)"></textarea>
+            <button onclick="processUserInput()" class="bg-[#F36F21] text-white p-3 rounded-xl hover:bg-[#d55d14] transition-colors flex-shrink-0 flex items-center justify-center">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+            </button>
+        </div>
     </div>
-  </section>
-
-
-  <!-- PASO 8 -->
-  <section class="step" id="s8">
-    <div class="card">
-
-      <div class="step-head">
-        <div class="step-number">Paso 8 · Detalle</div>
-        <h2>Detalle de la operación</h2>
-        <p>Revisa cómo se construye la propuesta seleccionada.</p>
-      </div>
-
-      <div class="detail-grid">
-
-        <div class="detail-row">
-          <span>Vehículo</span>
-          <strong id="dveh">$0,00</strong>
-        </div>
-
-        <div class="detail-row">
-          <span>Carrocería</span>
-          <strong id="dcar">$0,00</strong>
-        </div>
-
-        <div class="detail-row">
-          <span>Accesorios</span>
-          <strong id="dacc">$0,00</strong>
-        </div>
-
-        <div class="detail-row">
-          <span>Rastreo</span>
-          <strong id="drast">$0,00</strong>
-        </div>
-
-        <div class="detail-row">
-          <span>Otros gastos</span>
-          <strong id="dotros">$0,00</strong>
-        </div>
-
-        <div class="detail-row">
-          <span>Total operación</span>
-          <strong id="dop">$0,00</strong>
-        </div>
-
-        <div class="detail-row">
-          <span>Entrada</span>
-          <strong id="dentrada">$0,00</strong>
-        </div>
-
-        <div class="detail-row">
-          <span>Saldo base</span>
-          <strong id="dsaldo">$0,00</strong>
-        </div>
-
-        <div class="detail-row">
-          <span>Encaje</span>
-          <strong id="dencaje">$0,00</strong>
-        </div>
-
-        <div class="detail-row">
-          <span>Capital financiado</span>
-          <strong id="dcapital">$0,00</strong>
-        </div>
-
-        <div class="detail-row">
-          <span>Intereses</span>
-          <strong id="dinteres">$0,00</strong>
-        </div>
-
-        <div class="detail-row">
-          <span>Desgravamen</span>
-          <strong id="ddes">$0,00</strong>
-        </div>
 
-        <div class="detail-row">
-          <span>Fondo irrepartible</span>
-          <strong id="dfondo">$0,00</strong>
-        </div>
-
-        <div class="detail-row">
-          <span>SOLCA</span>
-          <strong id="dsolca">$0,00</strong>
-        </div>
-
-        <div class="detail-row">
-          <span>Gastos administrativos</span>
-          <strong id="dadmin">$0,00</strong>
-        </div>
-
-        <div class="detail-row">
-          <span>Ahorro programado</span>
-          <strong id="dahorro">$0,00</strong>
-        </div>
-
-        <div class="detail-row" style="grid-column:1/-1;background:#f4f7f9;border-radius:10px">
-          <span><strong>Total general</strong></span>
-          <strong id="dtotal">$0,00</strong>
-        </div>
-
-        <div class="detail-row" style="grid-column:1/-1">
-          <span>Tasa efectiva anual equivalente</span>
-          <strong id="defectiva">0,00%</strong>
-        </div>
-
-      </div>
-
-      <div class="navigation">
-        <button class="btn btn-secondary" onclick="go(7)">Atrás</button>
-        <button class="btn btn-primary" onclick="go(9)">Ver amortización</button>
-      </div>
-
-    </div>
-  </section>
-
-
-  <!-- PASO 9 -->
-  <section class="step" id="s9">
-    <div class="card">
-
-      <div class="step-head">
-        <div class="step-number">Paso 9 · Amortización</div>
-        <h2>Tabla de amortización</h2>
-        <p>Proyección de capital, interés y saldo durante el plazo seleccionado.</p>
-      </div>
-
-      <div class="table-wrap">
-
-        <table>
-          <thead>
-            <tr>
-              <th>Mes</th>
-              <th>Cuota</th>
-              <th>Interés</th>
-              <th>Capital</th>
-              <th>Saldo</th>
-            </tr>
-          </thead>
-
-          <tbody id="tabla"></tbody>
-
-        </table>
-
-      </div>
-
-      <div class="navigation">
-        <button class="btn btn-secondary" onclick="go(8)">Atrás</button>
-        <button class="btn btn-primary" onclick="go(10)">Finalizar cotización</button>
-      </div>
-
-    </div>
-  </section>
-
-
-  <!-- PASO 10 -->
-  <section class="step" id="s10">
-    <div class="card final-card">
-
-      <div class="welcome-icon">AC</div>
-
-      <h2>Cotización lista</h2>
-
-      <p>
-        La simulación ha sido estructurada y está lista para ser presentada
-        al cliente.
-      </p>
-
-      <div class="final-highlight">
-
-        <small id="finInst">Institución</small>
-
-        <strong id="finCuota">$0,00</strong>
-
-        <small>
-          Cuota mensual estimada
-        </small>
-
-      </div>
-
-      <div class="final-data">
-
-        <div class="final-pill">
-          Plazo: <strong id="finPlazo">—</strong>
-        </div>
-
-        <div class="final-pill">
-          Entrada: <strong id="finEntrada">$0,00</strong>
-        </div>
-
-        <div class="final-pill">
-          Capital: <strong id="finCapital">$0,00</strong>
-        </div>
-
-      </div>
-
-      <div class="navigation" style="justify-content:center">
-
-        <button class="btn btn-secondary" onclick="window.print()">
-          Imprimir / PDF
-        </button>
-
-        <button class="btn btn-whatsapp" onclick="whatsapp()">
-          Enviar por WhatsApp
-        </button>
-
-        <button class="btn btn-primary" onclick="nuevo()">
-          Nueva cotización
-        </button>
-
-      </div>
-
-    </div>
-  </section>
-
-  <div class="footer">
-    AutoClick · Cotizador Automotriz · Herramienta de apoyo comercial
-  </div>
-
-</main>
-
-
-<script>
-
-const rast = {
-  1:1081,
-  2:null,
-  3:null,
-  4:null,
-  5:2300
-};
-
-
-const cfg = {
-
-  Banco:{
-    tasa:15.5,
-    encaje:0,
-    fondo:0,
-    solca:0,
-    des:0.05
-  },
-
-  Cooperativa:{
-    tasa:14.5,
-    encaje:10,
-    fondo:3,
-    solca:0.5,
-    des:1
-  }
-
-};
-
-
-let institucionSeleccionada = "Banco";
-
-
-function money(n){
-
-  n = Number(n) || 0;
-
-  return n.toLocaleString("es-EC",{
-    style:"currency",
-    currency:"USD",
-    minimumFractionDigits:2
-  });
-
-}
-
-
-function num(id){
-
-  return Number(document.getElementById(id)?.value) || 0;
-
-}
-
-
-function getEntradaPct(){
-
-  const personalizada = Number(
-    document.getElementById("entradaPct").value
-  );
-
-  if(
-    document.getElementById("entradaPct").value !== "" &&
-    personalizada >= 0 &&
-    personalizada <= 100
-  ){
-
-    return personalizada;
-
-  }
-
-  const checked = document.querySelector(
-    'input[name="entrada"]:checked'
-  );
-
-  return checked ? Number(checked.value) : 0;
-
-}
-
-
-function getPlazo(){
-
-  return Number(document.getElementById("plazo").value) || 60;
-
-}
-
-
-function baseOperacion(){
-
-  const precio = num("precio");
-
-  const descuento = num("descuento");
-
-  const otros = num("otros");
-
-  const carro = num("vcarro");
-
-  const acc = num("vacc");
-
-  const rastreo = num("vrastreo");
-
-  const vehiculoNeto = Math.max(0,precio-descuento);
-
-  return {
-    vehiculoNeto,
-    carro,
-    acc,
-    rastreo,
-    otros,
-    total:vehiculoNeto+carro+acc+rastreo+otros
-  };
-
-}
-
-
-function pmt(rate,nper,pv){
-
-  if(rate===0){
-
-    return pv/nper;
-
-  }
-
-  return pv*rate/(1-Math.pow(1+rate,-nper));
-
-}
-
-
-function datos(inst){
-
-  const c = cfg[inst];
-
-  const op = baseOperacion();
-
-  const entradaPct = getEntradaPct();
-
-  const plazo = getPlazo();
-
-  const entrada = op.total*(entradaPct/100);
-
-  const saldoBase = Math.max(0,op.total-entrada);
-
-  const encaje = saldoBase*(c.encaje/100);
-
-  const capital = saldoBase+encaje;
-
-  const tasaMensual = (c.tasa/100)/12;
-
-  const cuotaBase = pmt(
-    tasaMensual,
-    plazo,
-    capital
-  );
-
-  const interes = Math.max(
-    0,
-    cuotaBase*plazo-capital
-  );
-
-  const desMensual =
-    capital*(c.des/100);
-
-  const desTotal =
-    desMensual*plazo;
-
-  const ahorroActivo =
-    document.getElementById("ahorroActivo").checked;
-
-  const ahorroMensual =
-    ahorroActivo
-    ? (capital/10000)*10
-    : 0;
-
-  const ahorroTotal =
-    ahorroMensual*plazo;
-
-  const fondo =
-    saldoBase*(c.fondo/100);
-
-  const solca =
-    op.total*(c.solca/100);
-
-  const admin = 0;
-
-  const otrosCostos =
-    desTotal+
-    fondo+
-    solca+
-    admin+
-    ahorroTotal;
-
-  const cuotaMensual =
-    cuotaBase+
-    desMensual+
-    ahorroMensual;
-
-  const totalGeneral =
-    entrada+
-    cuotaBase*plazo+
-    desTotal+
-    fondo+
-    solca+
-    admin+
-    ahorroTotal;
-
-  const efectiva =
-    (Math.pow(1+tasaMensual,12)-1)*100;
-
-  return {
-
-    inst,
-    plazo,
-    entradaPct,
-    vehiculoNeto:op.vehiculoNeto,
-    carro:op.carro,
-    acc:op.acc,
-    rastreo:op.rastreo,
-    otros:op.otros,
-    operacion:op.total,
-    entrada,
-    saldoBase,
-    encaje,
-    capital,
-    tasa:c.tasa,
-    tasaMensual,
-    cuotaBase,
-    cuotaMensual,
-    interes,
-    desMensual,
-    desTotal,
-    fondo,
-    solca,
-    admin,
-    ahorroMensual,
-    ahorroTotal,
-    otrosCostos,
-    totalGeneral,
-    efectiva
-
-  };
-
-}
-
-
-function calcular(){
-
-  const b = datos("Banco");
-
-  const c = datos("Cooperativa");
-
-
-  // BANCO
-
-  document.getElementById("bcuota").textContent =
-    money(b.cuotaMensual);
-
-  document.getElementById("bentrada").textContent =
-    money(b.entrada);
-
-  document.getElementById("bcapital").textContent =
-    money(b.capital);
-
-  document.getElementById("binteres").textContent =
-    money(b.interes);
-
-  document.getElementById("bcostos").textContent =
-    money(b.otrosCostos);
-
-  document.getElementById("btotal").textContent =
-    money(b.totalGeneral);
-
-
-  // COOPERATIVA
-
-  document.getElementById("ccuota").textContent =
-    money(c.cuotaMensual);
-
-  document.getElementById("centrada").textContent =
-    money(c.entrada);
-
-  document.getElementById("ccapital").textContent =
-    money(c.capital);
-
-  document.getElementById("cinteres").textContent =
-    money(c.interes);
-
-  document.getElementById("ccostos").textContent =
-    money(c.otrosCostos);
-
-  document.getElementById("ctotal").textContent =
-    money(c.totalGeneral);
-
-
-  // RESULTADO
-
-  document.getElementById("bcuota2").textContent =
-    money(b.cuotaMensual);
-
-  document.getElementById("bentrada2").textContent =
-    money(b.entrada);
-
-  document.getElementById("bcapital2").textContent =
-    money(b.capital);
-
-  document.getElementById("bplazo2").textContent =
-    b.plazo+" meses";
-
-
-  document.getElementById("ccuota2").textContent =
-    money(c.cuotaMensual);
-
-  document.getElementById("centrada2").textContent =
-    money(c.entrada);
-
-  document.getElementById("ccapital2").textContent =
-    money(c.capital);
-
-  document.getElementById("cplazo2").textContent =
-    c.plazo+" meses";
-
-
-  seleccionar(institucionSeleccionada);
-
-}
-
-
-function seleccionar(inst){
-
-  institucionSeleccionada = inst;
-
-  const d = datos(inst);
-
-  document.getElementById("xinstitucion").textContent =
-    inst;
-
-  document.getElementById("cuota").textContent =
-    money(d.cuotaMensual);
-
-  document.getElementById("xplazo").textContent =
-    d.plazo+" meses";
-
-  document.getElementById("xentrada").textContent =
-    money(d.entrada);
-
-  document.getElementById("xcapital").textContent =
-    money(d.capital);
-
-}
-
-
-function detalle(){
-
-  const d = datos(institucionSeleccionada);
-
-  document.getElementById("dveh").textContent =
-    money(d.vehiculoNeto);
-
-  document.getElementById("dcar").textContent =
-    money(d.carro);
-
-  document.getElementById("dacc").textContent =
-    money(d.acc);
-
-  document.getElementById("drast").textContent =
-    money(d.rastreo);
-
-  document.getElementById("dotros").textContent =
-    money(d.otros);
-
-  document.getElementById("dop").textContent =
-    money(d.operacion);
-
-  document.getElementById("dentrada").textContent =
-    money(d.entrada);
-
-  document.getElementById("dsaldo").textContent =
-    money(d.saldoBase);
-
-  document.getElementById("dencaje").textContent =
-    money(d.encaje);
-
-  document.getElementById("dcapital").textContent =
-    money(d.capital);
-
-  document.getElementById("dinteres").textContent =
-    money(d.interes);
-
-  document.getElementById("ddes").textContent =
-    money(d.desTotal);
-
-  document.getElementById("dfondo").textContent =
-    money(d.fondo);
-
-  document.getElementById("dsolca").textContent =
-    money(d.solca);
-
-  document.getElementById("dadmin").textContent =
-    money(d.admin);
-
-  document.getElementById("dahorro").textContent =
-    money(d.ahorroTotal);
-
-  document.getElementById("dtotal").textContent =
-    money(d.totalGeneral);
-
-  document.getElementById("defectiva").textContent =
-    d.efectiva.toFixed(2)+"%";
-
-}
-
-
-function amort(){
-
-  const d = datos(institucionSeleccionada);
-
-  let saldo = d.capital;
-
-  let html = "";
-
-  for(let i=1;i<=d.plazo;i++){
-
-    let interes = saldo*d.tasaMensual;
-
-    let capital = d.cuotaBase-interes;
-
-    if(i===d.plazo){
-
-      capital = saldo;
-
-    }
-
-    let cuota =
-      capital+interes;
-
-    saldo -= capital;
-
-    if(saldo<0.01){
-
-      saldo=0;
-
-    }
-
-    html += `
-
-      <tr>
-
-        <td>${i}</td>
-
-        <td>${money(cuota)}</td>
-
-        <td>${money(interes)}</td>
-
-        <td>${money(capital)}</td>
-
-        <td>${money(saldo)}</td>
-
-      </tr>
-
-    `;
-
-  }
-
-  document.getElementById("tabla").innerHTML = html;
-
-}
-
-
-function final(){
-
-  const d = datos(institucionSeleccionada);
-
-  document.getElementById("finInst").textContent =
-    d.inst;
-
-  document.getElementById("finCuota").textContent =
-    money(d.cuotaMensual);
-
-  document.getElementById("finPlazo").textContent =
-    d.plazo+" meses";
-
-  document.getElementById("finEntrada").textContent =
-    money(d.entrada);
-
-  document.getElementById("finCapital").textContent =
-    money(d.capital);
-
-}
-
-
-function go(numPaso){
-
-  if(numPaso===6){
-
-    calcular();
-
-  }
-
-  if(numPaso===7){
-
-    calcular();
-
-  }
-
-  if(numPaso===8){
-
-    if(!institucionSeleccionada){
-
-      seleccionar("Banco");
-
-    }
-
-    detalle();
-
-  }
-
-  if(numPaso===9){
-
-    amort();
-
-  }
-
-  if(numPaso===10){
-
-    final();
-
-  }
-
-
-  document.querySelectorAll(".step").forEach(
-    s=>s.classList.remove("active")
-  );
-
-  document.getElementById("s"+numPaso)
-    .classList.add("active");
-
-
-  const percent =
-    ((numPaso-1)/9)*100;
-
-  document.getElementById("progress").style.width =
-    Math.max(10,percent)+"%";
-
-
-  document.querySelectorAll(".progress-label")
-    .forEach((x,i)=>{
-
-      x.classList.toggle(
-        "active",
-        i===numPaso-1
-      );
-
-    });
-
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-}
-
-
-function entradaSeleccionada(valor){
-
-  document.getElementById("entradaPct").value = "";
-
-}
-
-
-function rastreoCambio(){
-
-  const value =
-    document.getElementById("rastreo").value;
-
-  const años =
-    document.getElementById("rastreoAnios");
-
-  const valor =
-    document.getElementById("vrastreo");
-
-
-  if(!value){
-
-    años.value="";
-    valor.value=0;
-    return;
-
-  }
-
-
-  años.value=value+" año"+(value>1?"s":"");
-
-
-  if(rast[value] !== null){
-
-    valor.value=rast[value];
-
-  }else{
-
-    valor.value=0;
-
-  }
-
-}
-
-
-function whatsapp(){
-
-  const d = datos(institucionSeleccionada);
-
-  const cliente =
-    document.getElementById("cliente").value ||
-    "cliente";
-
-
-  const marca =
-    document.getElementById("marca").value || "";
-
-  const modelo =
-    document.getElementById("modelo").value || "";
-
-
-  const mensaje =
-`Hola ${cliente}.
-
-Te comparto la simulación de tu vehículo ${marca} ${modelo} realizada con AutoClick.
-
-Institución: ${d.inst}
-Plazo: ${d.plazo} meses
-Entrada: ${money(d.entrada)}
-Capital financiado: ${money(d.capital)}
-Cuota mensual estimada: ${money(d.cuotaMensual)}
-
-Esta simulación es referencial y está sujeta a las condiciones y aprobación de la institución financiera.
-
-Saludos.`;
-
-
-  const url =
-    "https://wa.me/593991930112?text="+
-    encodeURIComponent(mensaje);
-
-
-  window.open(url,"_blank");
-
-}
-
-
-function nuevo(){
-
-  window.location.reload();
-
-}
-
-
-document.querySelectorAll(
-  "#precio,#descuento,#otros,#vcarro,#vacc,#vrastreo,#entradaPct,#plazo,#ahorroActivo"
-).forEach(el=>{
-
-  el.addEventListener("input",()=>{
-
-    if(document.getElementById("s6").classList.contains("active") ||
-       document.getElementById("s7").classList.contains("active")){
-
-      calcular();
-
-    }
-
-  });
-
-  el.addEventListener("change",()=>{
-
-    if(document.getElementById("s6").classList.contains("active") ||
-       document.getElementById("s7").classList.contains("active")){
-
-      calcular();
-
-    }
-
-  });
-
-});
-
-
-</script>
-
+    <!-- Floating Trigger -->
+    <button onclick="openChat()" class="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-40 bg-[#0B2E59] text-white p-4 rounded-full shadow-2xl hover:bg-[#15417a] transition-transform transform hover:scale-105 flex items-center justify-center group">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+        <span class="absolute -top-2 -right-2 w-4 h-4 bg-red-500 rounded-full border-2 border-white animate-pulse"></span>
+    </button>
+
+    <script>
+        const oficialWhatsApp = "593991930112";
+
+        // Combined Database matching requested specs
+        const database = [
+            // CAMIONES
+            { tipo: 'Camión', marca: 'FAW', modelo: 'Tiger VR', cap: '2.5 T', cat: '3.5 toneladas' },
+            { tipo: 'Camión', marca: 'FAW', modelo: 'Tiger VH', cap: '5.5 T', cat: '5 toneladas' },
+            { tipo: 'Camión', marca: 'FAW', modelo: 'Dragon', cap: '10 T', cat: '10 a 13 toneladas' },
+            { tipo: 'Camión', marca: 'FAW', modelo: 'JH6 460 HP', cap: '48 T', cat: 'Más de 13 toneladas' },
+            { tipo: 'Camión', marca: 'JAC', modelo: 'HFC 1040KN', cap: '3.5 T', cat: '3.5 toneladas' },
+            { tipo: 'Camión', marca: 'JAC', modelo: 'HFC 1060KN', cap: '5.5 T', cat: '5 toneladas' },
+            { tipo: 'Camión', marca: 'JAC', modelo: 'HFC 1120KN', cap: '8 T', cat: '8 toneladas' },
+            { tipo: 'Camión', marca: 'JAC', modelo: 'HFC 1160', cap: '13 T', cat: '10 a 13 toneladas' },
+            { tipo: 'Camión', marca: 'JAC', modelo: 'HFC 4254 Cabezal', cap: '48 T', cat: 'Más de 13 toneladas' },
+            { tipo: 'Camión', marca: 'SINOTRUK', modelo: 'NPS', cap: '5 T', cat: '5 toneladas' },
+            { tipo: 'Camión', marca: 'SINOTRUK', modelo: '1167', cap: '10 T', cat: '10 a 13 toneladas' },
+            { tipo: 'Camión', marca: 'SINOTRUK', modelo: 'MAX 530', cap: '48 T', cat: 'Más de 13 toneladas' },
+            { tipo: 'Camión', marca: 'CHEVROLET', modelo: 'NLR 511', cap: '3.5 T', cat: '3.5 toneladas' },
+            { tipo: 'Camión', marca: 'CHEVROLET', modelo: 'NQR 915', cap: '5.7 T', cat: '5 toneladas' },
+            { tipo: 'Camión', marca: 'HINO', modelo: 'Dutro 716', cap: '5.5 T', cat: '5 toneladas' },
+            { tipo: 'Camión', marca: 'MITSUBISHI FUSO', modelo: 'Canter 714', cap: '4.2 T', cat: '3.5 toneladas' },
+            // CAMIONETAS / LIVIANOS
+            { tipo: 'Liviano', marca: 'NISSAN', modelo: 'Frontier', cap: '1.0 T', cat: 'liviano' },
+            { tipo: 'Liviano', marca: 'CHEVROLET', modelo: 'D-Max', cap: '1.0 T', cat: 'liviano' },
+            { tipo: 'Liviano', marca: 'GREAT WALL', modelo: 'Poer MT 4x4', cap: '1.0 T', cat: 'liviano' },
+            { tipo: 'Liviano', marca: 'JAC', modelo: 'Frison T8 Pro', cap: '1.0 T', cat: 'liviano' },
+            // FURGONETAS / LIVIANOS
+            { tipo: 'Liviano', marca: 'CHEVROLET', modelo: 'N400 Cargo', cap: '0.75 T', cat: 'liviano' },
+            { tipo: 'Liviano', marca: 'FOTON', modelo: 'Gratour', cap: '0.75 T', cat: 'liviano' },
+            { tipo: 'Liviano', marca: 'JAC', modelo: 'Sunray', cap: '1.5 T', cat: 'liviano' },
+            // TAXIS (HÍBRIDOS/ELÉCTRICOS/GASOLINA mapeados a Vehículos Livianos o Eléctricos)
+            { tipo: 'Eléctrico', marca: 'GAC', modelo: 'AION ES', cap: 'Taxi', cat: 'taxi' },
+            { tipo: 'Eléctrico', marca: 'GAC', modelo: 'AION Y', cap: 'Taxi', cat: 'taxi' },
+            { tipo: 'Eléctrico', marca: 'MG', modelo: 'MG4 STD', cap: 'Taxi', cat: 'taxi' },
+            { tipo: 'Eléctrico', marca: 'DONGFENG', modelo: 'E70 PRO', cap: 'Taxi', cat: 'taxi' },
+            { tipo: 'Eléctrico', marca: 'NISSAN', modelo: 'LEAF', cap: 'Taxi', cat: 'taxi' },
+            { tipo: 'Eléctrico', marca: 'JAC', modelo: 'E-JS1', cap: 'Taxi', cat: 'taxi' },
+            { tipo: 'Liviano', marca: 'CHEVROLET', modelo: 'SAIL', cap: 'Taxi Gasolina', cat: 'taxi' },
+            { tipo: 'Liviano', marca: 'NISSAN', modelo: 'VERSA', cap: 'Taxi Gasolina', cat: 'taxi' },
+            { tipo: 'Híbrido', marca: 'NISSAN', modelo: 'X-TRAIL e-POWER', cap: 'Híbrido', cat: 'taxi' }
+        ];
+
+        let chatState = {
+            step: "inicio",
+            tipoVehiculo: "",
+            vehiculoSolicitado: "",
+            uso: "",
+            capacidad: "",
+            formaCompra: "",
+            entrada: "",
+            financiamiento: "",
+            plazo: "",
+            carroceria: "",
+            presupuesto: "",
+            nombre: "",
+            whatsapp: "",
+            ciudad: "",
+            preguntaPrincipal: "",
+            nivelIntencion: "MEDIA",
+            errorCount: 0
+        };
+
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const typingIndicator = document.getElementById('typing-indicator');
+
+        // Intent detection lists
+        const highIntentKeywords = ["comprar", "adquirir", "cotizar", "financiar", "reservar", "contacten", "vendedor", "asesor", "sin entrada", "cuota", "comprar hoy", "necesito una cotización"];
+        const recoveryKeywords = ["no sé", "no estoy seguro", "no entiendo", "qué significa", "explícame"];
+        const resetKeywords = ["empezar de nuevo", "reiniciar", "comenzar otra vez"];
+        const backKeywords = ["atrás", "quiero cambiar", "me equivoqué", "quiero otra opción", "regresar"];
+
+        function openChat() {
+            const widget = document.getElementById('chat-widget');
+            widget.classList.remove('chat-hidden');
+            widget.classList.add('chat-visible');
+            if (chatMessages.children.length === 0) {
+                initChatFlow();
+            }
+            setTimeout(() => chatInput.focus(), 300);
+        }
+
+        function closeChat() {
+            const widget = document.getElementById('chat-widget');
+            widget.classList.remove('chat-visible');
+            widget.classList.add('chat-hidden');
+        }
+
+        function scrollToBottom() {
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showTyping(duration = 700) {
+            return new Promise(resolve => {
+                typingIndicator.classList.remove('hidden');
+                scrollToBottom();
+                setTimeout(() => {
+                    typingIndicator.classList.add('hidden');
+                    resolve();
+                }, duration);
+            });
+        }
+
+        async function addMessage(sender, text, buttons = []) {
+            if (sender === 'bot') await showTyping();
+
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `max-w-[85%] rounded-2xl p-3 shadow-sm msg-enter text-sm leading-relaxed ${sender === 'user' ? 'bg-[#F36F21] text-white self-end rounded-tr-sm' : 'bg-white border border-gray-100 text-gray-800 self-start rounded-tl-sm'}`;
+            msgDiv.innerHTML = text.replace(/\n/g, '<br>');
+            chatMessages.appendChild(msgDiv);
+            
+            if (buttons.length > 0) {
+                const btnContainer = document.createElement('div');
+                btnContainer.className = "flex flex-wrap gap-2 mt-2 self-start";
+                btnContainer.dataset.buttons = "true";
+                buttons.forEach(btn => {
+                    const button = document.createElement('button');
+                    button.className = "bg-[#f8fafc] text-[#0B2E59] border border-[#e2e8f0] px-3 py-1.5 rounded-xl text-xs font-semibold hover:bg-[#0B2E59] hover:text-white transition-colors text-left";
+                    button.innerText = btn.label;
+                    button.onclick = () => handleButtonAction(btn.action, btn.value, btn.label, btnContainer);
+                    btnContainer.appendChild(button);
+                });
+                chatMessages.appendChild(btnContainer);
+            }
+            scrollToBottom();
+        }
+
+        function disablePastButtons() {
+            const containers = document.querySelectorAll('div[data-buttons="true"]');
+            containers.forEach(c => c.style.display = 'none');
+        }
+
+        function handleEnter(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                processUserInput();
+            }
+        }
+
+        async function processUserInput() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+            
+            chatInput.value = '';
+            chatInput.style.height = 'auto';
+            disablePastButtons();
+            await addMessage('user', text);
+
+            const textLower = text.toLowerCase();
+
+            // Check resets and backs
+            if (resetKeywords.some(w => textLower.includes(w))) {
+                await addMessage('bot', "Claro. Empecemos nuevamente.");
+                return initChatFlow();
+            }
+            if (backKeywords.some(w => textLower.includes(w))) {
+                await addMessage('bot', "Claro, no hay problema. ¿Qué deseas cambiar?", [
+                    {label: "Empezar de nuevo", action: "start", value: ""},
+                    {label: "Hablar con un asesor", action: "to_lead", value: ""}
+                ]);
+                return;
+            }
+
+            // High intent check
+            if (highIntentKeywords.some(w => textLower.includes(w)) && chatState.step !== "captura_nombre" && chatState.step !== "captura_whatsapp" && chatState.step !== "captura_ciudad") {
+                chatState.nivelIntencion = "ALTA";
+                chatState.step = "captura_nombre";
+                await addMessage('bot', "Para agilizar la atención, ¿cuál es tu nombre?");
+                return;
+            }
+
+            // Recovery check
+            if (recoveryKeywords.some(w => textLower.includes(w))) {
+                await addMessage('bot', "No te preocupes. Te puedo ayudar a identificar la opción más adecuada. ¿Para qué utilizarías principalmente el vehículo?", [
+                    {label: "Trabajo / negocio", action: "set_uso_recovery", value: "negocio"},
+                    {label: "Transporte de carga", action: "set_uso_recovery", value: "carga"},
+                    {label: "Quiero que me orienten", action: "to_lead", value: ""}
+                ]);
+                return;
+            }
+
+            // NLP Lite Extraction (If user writes full sentences)
+            if (chatState.step === "camion_uso" || chatState.step === "camion_capacidad") {
+                if (textLower.includes("repartir") || textLower.includes("distribución")) chatState.uso = "Distribución y reparto";
+                if (textLower.includes("construcción") || textLower.includes("materiales")) chatState.uso = "Construcción";
+                
+                let foundCap = false;
+                if (textLower.includes("3.5") || textLower.includes("3 y medio")) { chatState.capacidad = "3.5 toneladas"; foundCap = true; }
+                else if (textLower.includes("5 ton")) { chatState.capacidad = "5 toneladas"; foundCap = true; }
+                
+                if (textLower.includes("sin entrada") || textLower.includes("financiar")) {
+                    chatState.formaCompra = textLower.includes("sin entrada") ? "Sin entrada" : "Quiero financiarlo";
+                    chatState.financiamiento = "Sí";
+                    chatState.nivelIntencion = "ALTA";
+                }
+                
+                if (foundCap || chatState.uso) {
+                    await addMessage('bot', "Perfecto. Entiendo lo que buscas.");
+                    if(!chatState.capacidad) {
+                        return handleButtonAction("set_uso", chatState.uso || "General", "Continuar", null);
+                    } else if (!chatState.formaCompra) {
+                        return handleButtonAction("set_cap", chatState.capacidad, "Continuar", null);
+                    } else {
+                        return handleButtonAction("set_compra", chatState.formaCompra, "Continuar", null);
+                    }
+                }
+            }
+
+            // State Machine for text inputs
+            switch (chatState.step) {
+                case "captura_nombre":
+                    chatState.nombre = text;
+                    chatState.step = "captura_whatsapp";
+                    await addMessage('bot', "¿Cuál es tu número de WhatsApp?");
+                    break;
+                case "captura_whatsapp":
+                    chatState.whatsapp = text;
+                    chatState.step = "captura_ciudad";
+                    await addMessage('bot', "¿En qué ciudad te encuentras?");
+                    break;
+                case "captura_ciudad":
+                    chatState.ciudad = text;
+                    showSummary();
+                    break;
+                case "sabe_vehiculo":
+                    chatState.vehiculoSolicitado = text;
+                    chatState.step = "info_especifica";
+                    await addMessage('bot', `Perfecto, anotado: ${text}.\n\n¿Qué deseas conocer?`, [
+                        {label: "Precio", action: "info_precio", value: ""},
+                        {label: "Financiamiento", action: "info_fin", value: ""},
+                        {label: "Disponibilidad", action: "info_stock", value: ""},
+                        {label: "Ficha técnica", action: "info_ficha", value: ""},
+                        {label: "Hablar con asesor", action: "to_lead", value: ""}
+                    ]);
+                    break;
+                default:
+                    chatState.errorCount++;
+                    if(chatState.errorCount >= 2) {
+                        chatState.errorCount = 0;
+                        await addMessage('bot', "Creo que será más fácil ayudarte directamente con un asesor.\n\n¿Quieres que te contacte?", [
+                            {label: "Sí, contactar asesor", action: "to_lead", value: ""},
+                            {label: "Volver al menú", action: "start", value: ""}
+                        ]);
+                    } else {
+                        await addMessage('bot', "Quiero asegurarme de darte la información correcta. Puedes elegir una de estas opciones o, si prefieres, puedo conectarte con un asesor.", [
+                            {label: "Ver opciones", action: "start", value: ""},
+                            {label: "Hablar con un asesor", action: "to_lead", value: ""}
+                        ]);
+                    }
+            }
+        }
+
+        async function handleButtonAction(action, value, label, containerElement) {
+            if(containerElement) containerElement.style.display = 'none';
+            await addMessage('user', label);
+            chatState.errorCount = 0; // reset errors
+
+            switch (action) {
+                case "start": 
+                    initChatFlow(); 
+                    break;
+                
+                case "set_tipo":
+                    chatState.tipoVehiculo = value;
+                    if (value === "Camiones") {
+                        chatState.step = "camion_uso";
+                        await addMessage('bot', "Perfecto. Para recomendarte una opción adecuada, ¿qué tipo de trabajo realizarás con el camión?", [
+                            {label: "Distribución y reparto", action: "set_uso", value: "Distribución y reparto"},
+                            {label: "Transporte de carga", action: "set_uso", value: "Transporte de carga"},
+                            {label: "Construcción", action: "set_uso", value: "Construcción"},
+                            {label: "Agricultura", action: "set_uso", value: "Agricultura"},
+                            {label: "Otro", action: "set_uso", value: "Otro"},
+                            {label: "No estoy seguro", action: "set_uso", value: "No estoy seguro"}
+                        ]);
+                    } else if (value === "Ya_se") {
+                        chatState.step = "sabe_vehiculo";
+                        await addMessage('bot', "Perfecto. Escríbeme la marca y modelo que estás buscando.");
+                    } else if (value === "Promociones") {
+                        await addMessage('bot', "Las promociones pueden variar según el vehículo y la campaña vigente.\n\n¿Qué tipo de vehículo te interesa?", [
+                            {label: "Camión", action: "set_tipo", value: "Camiones"},
+                            {label: "Vehículo liviano", action: "set_tipo", value: "Vehículos livianos"},
+                            {label: "Híbrido / eléctrico", action: "set_tipo", value: "Híbridos / Eléctricos"},
+                            {label: "Hablar con asesor", action: "to_lead", value: ""}
+                        ]);
+                    } else {
+                        // Livianos o Eléctricos (Taxis entran aquí)
+                        chatState.step = "forma_compra";
+                        await addMessage('bot', `Entendido, buscas opciones en ${value}.\n\n¿Cómo tienes pensado adquirirlo?`, formaCompraButtons());
+                    }
+                    break;
+
+                case "set_uso":
+                case "set_uso_recovery":
+                    chatState.uso = value;
+                    chatState.step = "camion_capacidad";
+                    await addMessage('bot', "¿Qué capacidad de carga estás buscando?", [
+                        {label: "3.5 toneladas", action: "set_cap", value: "3.5 toneladas"},
+                        {label: "5 toneladas", action: "set_cap", value: "5 toneladas"},
+                        {label: "8 toneladas", action: "set_cap", value: "8 toneladas"},
+                        {label: "10 a 13 toneladas", action: "set_cap", value: "10 a 13 toneladas"},
+                        {label: "Más de 13 toneladas", action: "set_cap", value: "Más de 13 toneladas"},
+                        {label: "No estoy seguro", action: "set_cap", value: "No estoy seguro"}
+                    ]);
+                    break;
+
+                case "set_cap":
+                    chatState.capacidad = value;
+                    chatState.step = "forma_compra";
+                    await addMessage('bot', "¿Cómo tienes pensado adquirirlo?", formaCompraButtons());
+                    break;
+
+                case "set_compra":
+                    chatState.formaCompra = value;
+                    if (value === "Sin entrada" || value === "Quiero financiarlo") {
+                        chatState.nivelIntencion = "ALTA";
+                        chatState.financiamiento = "Sí";
+                        chatState.step = "plazo";
+                        await addMessage('bot', "Entiendo. Podemos revisar alternativas de financiamiento según el vehículo y el perfil del cliente.\n\n¿Qué plazo te interesa?", [
+                            {label: "36 meses", action: "set_plazo", value: "36 meses"},
+                            {label: "48 meses", action: "set_plazo", value: "48 meses"},
+                            {label: "60 meses", action: "set_plazo", value: "60 meses"},
+                            {label: "No estoy seguro", action: "set_plazo", value: "No estoy seguro"}
+                        ]);
+                    } else {
+                        chatState.step = "carroceria";
+                        await addMessage('bot', "¿Necesitas únicamente el vehículo o también una carrocería/furgón?", carroceriaButtons());
+                    }
+                    break;
+
+                case "set_plazo":
+                    chatState.plazo = value;
+                    chatState.step = "carroceria";
+                    await addMessage('bot', "¿Necesitas únicamente el vehículo o también una carrocería/furgón?", carroceriaButtons());
+                    break;
+
+                case "set_carroceria":
+                    chatState.carroceria = value;
+                    generateRecommendation();
+                    break;
+
+                // FAQ Responses (No inventing info)
+                case "info_precio":
+                    await addMessage('bot', "El precio puede variar según el modelo, configuración y disponibilidad. Un asesor puede confirmarte el valor actualizado.", [{label: "Hablar con asesor", action: "to_lead", value: ""}]);
+                    break;
+                case "info_fin":
+                    await addMessage('bot', "La cuota depende del valor del vehículo, entrada, plazo y condiciones aprobadas por la institución financiera. Un asesor puede revisar tu caso y darte una simulación referencial.", [{label: "Quiero que revisen mi financiamiento", action: "to_lead", value: ""}]);
+                    break;
+                case "info_stock":
+                    await addMessage('bot', "La disponibilidad puede cambiar constantemente. Un asesor puede confirmar el inventario actual.", [{label: "Consultar disponibilidad", action: "to_lead", value: ""}]);
+                    break;
+                case "info_ficha":
+                    await addMessage('bot', "Los requisitos y fichas técnicas te los puede facilitar un asesor directamente según el modelo exacto.", [{label: "Hablar con asesor", action: "to_lead", value: ""}]);
+                    break;
+
+                case "to_lead":
+                    chatState.nivelIntencion = "ALTA";
+                    chatState.step = "captura_nombre";
+                    await addMessage('bot', "Para agilizar la atención, ¿cuál es tu nombre?");
+                    break;
+                
+                case "send_whatsapp":
+                    sendToWhatsApp();
+                    break;
+            }
+        }
+
+        function formaCompraButtons() {
+            return [
+                {label: "Con entrada", action: "set_compra", value: "Con entrada"},
+                {label: "Sin entrada", action: "set_compra", value: "Sin entrada"},
+                {label: "Quiero financiarlo", action: "set_compra", value: "Quiero financiarlo"},
+                {label: "Pago de contado", action: "set_compra", value: "Pago de contado"},
+                {label: "No estoy seguro", action: "set_compra", value: "No estoy seguro"}
+            ];
+        }
+
+        function carroceriaButtons() {
+            return [
+                {label: "Solo el vehículo", action: "set_carroceria", value: "Solo el vehículo"},
+                {label: "Vehículo + furgón", action: "set_carroceria", value: "Vehículo + furgón"},
+                {label: "Necesito asesoría", action: "set_carroceria", value: "Necesito asesoría"}
+            ];
+        }
+
+        async function initChatFlow() {
+            // Reset state
+            chatState = { step: "inicio", tipoVehiculo: "", vehiculoSolicitado: "", uso: "", capacidad: "", formaCompra: "", entrada: "", financiamiento: "", plazo: "", carroceria: "", presupuesto: "", nombre: "", whatsapp: "", ciudad: "", preguntaPrincipal: "", nivelIntencion: "MEDIA", errorCount: 0 };
+            
+            await addMessage('bot', "Hola, soy el asistente virtual de AutoClick.\n\nTe ayudo a encontrar el vehículo adecuado para tu negocio, conocer opciones de financiamiento y resolver tus dudas.\n\n¿Qué estás buscando?", [
+                {label: "Camiones", action: "set_tipo", value: "Camiones"},
+                {label: "Vehículos livianos", action: "set_tipo", value: "Vehículos livianos"},
+                {label: "Híbridos / Eléctricos", action: "set_tipo", value: "Híbridos / Eléctricos"},
+                {label: "Promociones", action: "set_tipo", value: "Promociones"},
+                {label: "Ya sé qué vehículo quiero", action: "set_tipo", value: "Ya_se"},
+                {label: "Hablar con un asesor", action: "to_lead", value: ""}
+            ]);
+        }
+
+        async function generateRecommendation() {
+            chatState.step = "recomendacion";
+            let matches = [];
+
+            if (chatState.tipoVehiculo === "Camiones" && chatState.capacidad !== "No estoy seguro") {
+                matches = database.filter(item => item.tipo === 'Camión' && item.cat === chatState.capacidad);
+            } else if (chatState.tipoVehiculo === "Híbridos / Eléctricos") {
+                matches = database.filter(item => item.tipo === 'Eléctrico' || item.tipo === 'Híbrido');
+            } else {
+                // Fallback / Livianos
+                matches = database.filter(item => item.tipo === 'Liviano');
+            }
+
+            // Shuffle and pick 3
+            matches = matches.sort(() => 0.5 - Math.random()).slice(0, 3);
+            
+            if (matches.length === 0) {
+                await addMessage('bot', "Podría ajustarse a lo que buscas una configuración a medida. Una opción para revisar a detalle con un experto.", [{label: "Consultar con asesor", action: "to_lead", value: ""}]);
+                return;
+            }
+            
+            let htmlText = "";
+            matches.forEach((v, i) => {
+                let tag = i === 0 ? "OPCIÓN PARA REVISAR" : "ALTERNATIVA";
+                htmlText += `<b>${tag}</b><br>`;
+                htmlText += `${v.marca} ${v.modelo}<br>`;
+                if(v.cap) htmlText += `${v.cap}<br>`;
+                if(i === 0) htmlText += `<span class="text-xs text-gray-500">Adecuado para revisar en tus operaciones.</span><br>`;
+                htmlText += `<br>`;
+            });
+
+            await addMessage('bot', htmlText, [
+                {label: "Consultar con asesor", action: "to_lead", value: ""},
+                {label: "Ver otra alternativa", action: "start", value: ""}
+            ]);
+        }
+
+        async function showSummary() {
+            chatState.step = "resumen";
+            let sumText = "Perfecto. Esto es lo que tenemos registrado:\n\n";
+            if(chatState.nombre) sumText += `Nombre:\n${chatState.nombre}\n\n`;
+            if(chatState.ciudad) sumText += `Ciudad:\n${chatState.ciudad}\n\n`;
+            if(chatState.tipoVehiculo) sumText += `Vehículo:\n${chatState.tipoVehiculo}\n\n`;
+            if(chatState.vehiculoSolicitado) sumText += `Modelo solicitado:\n${chatState.vehiculoSolicitado}\n\n`;
+            if(chatState.capacidad && chatState.capacidad !== "No estoy seguro") sumText += `Capacidad:\n${chatState.capacidad}\n\n`;
+            if(chatState.uso) sumText += `Uso:\n${chatState.uso}\n\n`;
+            if(chatState.formaCompra) sumText += `Forma de compra:\n${chatState.formaCompra}\n\n`;
+            if(chatState.plazo) sumText += `Plazo:\n${chatState.plazo}\n\n`;
+            if(chatState.carroceria) sumText += `Carrocería:\n${chatState.carroceria}\n\n`;
+            
+            sumText += `Intención:\n${chatState.nivelIntencion}\n\n`;
+            sumText += "¿Quieres enviar esta información a un asesor comercial por WhatsApp?";
+
+            await addMessage('bot', sumText, [
+                {label: "Hablar con asesor por WhatsApp", action: "send_whatsapp", value: ""},
+                {label: "Seguir consultando", action: "start", value: ""}
+            ]);
+        }
+
+        function sendToWhatsApp() {
+            let msg = `Hola, soy ${chatState.nombre || 'un cliente'}.\n\n`;
+            
+            if (chatState.vehiculoSolicitado) {
+                msg += `Estoy interesado en: ${chatState.vehiculoSolicitado}\n`;
+            } else if (chatState.tipoVehiculo) {
+                msg += `Estoy interesado en un(a) ${chatState.tipoVehiculo}.\n`;
+            }
+
+            if(chatState.capacidad && chatState.capacidad !== "No estoy seguro") msg += `Capacidad: ${chatState.capacidad}\n`;
+            if(chatState.uso) msg += `Uso: ${chatState.uso}\n`;
+            if(chatState.formaCompra) msg += `Forma de compra: ${chatState.formaCompra}\n`;
+            if(chatState.plazo) msg += `Plazo: ${chatState.plazo}\n`;
+            if(chatState.carroceria) msg += `Carrocería: ${chatState.carroceria}\n`;
+            if(chatState.ciudad) msg += `Ciudad: ${chatState.ciudad}\n\n`;
+            
+            msg += `Quisiera recibir asesoría comercial de AutoClick.`;
+
+            directWhatsApp(msg);
+        }
+
+        function directWhatsApp(text) {
+            const url = `https://wa.me/${oficialWhatsApp}?text=${encodeURIComponent(text)}`;
+            window.open(url, '_blank');
+        }
+
+        function requestQuote(modelo) {
+            openChat();
+            setTimeout(async () => {
+                chatState.vehiculoSolicitado = modelo;
+                chatState.step = "info_especifica";
+                chatState.nivelIntencion = "ALTA"; // User clicked from catalog
+                await addMessage('bot', `Claro. Veo que estás interesado en el ${modelo}.\n\n¿Qué deseas conocer?`, [
+                    {label: "Precio", action: "info_precio", value: ""},
+                    {label: "Financiamiento", action: "info_fin", value: ""},
+                    {label: "Disponibilidad", action: "info_stock", value: ""},
+                    {label: "Hablar con asesor", action: "to_lead", value: ""}
+                ]);
+            }, 500);
+        }
+    </script>
 </body>
 </html>
